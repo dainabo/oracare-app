@@ -586,7 +586,7 @@
   .symptom-sub { font-size: 12px; color: var(--text-light); margin-top: 2px; }
 
   .dental-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
-  .dental-opt {
+  .dental-opt, .floss-opt, .nausea-opt, .brush-opt, .oral-opt {
     padding: 16px 18px;
     border-radius: 14px;
     border: 1.5px solid var(--border);
@@ -602,7 +602,7 @@
     gap: 12px;
     color: var(--text);
   }
-  .dental-opt.selected { border-color: var(--teal); background: var(--teal-pale); color: var(--teal); font-weight: 500; }
+  .dental-opt.selected, .floss-opt.selected, .nausea-opt.selected, .brush-opt.selected, .oral-opt.selected { border-color: var(--teal); background: var(--teal-pale); color: var(--teal); font-weight: 500; }
   .dental-opt-dot {
     width: 18px;
     height: 18px;
@@ -614,8 +614,16 @@
     justify-content: center;
     transition: all 0.2s;
   }
-  .dental-opt.selected .dental-opt-dot { border-color: var(--teal); background: var(--teal); }
-  .dental-opt.selected .dental-opt-dot::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: white; }
+  .dental-opt.selected .dental-opt-dot,
+  .floss-opt.selected .dental-opt-dot,
+  .nausea-opt.selected .dental-opt-dot,
+  .brush-opt.selected .dental-opt-dot,
+  .oral-opt.selected .dental-opt-dot { border-color: var(--teal); background: var(--teal); }
+  .dental-opt.selected .dental-opt-dot::after,
+  .floss-opt.selected .dental-opt-dot::after,
+  .nausea-opt.selected .dental-opt-dot::after,
+  .brush-opt.selected .dental-opt-dot::after,
+  .oral-opt.selected .dental-opt-dot::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: white; }
 
   .step-footer { margin-top: auto; display: flex; flex-direction: column; gap: 10px; }
 
@@ -1044,11 +1052,9 @@
 
       <div class="feature-item">
         <div class="feature-icon-wrap fi-teal">
-          <!-- Tooth / Track Symptoms: rectangular crown + two roots -->
+          <!-- Tooth / Track Symptoms: organic tooth silhouette -->
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="5" y="3" width="14" height="12" rx="3.5" stroke="#2E7D7D" stroke-width="1.7"/>
-            <path d="M9 15L9 21" stroke="#2E7D7D" stroke-width="1.7" stroke-linecap="round"/>
-            <path d="M15 15L15 21" stroke="#2E7D7D" stroke-width="1.7" stroke-linecap="round"/>
+            <path d="M6 7.5 C6 4.8 8.7 3 12 3 C15.3 3 18 4.8 18 7.5 C18 10.5 16.5 12.5 16 14 L16 20 Q15.5 22 14 21.5 Q12.5 21 12.5 19.5 L12.5 17 Q12.5 16 12 16 Q11.5 16 11.5 17 L11.5 19.5 Q11.5 21 10 21.5 Q8.5 22 8 20 L8 14 C7.5 12.5 6 10.5 6 7.5 Z" stroke="#2E7D7D" stroke-width="1.7" stroke-linejoin="round"/>
           </svg>
         </div>
         <span class="feature-label">Track<br>Symptoms</span>
@@ -1174,13 +1180,13 @@
         <div style="width:40px;"></div>
       </div>
       <div class="assessment-progress">
-        <div class="assessment-progress-fill" id="assessProgress" style="width: 33%;"></div>
+        <div class="assessment-progress-fill" id="assessProgress" style="width: 14.3%;"></div>
       </div>
     </div>
 
     <!-- Step 1: Trimester -->
     <div class="assessment-step active" id="astep-1">
-      <p class="step-num">Question 1 of 3</p>
+      <p class="step-num">Question 1 of 7</p>
       <h2 class="step-title">Which trimester are you in?</h2>
       <p class="step-body">Your trimester affects which oral health symptoms are most common and what care your body needs most.</p>
       <div class="trimester-options">
@@ -1207,7 +1213,7 @@
 
     <!-- Step 2: Symptoms -->
     <div class="assessment-step" id="astep-2">
-      <p class="step-num">Question 2 of 3</p>
+      <p class="step-num">Question 2 of 7</p>
       <h2 class="step-title">Are you experiencing any of these?</h2>
       <p class="step-body">Select all symptoms that apply. This helps us personalize your care plan.</p>
       <div class="symptom-list">
@@ -1258,9 +1264,33 @@
       </div>
     </div>
 
-    <!-- Step 3: Dental history -->
+    <!-- Step 3: Flossing -->
     <div class="assessment-step" id="astep-3">
-      <p class="step-num">Question 3 of 3</p>
+      <p class="step-num">Question 3 of 7</p>
+      <h2 class="step-title">Do you floss regularly?</h2>
+      <p class="step-body">Flossing helps remove plaque and reduce gum inflammation, which can become more common during pregnancy.</p>
+      <div class="dental-options">
+        <button class="floss-opt" onclick="selectFloss(this)">
+          <span class="dental-opt-dot"></span>Daily
+        </button>
+        <button class="floss-opt" onclick="selectFloss(this)">
+          <span class="dental-opt-dot"></span>A few times a week
+        </button>
+        <button class="floss-opt selected" onclick="selectFloss(this)">
+          <span class="dental-opt-dot"></span>Rarely
+        </button>
+        <button class="floss-opt" onclick="selectFloss(this)">
+          <span class="dental-opt-dot"></span>Never
+        </button>
+      </div>
+      <div class="step-footer">
+        <button class="btn-primary" onclick="goAssessStep(4)">Continue</button>
+      </div>
+    </div>
+
+    <!-- Step 4: Dental history -->
+    <div class="assessment-step" id="astep-4">
+      <p class="step-num">Question 4 of 7</p>
       <h2 class="step-title">When did you last visit a dentist?</h2>
       <p class="step-body">The ADA recommends two dental cleanings during pregnancy. Regular check-ups are safe and important.</p>
       <div class="dental-options">
@@ -1278,6 +1308,78 @@
         </button>
         <button class="dental-opt" onclick="selectDental(this)">
           <span class="dental-opt-dot"></span>I haven't been yet during pregnancy
+        </button>
+      </div>
+      <div class="step-footer">
+        <button class="btn-primary" onclick="goAssessStep(5)">Continue</button>
+      </div>
+    </div>
+
+    <!-- Step 5: Nausea / Vomiting -->
+    <div class="assessment-step" id="astep-5">
+      <p class="step-num">Question 5 of 7</p>
+      <h2 class="step-title">How often do you experience nausea or vomiting?</h2>
+      <p class="step-body">Frequent vomiting can expose teeth to stomach acid and increase the risk of enamel erosion during pregnancy.</p>
+      <div class="dental-options">
+        <button class="nausea-opt" onclick="selectNausea(this)">
+          <span class="dental-opt-dot"></span>Frequently
+        </button>
+        <button class="nausea-opt selected" onclick="selectNausea(this)">
+          <span class="dental-opt-dot"></span>Occasionally
+        </button>
+        <button class="nausea-opt" onclick="selectNausea(this)">
+          <span class="dental-opt-dot"></span>Rarely
+        </button>
+        <button class="nausea-opt" onclick="selectNausea(this)">
+          <span class="dental-opt-dot"></span>Never
+        </button>
+      </div>
+      <div class="step-footer">
+        <button class="btn-primary" onclick="goAssessStep(6)">Continue</button>
+      </div>
+    </div>
+
+    <!-- Step 6: Brushing Frequency -->
+    <div class="assessment-step" id="astep-6">
+      <p class="step-num">Question 6 of 7</p>
+      <h2 class="step-title">How often do you brush your teeth?</h2>
+      <p class="step-body">Daily brushing helps prevent plaque buildup, gum inflammation, and cavities during pregnancy.</p>
+      <div class="dental-options">
+        <button class="brush-opt" onclick="selectBrush(this)">
+          <span class="dental-opt-dot"></span>Less than once daily
+        </button>
+        <button class="brush-opt" onclick="selectBrush(this)">
+          <span class="dental-opt-dot"></span>Once daily
+        </button>
+        <button class="brush-opt selected" onclick="selectBrush(this)">
+          <span class="dental-opt-dot"></span>Twice daily
+        </button>
+        <button class="brush-opt" onclick="selectBrush(this)">
+          <span class="dental-opt-dot"></span>More than twice daily
+        </button>
+      </div>
+      <div class="step-footer">
+        <button class="btn-primary" onclick="goAssessStep(7)">Continue</button>
+      </div>
+    </div>
+
+    <!-- Step 7: Oral Health Self-Assessment -->
+    <div class="assessment-step" id="astep-7">
+      <p class="step-num">Question 7 of 7</p>
+      <h2 class="step-title">How would you rate your current oral health?</h2>
+      <p class="step-body">Your self-assessment helps personalize recommendations, educational content, and follow-up guidance.</p>
+      <div class="dental-options">
+        <button class="oral-opt" onclick="selectOral(this)">
+          <span class="dental-opt-dot"></span>Excellent
+        </button>
+        <button class="oral-opt selected" onclick="selectOral(this)">
+          <span class="dental-opt-dot"></span>Good
+        </button>
+        <button class="oral-opt" onclick="selectOral(this)">
+          <span class="dental-opt-dot"></span>Fair
+        </button>
+        <button class="oral-opt" onclick="selectOral(this)">
+          <span class="dental-opt-dot"></span>Poor
         </button>
       </div>
       <div class="step-footer">
@@ -1947,7 +2049,7 @@
     targetEl.classList.add('active');
     currentAssessStep = step;
 
-    const progress = (step / 3) * 100;
+    const progress = (step / 7) * 100;
     document.getElementById('assessProgress').style.width = progress + '%';
   }
 
@@ -1971,6 +2073,30 @@
   // ─── DENTAL OPTION ───
   function selectDental(btn) {
     document.querySelectorAll('.dental-opt').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+  }
+
+  // ─── FLOSS OPTION ───
+  function selectFloss(btn) {
+    document.querySelectorAll('.floss-opt').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+  }
+
+  // ─── NAUSEA OPTION ───
+  function selectNausea(btn) {
+    document.querySelectorAll('.nausea-opt').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+  }
+
+  // ─── BRUSH OPTION ───
+  function selectBrush(btn) {
+    document.querySelectorAll('.brush-opt').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+  }
+
+  // ─── ORAL HEALTH OPTION ───
+  function selectOral(btn) {
+    document.querySelectorAll('.oral-opt').forEach(b => b.classList.remove('selected'));
     btn.classList.add('selected');
   }
 
