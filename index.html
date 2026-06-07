@@ -319,7 +319,7 @@
   .welcome-headline {
     font-family: 'Outfit', sans-serif;
     font-size: 34px;
-    font-weight: 600;
+    font-weight: 500;
     line-height: 1.15;
     color: #2B2B2B;
     text-align: center;
@@ -328,6 +328,7 @@
     letter-spacing: -0.2px;
   }
   .welcome-headline .accent { color: var(--salmon); }
+  .welcome-headline .headline-dim { color: var(--teal); }
 
   /* ── Body copy ── */
   .welcome-body {
@@ -338,7 +339,7 @@
     color: #5F6368;
     text-align: center;
     max-width: 82%;
-    margin-bottom: 32px;
+    margin-bottom: 20px;
   }
 
   /* ── Feature row ── */
@@ -347,7 +348,7 @@
     justify-content: space-evenly;
     width: 100%;
     padding: 0 8px;
-    margin-bottom: 36px;
+    margin-bottom: 64px;
   }
   .feature-item {
     display: flex;
@@ -363,6 +364,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 26px;
   }
   .fi-teal   { background: rgba(46,125,125,0.10); }
   .fi-salmon { background: rgba(232,140,125,0.12); }
@@ -397,7 +399,7 @@
     font-weight: 600;
     cursor: pointer;
     transition: opacity 0.2s ease;
-    margin-bottom: 16px;
+    margin-bottom: 8px;
   }
   .btn-welcome-primary:active { opacity: 0.88; }
   .btn-welcome-secondary {
@@ -1037,9 +1039,7 @@
 
     <!-- Headline -->
     <h1 class="welcome-headline">
-      Personalized oral health<br>
-      for every hormonal<br>
-      <span class="accent">life stage.</span>
+      <span class="headline-dim">Personalized oral health care for every hormonal </span><span class="accent">life stage.</span>
     </h1>
 
     <!-- Body copy -->
@@ -1047,38 +1047,21 @@
       Track symptoms, understand risks, and protect your oral health through every hormonal stage.
     </p>
 
-    <!-- Feature row: flat SVG icons, no emojis, no cards, no dividers -->
+    <!-- Feature row -->
     <div class="feature-row">
 
       <div class="feature-item">
-        <div class="feature-icon-wrap fi-teal">
-          <!-- Tooth / Track Symptoms: organic tooth silhouette -->
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M6 7.5 C6 4.8 8.7 3 12 3 C15.3 3 18 4.8 18 7.5 C18 10.5 16.5 12.5 16 14 L16 20 Q15.5 22 14 21.5 Q12.5 21 12.5 19.5 L12.5 17 Q12.5 16 12 16 Q11.5 16 11.5 17 L11.5 19.5 Q11.5 21 10 21.5 Q8.5 22 8 20 L8 14 C7.5 12.5 6 10.5 6 7.5 Z" stroke="#2E7D7D" stroke-width="1.7" stroke-linejoin="round"/>
-          </svg>
-        </div>
+        <div class="feature-icon-wrap fi-teal">🦷</div>
         <span class="feature-label">Track<br>Symptoms</span>
       </div>
 
       <div class="feature-item">
-        <div class="feature-icon-wrap fi-salmon">
-          <!-- Sparkle / Personalized Care -->
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 2L13.4 8.6L20 10L13.4 11.4L12 18L10.6 11.4L4 10L10.6 8.6L12 2Z" stroke="#E88C7D" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/>
-            <path d="M19 15.5L19.9 18.1L22.5 19L19.9 19.9L19 22.5L18.1 19.9L15.5 19L18.1 18.1L19 15.5Z" stroke="#E88C7D" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"/>
-          </svg>
-        </div>
+        <div class="feature-icon-wrap fi-salmon">✨</div>
         <span class="feature-label">Personalized<br>Care</span>
       </div>
 
       <div class="feature-item">
-        <div class="feature-icon-wrap fi-slate">
-          <!-- Camera / AI Scan Insights -->
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M23 19C23 20.1 22.1 21 21 21H3C1.9 21 1 20.1 1 19V8C1 6.9 1.9 6 3 6H7L9 3H15L17 6H21C22.1 6 23 6.9 23 8V19Z" stroke="#64748B" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-            <circle cx="12" cy="13" r="4" stroke="#64748B" stroke-width="1.7"/>
-          </svg>
-        </div>
+        <div class="feature-icon-wrap fi-slate">📷</div>
         <span class="feature-label">AI Scan<br>Insights</span>
       </div>
 
@@ -1227,7 +1210,7 @@
         </div>
         <div class="symptom-item" onclick="toggleSymptom(this)">
           <div class="symptom-check"></div>
-          <span class="symptom-icon">❄️</span>
+          <span class="symptom-icon">⚡</span>
           <div class="symptom-text">
             <div class="symptom-name">Tooth sensitivity</div>
             <div class="symptom-sub">To hot, cold, or sweet foods</div>
@@ -1255,6 +1238,14 @@
           <div class="symptom-text">
             <div class="symptom-name">Morning sickness effects</div>
             <div class="symptom-sub">Tooth erosion from acid exposure</div>
+          </div>
+        </div>
+        <div class="symptom-item" onclick="toggleSymptom(this)">
+          <div class="symptom-check"></div>
+          <span class="symptom-icon">🦷</span>
+          <div class="symptom-text">
+            <div class="symptom-name">Tooth pain</div>
+            <div class="symptom-sub">Discomfort when chewing or biting</div>
           </div>
         </div>
       </div>
