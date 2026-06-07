@@ -1,0 +1,1912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OraCare — Women's Oral Health Companion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --teal: #2E7D7D;
+    --teal-light: #3D9E9E;
+    --teal-pale: #E8F4F4;
+    --teal-mid: #C2DEDE;
+    --salmon: #E88C7D;
+    --salmon-light: #F5B8AE;
+    --salmon-pale: #FDF0EE;
+    --bg: #F8F5F4;
+    --bg-card: #FFFFFF;
+    --text: #2F3133;
+    --text-mid: #5A5E62;
+    --text-light: #9EA4A8;
+    --border: #EDE9E7;
+    --shadow-sm: 0 2px 8px rgba(47,49,51,0.06);
+    --shadow-md: 0 8px 24px rgba(47,49,51,0.10);
+    --shadow-lg: 0 16px 48px rgba(47,49,51,0.14);
+    --r-sm: 12px;
+    --r-md: 18px;
+    --r-lg: 24px;
+    --r-xl: 32px;
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body: 'DM Sans', system-ui, sans-serif;
+  }
+
+  html, body {
+    background: #E8E4E2;
+    min-height: 100vh;
+    font-family: var(--font-body);
+    color: var(--text);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 24px 0 48px;
+  }
+
+  /* ─── PHONE SHELL ─── */
+  #app {
+    width: 375px;
+    min-height: 812px;
+    background: var(--bg);
+    border-radius: 44px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.28), 0 0 0 1px rgba(255,255,255,0.15), inset 0 0 0 1px rgba(0,0,0,0.1);
+  }
+
+  /* ─── STATUS BAR ─── */
+  .status-bar {
+    height: 44px;
+    padding: 14px 24px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+  }
+  .status-bar .time { font-size: 15px; font-weight: 600; letter-spacing: -0.3px; }
+  .status-bar .icons { display: flex; gap: 6px; align-items: center; }
+  .status-bar svg { width: 16px; height: 12px; }
+
+  /* ─── SCREENS ─── */
+  .screen {
+    position: absolute;
+    inset: 0;
+    display: none;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .screen::-webkit-scrollbar { display: none; }
+  .screen.active { display: flex; }
+
+  /* Transition animations */
+  .screen.slide-in {
+    animation: slideIn 0.38s cubic-bezier(0.32, 0.72, 0, 1) forwards;
+  }
+  .screen.slide-out {
+    animation: slideOut 0.38s cubic-bezier(0.32, 0.72, 0, 1) forwards;
+  }
+  .screen.slide-back-in {
+    animation: slideBackIn 0.38s cubic-bezier(0.32, 0.72, 0, 1) forwards;
+  }
+  .screen.slide-back-out {
+    animation: slideBackOut 0.38s cubic-bezier(0.32, 0.72, 0, 1) forwards;
+  }
+  @keyframes slideIn { from { transform: translateX(100%); opacity: 0.6; } to { transform: translateX(0); opacity: 1; } }
+  @keyframes slideOut { from { transform: translateX(0); opacity: 1; } to { transform: translateX(-30%); opacity: 0; } }
+  @keyframes slideBackIn { from { transform: translateX(-30%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+  @keyframes slideBackOut { from { transform: translateX(0); opacity: 1; } to { transform: translateX(100%); opacity: 0.6; } }
+
+  /* ─── TYPOGRAPHY ─── */
+  .display { font-family: var(--font-display); font-size: 36px; line-height: 1.15; letter-spacing: -0.5px; }
+  .heading { font-family: var(--font-display); font-size: 26px; line-height: 1.25; letter-spacing: -0.3px; }
+  .subheading { font-size: 18px; font-weight: 600; letter-spacing: -0.2px; }
+  .body { font-size: 15px; line-height: 1.6; font-weight: 300; color: var(--text-mid); }
+  .label { font-size: 12px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; color: var(--text-light); }
+  .caption { font-size: 13px; color: var(--text-light); line-height: 1.5; }
+
+  /* ─── BUTTONS ─── */
+  .btn-primary {
+    width: 100%;
+    padding: 17px 24px;
+    background: var(--teal);
+    color: white;
+    border: none;
+    border-radius: 16px;
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.2px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-primary:active { transform: scale(0.98); }
+  .btn-primary:after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .btn-secondary {
+    width: 100%;
+    padding: 17px 24px;
+    background: transparent;
+    color: var(--teal);
+    border: 1.5px solid var(--teal-mid);
+    border-radius: 16px;
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .btn-secondary:active { background: var(--teal-pale); }
+
+  .btn-ghost {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-body);
+    color: var(--text-mid);
+    font-size: 15px;
+    font-weight: 500;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* ─── BACK BUTTON ─── */
+  .back-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.9);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+  .back-btn:active { transform: scale(0.93); }
+
+  /* ─── CARDS ─── */
+  .card {
+    background: var(--bg-card);
+    border-radius: var(--r-lg);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+  }
+
+  /* ─── PROGRESS DOTS ─── */
+  .progress-dots { display: flex; gap: 6px; justify-content: center; }
+  .dot { width: 6px; height: 6px; border-radius: 3px; background: var(--teal-mid); transition: all 0.3s; }
+  .dot.active { width: 20px; background: var(--teal); }
+
+  /* ─── CHIP / TAG ─── */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 11px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .chip-teal { background: var(--teal-pale); color: var(--teal); }
+  .chip-salmon { background: var(--salmon-pale); color: var(--salmon); }
+  .chip-amber { background: #FEF3E2; color: #D97706; }
+  .chip-green { background: #ECFDF5; color: #059669; }
+
+  /* ─── BOTTOM NAV ─── */
+  .bottom-nav {
+    position: sticky;
+    bottom: 0;
+    background: rgba(248,245,244,0.92);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid var(--border);
+    padding: 8px 0 20px;
+    display: flex;
+    justify-content: space-around;
+    z-index: 50;
+    flex-shrink: 0;
+  }
+  .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px 12px;
+    border-radius: 12px;
+    transition: all 0.2s;
+  }
+  .nav-item svg { width: 22px; height: 22px; transition: all 0.2s; }
+  .nav-item span { font-size: 10px; font-weight: 500; color: var(--text-light); transition: all 0.2s; }
+  .nav-item.active svg path, .nav-item.active svg circle, .nav-item.active svg rect { stroke: var(--teal); }
+  .nav-item.active span { color: var(--teal); font-weight: 600; }
+
+  /* ════════════════════════════════════════
+     SCREEN 1 — WELCOME
+  ════════════════════════════════════════ */
+  #screen-welcome {
+    background: linear-gradient(165deg, #1A5C5C 0%, #2E7D7D 45%, #3A9A9A 100%);
+  }
+  #screen-welcome .status-bar .time,
+  #screen-welcome .status-bar .icons svg path,
+  #screen-welcome .status-bar .icons svg rect { color: white; fill: white; stroke: white; }
+
+  .welcome-orb {
+    position: absolute;
+    width: 380px;
+    height: 380px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 40%, rgba(232,140,125,0.35), rgba(255,255,255,0.05) 70%);
+    top: -60px;
+    right: -80px;
+    pointer-events: none;
+  }
+  .welcome-orb-2 {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.06), transparent 70%);
+    bottom: 120px;
+    left: -40px;
+    pointer-events: none;
+  }
+
+  .welcome-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 44px 32px 40px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .welcome-logo {
+    margin-top: 52px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .logo-mark {
+    width: 44px;
+    height: 44px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+  .logo-wordmark { font-family: var(--font-display); font-size: 22px; font-weight: 600; color: white; letter-spacing: 0.5px; }
+
+  .welcome-hero {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 24px 0 16px;
+  }
+  .welcome-tagline {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 16px;
+  }
+  .welcome-title {
+    font-family: var(--font-display);
+    font-size: 42px;
+    font-weight: 500;
+    line-height: 1.1;
+    color: white;
+    margin-bottom: 20px;
+  }
+  .welcome-title em { font-style: italic; color: rgba(232,140,125,0.95); }
+  .welcome-body {
+    font-size: 16px;
+    line-height: 1.65;
+    color: rgba(255,255,255,0.72);
+    font-weight: 300;
+    max-width: 280px;
+  }
+
+  .welcome-stats {
+    display: flex;
+    gap: 20px;
+    margin: 32px 0;
+  }
+  .stat-pill {
+    flex: 1;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 16px;
+    padding: 14px 16px;
+  }
+  .stat-num { font-family: var(--font-display); font-size: 22px; color: white; font-weight: 500; }
+  .stat-label { font-size: 11px; color: rgba(255,255,255,0.55); margin-top: 3px; font-weight: 400; }
+
+  .welcome-cta {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .btn-welcome-primary {
+    width: 100%;
+    padding: 18px;
+    background: white;
+    color: var(--teal);
+    border: none;
+    border-radius: 18px;
+    font-family: var(--font-body);
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: -0.3px;
+    transition: all 0.2s;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  }
+  .btn-welcome-primary:active { transform: scale(0.97); }
+  .btn-welcome-secondary {
+    width: 100%;
+    padding: 16px;
+    background: rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.85);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 18px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    transition: all 0.2s;
+  }
+  .welcome-footer { text-align: center; margin-top: 20px; font-size: 12px; color: rgba(255,255,255,0.35); line-height: 1.6; }
+
+  /* ════════════════════════════════════════
+     SCREEN 2 — LIFE STAGE
+  ════════════════════════════════════════ */
+  .screen-header {
+    padding: 54px 24px 0;
+    flex-shrink: 0;
+  }
+  .nav-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+
+  .life-stage-intro { padding: 0 24px 8px; }
+  .life-stage-intro .heading { margin-bottom: 10px; }
+
+  .stages-grid {
+    padding: 16px 24px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 1;
+  }
+
+  .stage-card {
+    background: var(--bg-card);
+    border-radius: var(--r-lg);
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    border: 1.5px solid transparent;
+    transition: all 0.25s ease;
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    overflow: hidden;
+  }
+  .stage-card:active, .stage-card.selected {
+    border-color: var(--teal);
+    box-shadow: 0 0 0 4px var(--teal-pale), var(--shadow-md);
+  }
+  .stage-card.pregnancy-card { border-color: var(--teal); background: linear-gradient(135deg, #FAFFFE, #F0FAFA); }
+  .stage-card.coming-soon { opacity: 0.55; cursor: default; }
+
+  .stage-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 24px;
+  }
+  .stage-icon-teal { background: var(--teal-pale); }
+  .stage-icon-salmon { background: var(--salmon-pale); }
+  .stage-icon-amber { background: #FEF3E2; }
+  .stage-icon-lavender { background: #F3F0FF; }
+  .stage-icon-rose { background: #FFF0F3; }
+
+  .stage-text { flex: 1; }
+  .stage-name { font-weight: 600; font-size: 16px; margin-bottom: 3px; }
+  .stage-desc { font-size: 13px; color: var(--text-light); line-height: 1.4; }
+  .stage-arrow { color: var(--text-light); }
+  .stage-badge {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    background: var(--teal-pale);
+    color: var(--teal);
+    padding: 3px 8px;
+    border-radius: 8px;
+  }
+  .stage-badge.soon { background: #F3F4F6; color: var(--text-light); }
+
+  /* ════════════════════════════════════════
+     SCREEN 3 — PREGNANCY ASSESSMENT
+  ════════════════════════════════════════ */
+  .assessment-progress {
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    margin: 0 24px 0;
+    overflow: hidden;
+  }
+  .assessment-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--teal), var(--teal-light));
+    border-radius: 2px;
+    transition: width 0.4s ease;
+  }
+
+  .assessment-step {
+    display: none;
+    flex-direction: column;
+    flex: 1;
+    padding: 24px 24px 32px;
+    animation: fadeUp 0.3s ease forwards;
+  }
+  .assessment-step.active { display: flex; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+  .step-num { font-size: 12px; font-weight: 600; color: var(--text-light); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+  .step-title { font-family: var(--font-display); font-size: 24px; line-height: 1.25; margin-bottom: 8px; }
+  .step-body { font-size: 14px; color: var(--text-mid); margin-bottom: 28px; line-height: 1.55; }
+
+  .trimester-options { display: flex; gap: 10px; margin-bottom: 24px; }
+  .tri-btn {
+    flex: 1;
+    padding: 16px 10px;
+    border-radius: 16px;
+    border: 1.5px solid var(--border);
+    background: white;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s;
+    font-family: var(--font-body);
+  }
+  .tri-btn .tri-num { font-family: var(--font-display); font-size: 28px; color: var(--teal); }
+  .tri-btn .tri-label { font-size: 11px; color: var(--text-light); margin-top: 4px; font-weight: 500; }
+  .tri-btn .tri-weeks { font-size: 10px; color: var(--text-light); margin-top: 2px; }
+  .tri-btn.selected, .tri-btn:active { border-color: var(--teal); background: var(--teal-pale); box-shadow: 0 0 0 3px rgba(46,125,125,0.1); }
+  .tri-btn.selected .tri-label, .tri-btn.selected .tri-weeks { color: var(--teal); }
+
+  .symptom-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+  .symptom-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 18px;
+    background: white;
+    border-radius: 14px;
+    border: 1.5px solid var(--border);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .symptom-item.checked { border-color: var(--teal); background: var(--teal-pale); }
+  .symptom-check {
+    width: 22px;
+    height: 22px;
+    border-radius: 7px;
+    border: 1.5px solid var(--border);
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+  .symptom-item.checked .symptom-check { background: var(--teal); border-color: var(--teal); }
+  .symptom-icon { font-size: 20px; }
+  .symptom-text { flex: 1; }
+  .symptom-name { font-size: 15px; font-weight: 500; }
+  .symptom-sub { font-size: 12px; color: var(--text-light); margin-top: 2px; }
+
+  .dental-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+  .dental-opt {
+    padding: 16px 18px;
+    border-radius: 14px;
+    border: 1.5px solid var(--border);
+    background: white;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 400;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--text);
+  }
+  .dental-opt.selected { border-color: var(--teal); background: var(--teal-pale); color: var(--teal); font-weight: 500; }
+  .dental-opt-dot {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+  .dental-opt.selected .dental-opt-dot { border-color: var(--teal); background: var(--teal); }
+  .dental-opt.selected .dental-opt-dot::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: white; }
+
+  .step-footer { margin-top: auto; display: flex; flex-direction: column; gap: 10px; }
+
+  /* ════════════════════════════════════════
+     SCREEN 4 — DASHBOARD
+  ════════════════════════════════════════ */
+  .dashboard-header {
+    padding: 54px 24px 20px;
+    background: linear-gradient(170deg, var(--teal) 0%, #3A9A9A 100%);
+    color: white;
+    border-radius: 0 0 32px 32px;
+    flex-shrink: 0;
+  }
+  .dash-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
+  .dash-greeting { font-size: 14px; color: rgba(255,255,255,0.65); margin-bottom: 4px; font-weight: 300; }
+  .dash-name { font-family: var(--font-display); font-size: 24px; color: white; }
+  .notif-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .notif-dot {
+    position: absolute;
+    top: 8px; right: 9px;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--salmon);
+    border: 2px solid var(--teal);
+  }
+
+  .health-score-card {
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 22px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .score-ring-wrap { position: relative; width: 88px; height: 88px; flex-shrink: 0; }
+  .score-ring-wrap svg { transform: rotate(-90deg); }
+  .score-ring-bg { fill: none; stroke: rgba(255,255,255,0.2); stroke-width: 8; }
+  .score-ring-fill { fill: none; stroke: white; stroke-width: 8; stroke-linecap: round; transition: stroke-dashoffset 1.2s ease; }
+  .score-ring-fill.good { stroke: #7DECD4; }
+  .score-ring-fill.warn { stroke: var(--salmon-light); }
+  .score-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .score-num { font-family: var(--font-display); font-size: 26px; color: white; line-height: 1; }
+  .score-label { font-size: 9px; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.5px; }
+
+  .score-details { flex: 1; color: white; }
+  .score-title { font-size: 13px; color: rgba(255,255,255,0.6); margin-bottom: 4px; font-weight: 400; }
+  .score-status { font-size: 18px; font-weight: 600; margin-bottom: 10px; }
+  .score-metrics { display: flex; gap: 8px; flex-wrap: wrap; }
+  .metric-pill {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(255,255,255,0.12);
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 11px;
+    color: rgba(255,255,255,0.8);
+  }
+  .metric-dot { width: 6px; height: 6px; border-radius: 50%; }
+
+  .dashboard-body { flex: 1; padding: 20px 24px 0; }
+
+  .section-title {
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 14px;
+    letter-spacing: -0.2px;
+  }
+
+  .quick-actions { display: flex; gap: 10px; margin-bottom: 28px; }
+  .quick-action {
+    flex: 1;
+    background: white;
+    border-radius: var(--r-md);
+    padding: 16px 14px;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.2s;
+    border: none;
+    font-family: var(--font-body);
+  }
+  .quick-action:active { transform: scale(0.96); box-shadow: var(--shadow-md); }
+  .qa-icon { font-size: 26px; margin-bottom: 8px; }
+  .qa-label { font-size: 12px; font-weight: 600; color: var(--text); }
+  .qa-sub { font-size: 10px; color: var(--text-light); margin-top: 2px; }
+
+  .tip-cards { display: flex; flex-direction: column; gap: 12px; margin-bottom: 28px; }
+  .tip-card {
+    background: white;
+    border-radius: var(--r-md);
+    padding: 18px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    box-shadow: var(--shadow-sm);
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    text-align: left;
+    width: 100%;
+    font-family: var(--font-body);
+  }
+  .tip-card:active { box-shadow: var(--shadow-md); transform: translateY(-1px); }
+  .tip-icon-wrap {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .tip-content { flex: 1; }
+  .tip-label { font-size: 10px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 4px; }
+  .tip-title { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+  .tip-body { font-size: 12px; color: var(--text-light); line-height: 1.5; }
+
+  .symptom-log {
+    background: white;
+    border-radius: var(--r-lg);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    margin-bottom: 28px;
+  }
+  .symptom-log-header { padding: 16px 18px 12px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+  .symptom-log-title { font-size: 15px; font-weight: 600; }
+  .see-all { font-size: 13px; color: var(--teal); font-weight: 600; background: none; border: none; cursor: pointer; font-family: var(--font-body); }
+  .symptom-row { padding: 13px 18px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--border); }
+  .symptom-row:last-child { border-bottom: none; }
+  .symptom-row-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .symptom-row-text { flex: 1; font-size: 14px; color: var(--text); }
+  .symptom-row-date { font-size: 12px; color: var(--text-light); }
+
+  /* ════════════════════════════════════════
+     SCREEN 5 — SCAN INSTRUCTIONS
+  ════════════════════════════════════════ */
+  .scan-hero {
+    background: linear-gradient(170deg, #1A5C5C 0%, var(--teal) 100%);
+    padding: 54px 24px 32px;
+    text-align: center;
+    color: white;
+    flex-shrink: 0;
+    border-radius: 0 0 36px 36px;
+  }
+  .scan-hero-title { font-family: var(--font-display); font-size: 28px; color: white; margin-bottom: 10px; }
+  .scan-hero-sub { font-size: 15px; color: rgba(255,255,255,0.7); font-weight: 300; max-width: 260px; margin: 0 auto; }
+
+  .scan-phone-preview {
+    width: 160px;
+    height: 200px;
+    margin: 24px auto;
+    position: relative;
+  }
+
+  .scan-steps { padding: 24px 24px 0; flex: 1; }
+  .scan-step-item {
+    display: flex;
+    gap: 16px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: flex-start;
+  }
+  .scan-step-item:last-child { border-bottom: none; }
+  .step-bubble {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--teal-pale);
+    color: var(--teal);
+    font-weight: 700;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .scan-step-content { flex: 1; padding-top: 4px; }
+  .scan-step-title { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+  .scan-step-body { font-size: 13px; color: var(--text-light); line-height: 1.5; }
+
+  .scan-warning {
+    margin: 20px 24px;
+    padding: 14px 16px;
+    background: #FEF3E2;
+    border-radius: 14px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .scan-warning-text { font-size: 13px; color: #92400E; line-height: 1.5; }
+  .scan-footer { padding: 16px 24px 32px; flex-shrink: 0; }
+
+  /* ════════════════════════════════════════
+     SCREEN 6 — AI SCAN RESULTS
+  ════════════════════════════════════════ */
+  .results-header {
+    padding: 54px 24px 24px;
+    flex-shrink: 0;
+  }
+  .results-chip-row { display: flex; gap: 8px; margin: 16px 0 0; flex-wrap: wrap; }
+
+  .scan-result-image {
+    margin: 0 24px;
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .result-metrics {
+    padding: 20px 24px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .metric-card {
+    background: white;
+    border-radius: var(--r-md);
+    padding: 18px;
+    box-shadow: var(--shadow-sm);
+  }
+  .metric-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .metric-name { font-size: 14px; font-weight: 600; }
+  .metric-score { font-family: var(--font-display); font-size: 22px; }
+  .metric-bar { height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; margin-bottom: 8px; }
+  .metric-bar-fill { height: 100%; border-radius: 4px; transition: width 1s ease; }
+  .bar-good { background: linear-gradient(90deg, #34D399, #10B981); }
+  .bar-warn { background: linear-gradient(90deg, #FCD34D, #F59E0B); }
+  .bar-poor { background: linear-gradient(90deg, var(--salmon-light), var(--salmon)); }
+  .metric-desc { font-size: 12px; color: var(--text-light); line-height: 1.5; }
+
+  .ai-note {
+    margin: 16px 24px 24px;
+    padding: 16px;
+    background: var(--teal-pale);
+    border-radius: var(--r-md);
+    display: flex;
+    gap: 12px;
+  }
+  .ai-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--teal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .ai-note-content { flex: 1; }
+  .ai-note-from { font-size: 11px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: var(--teal); margin-bottom: 4px; }
+  .ai-note-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+
+  .results-footer { padding: 0 24px 32px; flex-shrink: 0; display: flex; flex-direction: column; gap: 10px; }
+
+  /* ════════════════════════════════════════
+     SCREEN 7 — RECOMMENDATIONS
+  ════════════════════════════════════════ */
+  .recs-header {
+    padding: 54px 24px 20px;
+    flex-shrink: 0;
+  }
+  .recs-summary {
+    margin: 0 24px 20px;
+    background: linear-gradient(135deg, var(--teal), #3A9A9A);
+    border-radius: var(--r-lg);
+    padding: 20px;
+    color: white;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+  .recs-summary-text { flex: 1; }
+  .recs-summary-label { font-size: 12px; color: rgba(255,255,255,0.65); margin-bottom: 4px; font-weight: 400; text-transform: uppercase; letter-spacing: 0.8px; }
+  .recs-summary-title { font-family: var(--font-display); font-size: 20px; line-height: 1.3; }
+  .recs-summary-count { font-size: 13px; color: rgba(255,255,255,0.65); margin-top: 6px; }
+
+  .recs-filter { padding: 0 24px 16px; display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; flex-shrink: 0; }
+  .recs-filter::-webkit-scrollbar { display: none; }
+  .filter-pill {
+    padding: 7px 14px;
+    border-radius: 20px;
+    border: 1.5px solid var(--border);
+    background: white;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-mid);
+    cursor: pointer;
+    white-space: nowrap;
+    font-family: var(--font-body);
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+  .filter-pill.active { background: var(--teal); border-color: var(--teal); color: white; }
+
+  .recs-list { padding: 0 24px 32px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+  .rec-card {
+    background: white;
+    border-radius: var(--r-md);
+    padding: 18px;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    gap: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-left: 3px solid transparent;
+  }
+  .rec-card:active { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+  .rec-card.priority-high { border-left-color: var(--salmon); }
+  .rec-card.priority-medium { border-left-color: #F59E0B; }
+  .rec-card.priority-low { border-left-color: var(--teal); }
+  .rec-icon-wrap {
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+  .rec-content { flex: 1; }
+  .rec-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
+  .rec-priority { font-size: 10px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase; }
+  .rec-time { font-size: 11px; color: var(--text-light); }
+  .rec-title { font-size: 15px; font-weight: 600; margin-bottom: 5px; }
+  .rec-body { font-size: 12px; color: var(--text-light); line-height: 1.55; }
+  .rec-tags { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+  .rec-tag {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+
+  /* ════════════════════════════════════════
+     UTILITIES
+  ════════════════════════════════════════ */
+  .spacer { flex: 1; }
+  .divider { height: 1px; background: var(--border); margin: 0; }
+  .mt-auto { margin-top: auto; }
+  .pb-safe { padding-bottom: 32px; }
+
+  /* Ring animation on load */
+  @keyframes ringDraw {
+    from { stroke-dashoffset: 245; }
+    to { stroke-dashoffset: var(--target-offset); }
+  }
+  .score-ring-fill { animation: ringDraw 1.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both; }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- ════ STATUS BAR (shared) ════ -->
+  <div class="status-bar" id="statusBar">
+    <span class="time">9:41</span>
+    <div class="icons">
+      <svg viewBox="0 0 16 12" fill="none"><rect x="0" y="3" width="3" height="9" rx="1" fill="currentColor"/><rect x="4.5" y="2" width="3" height="10" rx="1" fill="currentColor" opacity="0.4"/><rect x="9" y="0" width="3" height="12" rx="1" fill="currentColor" opacity="0.3"/><rect x="13.5" y="0" width="2.5" height="12" rx="1" fill="currentColor" opacity="0.2"/></svg>
+      <svg viewBox="0 0 16 12" fill="none"><path d="M8 2.5C10.5 2.5 12.7 3.5 14.2 5.2L15.5 3.7C13.6 1.4 10.9 0 8 0C5.1 0 2.4 1.4 0.5 3.7L1.8 5.2C3.3 3.5 5.5 2.5 8 2.5Z" fill="currentColor"/><path d="M8 5.5C9.7 5.5 11.2 6.2 12.3 7.3L13.6 5.8C12.1 4.3 10.1 3.5 8 3.5C5.9 3.5 3.9 4.3 2.4 5.8L3.7 7.3C4.8 6.2 6.3 5.5 8 5.5Z" fill="currentColor" opacity="0.7"/><circle cx="8" cy="10" r="2" fill="currentColor"/></svg>
+      <svg viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="currentColor" stroke-opacity="0.35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="currentColor"/><path d="M23 4.5V7.5C23.8 7.2 24.5 6.5 24.5 6C24.5 5.5 23.8 4.8 23 4.5Z" fill="currentColor" opacity="0.4"/></svg>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════
+       SCREEN 1: WELCOME
+  ════════════════════════════ -->
+  <div class="screen active" id="screen-welcome">
+    <div class="welcome-orb"></div>
+    <div class="welcome-orb-2"></div>
+    <div class="welcome-content">
+      <div class="welcome-logo">
+        <div style="background: rgba(255,255,255,0.92); border-radius: 20px; padding: 10px 18px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.5);">
+          <img src="assets/OraCare-02.png" alt="OraCare" style="height: 44px; width: auto; display: block;">
+        </div>
+      </div>
+
+      <div class="welcome-hero">
+        <p class="welcome-tagline">Women's Oral Health</p>
+        <h1 class="welcome-title">Your smile,<br><em>understood.</em></h1>
+        <p class="welcome-body">Hormonal changes affect your oral health in ways no one tells you about. OraCare helps you track, understand, and protect your smile.</p>
+
+        <div class="welcome-stats">
+          <div class="stat-pill">
+            <div class="stat-num">80%</div>
+            <div class="stat-label">of pregnant women experience gum changes</div>
+          </div>
+          <div class="stat-pill">
+            <div class="stat-num">1 in 3</div>
+            <div class="stat-label">women notice dental sensitivity changes</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="welcome-cta">
+        <button class="btn-welcome-primary" onclick="navigate('screen-life-stage', 'forward')">Get Started — It's Free</button>
+        <button class="btn-welcome-secondary" onclick="navigate('screen-dashboard', 'forward')">I already have an account</button>
+      </div>
+      <p class="welcome-footer">By continuing you agree to our Terms of Service and Privacy Policy.<br>Your health data is encrypted and never sold.</p>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════
+       SCREEN 2: LIFE STAGE
+  ════════════════════════════ -->
+  <div class="screen" id="screen-life-stage">
+    <div class="screen-header">
+      <div class="nav-row">
+        <button class="back-btn" onclick="navigate('screen-welcome', 'back')">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M11 14L6 9L11 4" stroke="#2F3133" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="life-stage-intro" style="padding: 0 24px 8px;">
+      <p class="label" style="margin-bottom: 8px;">Step 1 of 3</p>
+      <h2 class="heading">Where are you in your journey?</h2>
+      <p class="body" style="margin-top: 8px;">OraCare personalizes guidance based on your hormonal life stage.</p>
+    </div>
+
+    <div class="stages-grid">
+      <div class="stage-card coming-soon">
+        <div class="stage-icon stage-icon-lavender">🌸</div>
+        <div class="stage-text">
+          <div class="stage-name">Puberty</div>
+          <div class="stage-desc">Ages 10–18 • Hormonal onset changes</div>
+        </div>
+        <span class="stage-badge soon">Soon</span>
+      </div>
+
+      <div class="stage-card pregnancy-card" onclick="navigate('screen-assessment', 'forward')">
+        <div class="stage-icon stage-icon-teal">🤰</div>
+        <div class="stage-text">
+          <div class="stage-name" style="color: var(--teal);">Pregnancy</div>
+          <div class="stage-desc">Trimester-specific oral health guidance</div>
+        </div>
+        <span class="stage-badge">Active</span>
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" class="stage-arrow" style="color: var(--teal)"><path d="M8 5L13 10L8 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+
+      <div class="stage-card coming-soon">
+        <div class="stage-icon stage-icon-salmon">👶</div>
+        <div class="stage-text">
+          <div class="stage-name">Postpartum</div>
+          <div class="stage-desc">Recovery & nursing period changes</div>
+        </div>
+        <span class="stage-badge soon">Soon</span>
+      </div>
+
+      <div class="stage-card coming-soon">
+        <div class="stage-icon stage-icon-amber">🌿</div>
+        <div class="stage-text">
+          <div class="stage-name">Perimenopause</div>
+          <div class="stage-desc">Transitional hormonal fluctuations</div>
+        </div>
+        <span class="stage-badge soon">Soon</span>
+      </div>
+
+      <div class="stage-card coming-soon">
+        <div class="stage-icon stage-icon-rose">🌺</div>
+        <div class="stage-text">
+          <div class="stage-name">Menopause</div>
+          <div class="stage-desc">Estrogen decline oral impacts</div>
+        </div>
+        <span class="stage-badge soon">Soon</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════
+       SCREEN 3: ASSESSMENT
+  ════════════════════════════ -->
+  <div class="screen" id="screen-assessment">
+    <div class="screen-header">
+      <div class="nav-row">
+        <button class="back-btn" onclick="navigate('screen-life-stage', 'back')">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M11 14L6 9L11 4" stroke="#2F3133" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div style="flex:1; text-align: center;">
+          <span class="label">Pregnancy Assessment</span>
+        </div>
+        <div style="width:40px;"></div>
+      </div>
+      <div class="assessment-progress">
+        <div class="assessment-progress-fill" id="assessProgress" style="width: 33%;"></div>
+      </div>
+    </div>
+
+    <!-- Step 1: Trimester -->
+    <div class="assessment-step active" id="astep-1">
+      <p class="step-num">Question 1 of 3</p>
+      <h2 class="step-title">Which trimester are you in?</h2>
+      <p class="step-body">Your trimester affects which oral health symptoms are most common and what care your body needs most.</p>
+      <div class="trimester-options">
+        <button class="tri-btn" onclick="selectTrimester(this, 1)">
+          <div class="tri-num">1st</div>
+          <div class="tri-label">Trimester</div>
+          <div class="tri-weeks">Weeks 1–12</div>
+        </button>
+        <button class="tri-btn selected" onclick="selectTrimester(this, 2)">
+          <div class="tri-num">2nd</div>
+          <div class="tri-label">Trimester</div>
+          <div class="tri-weeks">Weeks 13–26</div>
+        </button>
+        <button class="tri-btn" onclick="selectTrimester(this, 3)">
+          <div class="tri-num">3rd</div>
+          <div class="tri-label">Trimester</div>
+          <div class="tri-weeks">Weeks 27–40</div>
+        </button>
+      </div>
+      <div class="step-footer">
+        <button class="btn-primary" onclick="goAssessStep(2)">Continue</button>
+      </div>
+    </div>
+
+    <!-- Step 2: Symptoms -->
+    <div class="assessment-step" id="astep-2">
+      <p class="step-num">Question 2 of 3</p>
+      <h2 class="step-title">Are you experiencing any of these?</h2>
+      <p class="step-body">Select all symptoms that apply. This helps us personalize your care plan.</p>
+      <div class="symptom-list">
+        <div class="symptom-item checked" onclick="toggleSymptom(this)">
+          <div class="symptom-check"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="symptom-icon">🩸</span>
+          <div class="symptom-text">
+            <div class="symptom-name">Bleeding gums</div>
+            <div class="symptom-sub">When brushing or flossing</div>
+          </div>
+        </div>
+        <div class="symptom-item" onclick="toggleSymptom(this)">
+          <div class="symptom-check"></div>
+          <span class="symptom-icon">❄️</span>
+          <div class="symptom-text">
+            <div class="symptom-name">Tooth sensitivity</div>
+            <div class="symptom-sub">To hot, cold, or sweet foods</div>
+          </div>
+        </div>
+        <div class="symptom-item checked" onclick="toggleSymptom(this)">
+          <div class="symptom-check"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="symptom-icon">💧</span>
+          <div class="symptom-text">
+            <div class="symptom-name">Dry mouth</div>
+            <div class="symptom-sub">Reduced saliva production</div>
+          </div>
+        </div>
+        <div class="symptom-item" onclick="toggleSymptom(this)">
+          <div class="symptom-check"></div>
+          <span class="symptom-icon">😬</span>
+          <div class="symptom-text">
+            <div class="symptom-name">Gum swelling</div>
+            <div class="symptom-sub">Puffy or tender gums</div>
+          </div>
+        </div>
+        <div class="symptom-item" onclick="toggleSymptom(this)">
+          <div class="symptom-check"></div>
+          <span class="symptom-icon">🤢</span>
+          <div class="symptom-text">
+            <div class="symptom-name">Morning sickness effects</div>
+            <div class="symptom-sub">Tooth erosion from acid exposure</div>
+          </div>
+        </div>
+      </div>
+      <div class="step-footer">
+        <button class="btn-primary" onclick="goAssessStep(3)">Continue</button>
+        <button class="btn-ghost" style="align-self: center;" onclick="goAssessStep(3)">None of these apply</button>
+      </div>
+    </div>
+
+    <!-- Step 3: Dental history -->
+    <div class="assessment-step" id="astep-3">
+      <p class="step-num">Question 3 of 3</p>
+      <h2 class="step-title">When did you last visit a dentist?</h2>
+      <p class="step-body">The ADA recommends two dental cleanings during pregnancy. Regular check-ups are safe and important.</p>
+      <div class="dental-options">
+        <button class="dental-opt" onclick="selectDental(this)">
+          <span class="dental-opt-dot"></span>Within the last 3 months
+        </button>
+        <button class="dental-opt selected" onclick="selectDental(this)">
+          <span class="dental-opt-dot"></span>3–6 months ago
+        </button>
+        <button class="dental-opt" onclick="selectDental(this)">
+          <span class="dental-opt-dot"></span>6–12 months ago
+        </button>
+        <button class="dental-opt" onclick="selectDental(this)">
+          <span class="dental-opt-dot"></span>More than a year ago
+        </button>
+        <button class="dental-opt" onclick="selectDental(this)">
+          <span class="dental-opt-dot"></span>I haven't been yet during pregnancy
+        </button>
+      </div>
+      <div class="step-footer">
+        <button class="btn-primary" onclick="navigate('screen-dashboard', 'forward')">Build My Care Plan</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════
+       SCREEN 4: DASHBOARD
+  ════════════════════════════ -->
+  <div class="screen" id="screen-dashboard">
+    <div class="dashboard-header">
+      <div class="dash-top">
+        <div>
+          <div class="dash-greeting">Good morning,</div>
+          <div class="dash-name">Week 18 · 2nd Trimester</div>
+        </div>
+        <button class="notif-btn">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2C10 2 7 4.5 7 9.5V12.5L5.5 14H14.5L13 12.5V9.5C13 4.5 10 2 10 2Z" stroke="white" stroke-width="1.5" stroke-linejoin="round"/><path d="M8 14C8 15.1 8.9 16 10 16C11.1 16 12 15.1 12 14" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <span class="notif-dot"></span>
+        </button>
+      </div>
+
+      <div class="health-score-card">
+        <div class="score-ring-wrap">
+          <svg width="88" height="88" viewBox="0 0 88 88">
+            <circle class="score-ring-bg" cx="44" cy="44" r="36"/>
+            <circle class="score-ring-fill good" cx="44" cy="44" r="36"
+              stroke-dasharray="226"
+              stroke-dashoffset="68"
+              style="--target-offset: 68;"/>
+          </svg>
+          <div class="score-center">
+            <span class="score-num">72</span>
+            <span class="score-label">Score</span>
+          </div>
+        </div>
+        <div class="score-details">
+          <div class="score-title">Oral Health Score</div>
+          <div class="score-status">Good — Improving</div>
+          <div class="score-metrics">
+            <span class="metric-pill"><span class="metric-dot" style="background:#7DECD4;"></span>Gums Fair</span>
+            <span class="metric-pill"><span class="metric-dot" style="background:var(--salmon-light);"></span>Sensitivity</span>
+            <span class="metric-pill"><span class="metric-dot" style="background:#FCD34D;"></span>Dry Mouth</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dashboard-body">
+      <div class="section-title" style="margin-top: 24px;">Quick Actions</div>
+      <div class="quick-actions">
+        <button class="quick-action" onclick="navigate('screen-scan-instructions', 'forward')">
+          <div class="qa-icon">📷</div>
+          <div class="qa-label">Scan</div>
+          <div class="qa-sub">Take a scan</div>
+        </button>
+        <button class="quick-action" onclick="navigate('screen-recommendations', 'forward')">
+          <div class="qa-icon">✨</div>
+          <div class="qa-label">Care Plan</div>
+          <div class="qa-sub">7 actions</div>
+        </button>
+        <button class="quick-action">
+          <div class="qa-icon">📅</div>
+          <div class="qa-label">Log</div>
+          <div class="qa-sub">Daily check-in</div>
+        </button>
+        <button class="quick-action">
+          <div class="qa-icon">💬</div>
+          <div class="qa-label">Ask AI</div>
+          <div class="qa-sub">Chat now</div>
+        </button>
+      </div>
+
+      <div class="section-title">For Your Trimester</div>
+      <div class="tip-cards">
+        <button class="tip-card" onclick="navigate('screen-recommendations', 'forward')">
+          <div class="tip-icon-wrap" style="background: var(--salmon-pale);">🩸</div>
+          <div class="tip-content">
+            <div class="tip-label" style="color: var(--salmon);">Attention Needed</div>
+            <div class="tip-title">Pregnancy Gingivitis Risk</div>
+            <div class="tip-body">Elevated progesterone increases inflammation. 2nd trimester is peak risk. See your tip plan.</div>
+          </div>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="color: var(--text-light); flex-shrink:0; margin-top:2px;"><path d="M6 4L10 8L6 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="tip-card" onclick="navigate('screen-scan-instructions', 'forward')">
+          <div class="tip-icon-wrap" style="background: var(--teal-pale);">🔬</div>
+          <div class="tip-content">
+            <div class="tip-label" style="color: var(--teal);">New Feature</div>
+            <div class="tip-title">AI Gum Health Scan</div>
+            <div class="tip-body">Take a quick photo for an instant AI assessment of your gum color, inflammation, and more.</div>
+          </div>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="color: var(--text-light); flex-shrink:0; margin-top:2px;"><path d="M6 4L10 8L6 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+
+      <div class="section-title">Recent Symptoms</div>
+      <div class="symptom-log">
+        <div class="symptom-log-header">
+          <span class="symptom-log-title">Symptom Tracker</span>
+          <button class="see-all">See all</button>
+        </div>
+        <div class="symptom-row">
+          <div class="symptom-row-dot" style="background: var(--salmon);"></div>
+          <div class="symptom-row-text">Bleeding gums while brushing</div>
+          <div class="symptom-row-date">Today</div>
+        </div>
+        <div class="symptom-row">
+          <div class="symptom-row-dot" style="background: #FCD34D;"></div>
+          <div class="symptom-row-text">Dry mouth (moderate)</div>
+          <div class="symptom-row-date">Yesterday</div>
+        </div>
+        <div class="symptom-row">
+          <div class="symptom-row-dot" style="background: var(--teal-light);"></div>
+          <div class="symptom-row-text">No symptoms reported</div>
+          <div class="symptom-row-date">Jun 5</div>
+        </div>
+      </div>
+
+      <div style="background: var(--teal-pale); border-radius: var(--r-md); padding: 16px 18px; margin-bottom: 28px; display: flex; gap: 12px; align-items: center;">
+        <span style="font-size: 24px;">🦷</span>
+        <div>
+          <div style="font-size: 14px; font-weight: 600; margin-bottom: 3px;">Next Dental Visit</div>
+          <div style="font-size: 13px; color: var(--text-mid);">Schedule your 2nd trimester cleaning — recommended by Week 22.</div>
+        </div>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="color: var(--teal); flex-shrink:0;"><path d="M6 4L10 8L6 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </div>
+
+    <div class="bottom-nav">
+      <button class="nav-item active" onclick="navigate('screen-dashboard', 'forward')">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 9.5L11 3L19 9.5V19C19 19.6 18.6 20 18 20H14V15H8V20H4C3.4 20 3 19.6 3 19V9.5Z" stroke="#2E7D7D" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        <span>Home</span>
+      </button>
+      <button class="nav-item" onclick="navigate('screen-scan-instructions', 'forward')">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="3" y="5" width="16" height="13" rx="2" stroke="#9EA4A8" stroke-width="1.6"/><circle cx="11" cy="11.5" r="3" stroke="#9EA4A8" stroke-width="1.6"/><path d="M8 5V4C8 3.4 8.4 3 9 3H13C13.6 3 14 3.4 14 4V5" stroke="#9EA4A8" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <span>Scan</span>
+      </button>
+      <button class="nav-item" onclick="navigate('screen-recommendations', 'forward')">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M7 11H15M7 7H15M7 15H11" stroke="#9EA4A8" stroke-width="1.6" stroke-linecap="round"/><rect x="3" y="3" width="16" height="16" rx="3" stroke="#9EA4A8" stroke-width="1.6"/></svg>
+        <span>Plan</span>
+      </button>
+      <button class="nav-item">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="8" r="4" stroke="#9EA4A8" stroke-width="1.6"/><path d="M4 19C4 15.7 7.1 13 11 13C14.9 13 18 15.7 18 19" stroke="#9EA4A8" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <span>Profile</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════
+       SCREEN 5: SCAN INSTRUCTIONS
+  ════════════════════════════ -->
+  <div class="screen" id="screen-scan-instructions">
+    <div class="scan-hero">
+      <div class="nav-row" style="justify-content: flex-start; margin-bottom: 16px;">
+        <button class="back-btn" style="background: rgba(255,255,255,0.15); box-shadow: none;" onclick="navigate('screen-dashboard', 'back')">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M11 14L6 9L11 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+
+      <!-- Phone + mouth SVG illustration -->
+      <svg width="160" height="160" viewBox="0 0 160 160" fill="none" style="margin: 0 auto; display: block;">
+        <!-- Phone body -->
+        <rect x="50" y="20" width="60" height="110" rx="12" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+        <!-- Screen -->
+        <rect x="55" y="30" width="50" height="88" rx="6" fill="rgba(255,255,255,0.08)"/>
+        <!-- Mouth scan area -->
+        <rect x="60" y="45" width="40" height="40" rx="6" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" stroke-dasharray="4 2"/>
+        <!-- Teeth illustration in scan area -->
+        <rect x="63" y="55" width="9" height="14" rx="3" fill="white" opacity="0.85"/>
+        <rect x="74" y="53" width="11" height="16" rx="3" fill="white" opacity="0.9"/>
+        <rect x="87" y="55" width="9" height="14" rx="3" fill="white" opacity="0.85"/>
+        <!-- Gum line -->
+        <path d="M63 55 Q67 51 74 53 Q79 51 87 53 Q93 51 96 55" stroke="var(--salmon-light)" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.8"/>
+        <!-- Scan line -->
+        <line x1="60" y1="69" x2="100" y2="69" stroke="#7DECD4" stroke-width="1.5" stroke-dasharray="3 2" opacity="0.8"/>
+        <!-- Camera button -->
+        <circle cx="80" cy="108" r="10" fill="rgba(255,255,255,0.25)" stroke="rgba(255,255,255,0.6)" stroke-width="1.5"/>
+        <circle cx="80" cy="108" r="6" fill="white" opacity="0.8"/>
+        <!-- Corner marks -->
+        <path d="M61 46 L61 50 M61 46 L65 46" stroke="#7DECD4" stroke-width="2" stroke-linecap="round"/>
+        <path d="M99 46 L99 50 M99 46 L95 46" stroke="#7DECD4" stroke-width="2" stroke-linecap="round"/>
+        <path d="M61 84 L61 80 M61 84 L65 84" stroke="#7DECD4" stroke-width="2" stroke-linecap="round"/>
+        <path d="M99 84 L99 80 M99 84 L95 84" stroke="#7DECD4" stroke-width="2" stroke-linecap="round"/>
+        <!-- AI sparkle -->
+        <circle cx="126" cy="48" r="18" fill="rgba(232,140,125,0.2)"/>
+        <path d="M126 40 L127.5 45 L132 44 L128.5 47 L130 52 L126 49 L122 52 L123.5 47 L120 44 L124.5 45 Z" fill="white" opacity="0.9"/>
+      </svg>
+
+      <h1 class="scan-hero-title">AI Oral Health Scan</h1>
+      <p class="scan-hero-sub">A 30-second photo scan powered by AI. No special equipment needed.</p>
+    </div>
+
+    <div class="scan-steps">
+      <div class="scan-step-item">
+        <div class="step-bubble">1</div>
+        <div class="scan-step-content">
+          <div class="scan-step-title">Find good lighting</div>
+          <div class="scan-step-body">Stand near a bright light source or turn on your overhead light. Avoid backlighting from windows.</div>
+        </div>
+      </div>
+      <div class="scan-step-item">
+        <div class="step-bubble">2</div>
+        <div class="scan-step-content">
+          <div class="scan-step-title">Hold phone 8–10 inches away</div>
+          <div class="scan-step-body">Prop your phone or have someone hold it. Position so your full smile and gum line are visible in frame.</div>
+        </div>
+      </div>
+      <div class="scan-step-item">
+        <div class="step-bubble">3</div>
+        <div class="scan-step-content">
+          <div class="scan-step-title">Open wide and smile</div>
+          <div class="scan-step-body">Pull lips back to expose your teeth and gums. The AI analyzes gum color, texture, and inflammation markers.</div>
+        </div>
+      </div>
+      <div class="scan-step-item">
+        <div class="step-bubble">4</div>
+        <div class="scan-step-content">
+          <div class="scan-step-title">Keep still and tap capture</div>
+          <div class="scan-step-body">Hold steady for 2 seconds while the AI captures and processes your image.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="scan-warning">
+      <span style="font-size: 18px; flex-shrink: 0;">⚠️</span>
+      <div class="scan-warning-text"><strong>Medical disclaimer:</strong> OraCare AI scans provide health monitoring support only and do not replace professional dental diagnosis. Always consult your dentist for clinical evaluation.</div>
+    </div>
+
+    <div class="scan-footer">
+      <button class="btn-primary" onclick="navigate('screen-scan-results', 'forward')" style="background: linear-gradient(135deg, var(--teal), #3A9A9A);">
+        Start Scan
+      </button>
+      <button class="btn-secondary" style="margin-top: 10px;" onclick="navigate('screen-dashboard', 'back')">Skip for now</button>
+    </div>
+
+    <div class="bottom-nav">
+      <button class="nav-item" onclick="navigate('screen-dashboard', 'back')">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 9.5L11 3L19 9.5V19C19 19.6 18.6 20 18 20H14V15H8V20H4C3.4 20 3 19.6 3 19V9.5Z" stroke="#9EA4A8" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        <span>Home</span>
+      </button>
+      <button class="nav-item active">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="3" y="5" width="16" height="13" rx="2" stroke="#2E7D7D" stroke-width="1.6"/><circle cx="11" cy="11.5" r="3" stroke="#2E7D7D" stroke-width="1.6"/><path d="M8 5V4C8 3.4 8.4 3 9 3H13C13.6 3 14 3.4 14 4V5" stroke="#2E7D7D" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <span>Scan</span>
+      </button>
+      <button class="nav-item" onclick="navigate('screen-recommendations', 'forward')">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M7 11H15M7 7H15M7 15H11" stroke="#9EA4A8" stroke-width="1.6" stroke-linecap="round"/><rect x="3" y="3" width="16" height="16" rx="3" stroke="#9EA4A8" stroke-width="1.6"/></svg>
+        <span>Plan</span>
+      </button>
+      <button class="nav-item">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="8" r="4" stroke="#9EA4A8" stroke-width="1.6"/><path d="M4 19C4 15.7 7.1 13 11 13C14.9 13 18 15.7 18 19" stroke="#9EA4A8" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <span>Profile</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════
+       SCREEN 6: AI SCAN RESULTS
+  ════════════════════════════ -->
+  <div class="screen" id="screen-scan-results">
+    <div class="results-header">
+      <div class="nav-row">
+        <button class="back-btn" onclick="navigate('screen-scan-instructions', 'back')">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M11 14L6 9L11 4" stroke="#2F3133" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div style="flex: 1; text-align: center;">
+          <span style="font-size: 16px; font-weight: 600;">Scan Results</span>
+        </div>
+        <button style="background: none; border: none; cursor: pointer; font-size: 14px; color: var(--teal); font-weight: 600; font-family: var(--font-body);">Share</button>
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+        <div>
+          <p class="label" style="margin-bottom: 6px;">Analysis Complete</p>
+          <h2 style="font-family: var(--font-display); font-size: 24px; line-height: 1.2;">Your Oral Health<br>Report</h2>
+        </div>
+        <span class="chip chip-amber">Attention Needed</span>
+      </div>
+      <div class="results-chip-row">
+        <span class="chip chip-teal">2nd Trimester</span>
+        <span class="chip" style="background: var(--border); color: var(--text-mid);">Scanned Today 9:41 AM</span>
+      </div>
+    </div>
+
+    <!-- Simulated scan image -->
+    <div class="scan-result-image">
+      <svg width="327" height="180" viewBox="0 0 327 180" fill="none" style="display: block; width: 100%; height: auto;">
+        <!-- Background mouth/dark area -->
+        <rect width="327" height="180" fill="#1A1A1A"/>
+        <!-- Lip areas (top and bottom) -->
+        <ellipse cx="163" cy="20" rx="100" ry="35" fill="#C0826E" opacity="0.8"/>
+        <ellipse cx="163" cy="162" rx="110" ry="38" fill="#C0826E" opacity="0.7"/>
+        <!-- Gum - slightly inflamed pink -->
+        <ellipse cx="163" cy="75" rx="130" ry="30" fill="#CC8080" opacity="0.5"/>
+        <!-- Teeth row - upper -->
+        <rect x="40" y="75" width="32" height="40" rx="6" fill="#F5F0E8"/>
+        <rect x="76" y="68" width="38" height="48" rx="7" fill="#F8F4EC"/>
+        <rect x="118" y="65" width="20" height="52" rx="5" fill="#FAF7F0"/>
+        <rect x="142" y="64" width="22" height="54" rx="5" fill="#FDFAF5"/>
+        <rect x="168" y="64" width="22" height="54" rx="5" fill="#FDFAF5"/>
+        <rect x="194" y="65" width="20" height="52" rx="5" fill="#FAF7F0"/>
+        <rect x="218" y="68" width="38" height="48" rx="7" fill="#F8F4EC"/>
+        <rect x="260" y="75" width="32" height="40" rx="6" fill="#F5F0E8"/>
+        <!-- Gum highlights and inflammation markers -->
+        <ellipse cx="90" cy="78" rx="18" ry="8" fill="#E07070" opacity="0.4"/>
+        <ellipse cx="240" cy="78" rx="14" ry="7" fill="#E07070" opacity="0.35"/>
+        <!-- Bottom teeth partial -->
+        <rect x="60" y="120" width="28" height="36" rx="5" fill="#F0EDE5" opacity="0.6"/>
+        <rect x="92" y="118" width="34" height="38" rx="6" fill="#F3F0E8" opacity="0.7"/>
+        <rect x="130" y="116" width="18" height="40" rx="5" fill="#F5F2EA" opacity="0.8"/>
+        <rect x="152" y="115" width="20" height="42" rx="5" fill="#F7F4EC" opacity="0.85"/>
+        <rect x="177" y="115" width="20" height="42" rx="5" fill="#F7F4EC" opacity="0.85"/>
+        <rect x="201" y="116" width="18" height="40" rx="5" fill="#F5F2EA" opacity="0.8"/>
+        <rect x="223" y="118" width="34" height="38" rx="6" fill="#F3F0E8" opacity="0.7"/>
+        <rect x="261" y="120" width="28" height="36" rx="5" fill="#F0EDE5" opacity="0.6"/>
+        <!-- AI detection overlays -->
+        <!-- Gum inflammation marker left -->
+        <rect x="68" y="68" width="52" height="28" rx="4" fill="none" stroke="#E88C7D" stroke-width="1.5" stroke-dasharray="3 2" opacity="0.9"/>
+        <rect x="69" y="58" width="72" height="16" rx="4" fill="#E88C7D" opacity="0.85"/>
+        <text x="74" y="69" fill="white" font-size="9" font-family="system-ui" font-weight="600">Inflammation Detected</text>
+        <!-- Good area marker right  -->
+        <rect x="214" y="65" width="48" height="34" rx="4" fill="none" stroke="#34D399" stroke-width="1.5" opacity="0.7"/>
+        <!-- Sensitivity marker center -->
+        <circle cx="163" cy="92" r="16" fill="none" stroke="#FCD34D" stroke-width="1.5" stroke-dasharray="3 2" opacity="0.8"/>
+        <!-- Scan lines overlay -->
+        <rect width="327" height="180" fill="url(#scanlines)" opacity="0.06"/>
+        <defs>
+          <pattern id="scanlines" width="1" height="3" patternUnits="userSpaceOnUse">
+            <line x1="0" y1="0" x2="1" y2="0" stroke="white" stroke-width="1"/>
+          </pattern>
+        </defs>
+        <!-- Corner brackets -->
+        <path d="M15 30 L15 15 L30 15" stroke="#7DECD4" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+        <path d="M312 30 L312 15 L297 15" stroke="#7DECD4" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+        <path d="M15 150 L15 165 L30 165" stroke="#7DECD4" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+        <path d="M312 150 L312 165 L297 165" stroke="#7DECD4" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+        <!-- AI badge -->
+        <rect x="8" y="8" width="50" height="20" rx="6" fill="rgba(46,125,125,0.85)"/>
+        <text x="14" y="21" fill="white" font-size="9" font-family="system-ui" font-weight="700">AI SCAN</text>
+      </svg>
+    </div>
+
+    <div class="result-metrics">
+      <div class="metric-card">
+        <div class="metric-header">
+          <div>
+            <div class="metric-name">Gum Health</div>
+            <div style="font-size: 12px; color: var(--text-light); margin-top: 2px;">Inflammation assessment</div>
+          </div>
+          <div>
+            <span class="metric-score" style="color: #F59E0B;">54</span>
+            <span style="font-size: 13px; color: var(--text-light);">/100</span>
+          </div>
+        </div>
+        <div class="metric-bar"><div class="metric-bar-fill bar-warn" style="width: 54%;"></div></div>
+        <div class="metric-desc">Mild-to-moderate inflammation detected in the upper left gum margin — consistent with pregnancy gingivitis. Hormonal changes increase gum sensitivity during the 2nd trimester.</div>
+        <span class="chip chip-amber" style="margin-top: 10px;">Needs Attention</span>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-header">
+          <div>
+            <div class="metric-name">Enamel Appearance</div>
+            <div style="font-size: 12px; color: var(--text-light); margin-top: 2px;">Surface integrity check</div>
+          </div>
+          <div>
+            <span class="metric-score" style="color: #10B981;">82</span>
+            <span style="font-size: 13px; color: var(--text-light);">/100</span>
+          </div>
+        </div>
+        <div class="metric-bar"><div class="metric-bar-fill bar-good" style="width: 82%;"></div></div>
+        <div class="metric-desc">Enamel surface appears well-maintained with no significant erosion markers visible. Continue current fluoride routine.</div>
+        <span class="chip chip-green" style="margin-top: 10px;">Good</span>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-header">
+          <div>
+            <div class="metric-name">Sensitivity Risk</div>
+            <div style="font-size: 12px; color: var(--text-light); margin-top: 2px;">Dentin exposure estimate</div>
+          </div>
+          <div>
+            <span class="metric-score" style="color: var(--salmon);">42</span>
+            <span style="font-size: 13px; color: var(--text-light);">/100</span>
+          </div>
+        </div>
+        <div class="metric-bar"><div class="metric-bar-fill bar-poor" style="width: 42%;"></div></div>
+        <div class="metric-desc">Gum recession at 2–3 teeth may be contributing to reported sensitivity. This is a known side effect of pregnancy hormones and typically resolves postpartum.</div>
+        <span class="chip chip-salmon" style="margin-top: 10px; background: var(--salmon-pale); color: var(--salmon);">Elevated</span>
+      </div>
+    </div>
+
+    <div class="ai-note">
+      <div class="ai-avatar">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="4" fill="white"/><path d="M10 4 L10 2 M10 18 L10 16 M4 10 L2 10 M18 10 L16 10 M5.5 5.5 L4 4 M15.5 15.5 L14 14 M14.5 5.5 L16 4 M4.5 15.5 L6 14" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/></svg>
+      </div>
+      <div class="ai-note-content">
+        <div class="ai-note-from">OraCare AI</div>
+        <div class="ai-note-text">Based on your scan and 2nd trimester status, the gum inflammation is typical of <em>pregnancy gingivitis</em> — affecting up to 70% of pregnant women. I've updated your care plan with targeted recommendations. This is very manageable with the right routine.</div>
+      </div>
+    </div>
+
+    <div class="results-footer">
+      <button class="btn-primary" onclick="navigate('screen-recommendations', 'forward')">View Personalized Plan</button>
+      <button class="btn-secondary" onclick="navigate('screen-dashboard', 'back')">Back to Dashboard</button>
+    </div>
+
+    <div class="bottom-nav">
+      <button class="nav-item" onclick="navigate('screen-dashboard', 'back')">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 9.5L11 3L19 9.5V19C19 19.6 18.6 20 18 20H14V15H8V20H4C3.4 20 3 19.6 3 19V9.5Z" stroke="#9EA4A8" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        <span>Home</span>
+      </button>
+      <button class="nav-item active">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="3" y="5" width="16" height="13" rx="2" stroke="#2E7D7D" stroke-width="1.6"/><circle cx="11" cy="11.5" r="3" stroke="#2E7D7D" stroke-width="1.6"/><path d="M8 5V4C8 3.4 8.4 3 9 3H13C13.6 3 14 3.4 14 4V5" stroke="#2E7D7D" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <span>Scan</span>
+      </button>
+      <button class="nav-item" onclick="navigate('screen-recommendations', 'forward')">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M7 11H15M7 7H15M7 15H11" stroke="#9EA4A8" stroke-width="1.6" stroke-linecap="round"/><rect x="3" y="3" width="16" height="16" rx="3" stroke="#9EA4A8" stroke-width="1.6"/></svg>
+        <span>Plan</span>
+      </button>
+      <button class="nav-item">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="8" r="4" stroke="#9EA4A8" stroke-width="1.6"/><path d="M4 19C4 15.7 7.1 13 11 13C14.9 13 18 15.7 18 19" stroke="#9EA4A8" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <span>Profile</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════
+       SCREEN 7: RECOMMENDATIONS
+  ════════════════════════════ -->
+  <div class="screen" id="screen-recommendations">
+    <div class="recs-header">
+      <div class="nav-row">
+        <button class="back-btn" onclick="navigate('screen-dashboard', 'back')">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M11 14L6 9L11 4" stroke="#2F3133" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div style="flex: 1; text-align: center;">
+          <span style="font-size: 16px; font-weight: 600;">Care Plan</span>
+        </div>
+        <button style="background: none; border: none; cursor: pointer; font-size: 14px; color: var(--teal); font-weight: 600; font-family: var(--font-body);">Edit</button>
+      </div>
+    </div>
+
+    <div class="recs-summary">
+      <div class="recs-summary-text">
+        <div class="recs-summary-label">Pregnancy · Week 18</div>
+        <div class="recs-summary-title">Your personalized oral health action plan</div>
+        <div class="recs-summary-count">7 recommendations · Based on your scan + symptoms</div>
+      </div>
+      <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+        <circle cx="28" cy="28" r="28" fill="rgba(255,255,255,0.12)"/>
+        <circle cx="28" cy="28" r="22" stroke="rgba(255,255,255,0.3)" stroke-width="3" stroke-dasharray="138" stroke-dashoffset="34"/>
+        <text x="28" y="34" text-anchor="middle" fill="white" font-size="16" font-family="Georgia" font-weight="500">7</text>
+      </svg>
+    </div>
+
+    <div class="recs-filter">
+      <button class="filter-pill active">All (7)</button>
+      <button class="filter-pill">Daily Habits</button>
+      <button class="filter-pill">Products</button>
+      <button class="filter-pill">Appointments</button>
+    </div>
+
+    <div class="recs-list">
+
+      <div class="rec-card priority-high">
+        <div class="rec-icon-wrap" style="background: var(--salmon-pale);">🩸</div>
+        <div class="rec-content">
+          <div class="rec-meta">
+            <span class="rec-priority" style="color: var(--salmon);">High Priority</span>
+            <span class="rec-time">Daily</span>
+          </div>
+          <div class="rec-title">Switch to a soft-bristled toothbrush</div>
+          <div class="rec-body">Your scan indicates gum inflammation. Hard bristles worsen pregnancy gingivitis. Use a soft or extra-soft brush and apply gentle, circular motions at a 45° angle to the gum line.</div>
+          <div class="rec-tags">
+            <span class="rec-tag" style="background: var(--salmon-pale); color: var(--salmon);">Gingivitis</span>
+            <span class="rec-tag" style="background: var(--border); color: var(--text-mid);">Daily Habit</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rec-card priority-high">
+        <div class="rec-icon-wrap" style="background: var(--salmon-pale);">📅</div>
+        <div class="rec-content">
+          <div class="rec-meta">
+            <span class="rec-priority" style="color: var(--salmon);">High Priority</span>
+            <span class="rec-time">This Week</span>
+          </div>
+          <div class="rec-title">Book a dental cleaning before Week 22</div>
+          <div class="rec-body">The 2nd trimester is the safest window for dental procedures. The ADA recommends at least one professional cleaning during pregnancy. Early treatment prevents worsening gingivitis.</div>
+          <div class="rec-tags">
+            <span class="rec-tag" style="background: var(--salmon-pale); color: var(--salmon);">Urgent</span>
+            <span class="rec-tag" style="background: var(--border); color: var(--text-mid);">Appointment</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rec-card priority-medium">
+        <div class="rec-icon-wrap" style="background: #FEF3E2;">💊</div>
+        <div class="rec-content">
+          <div class="rec-meta">
+            <span class="rec-priority" style="color: #D97706;">Medium Priority</span>
+            <span class="rec-time">Daily</span>
+          </div>
+          <div class="rec-title">Rinse with alcohol-free antibacterial mouthwash</div>
+          <div class="rec-body">Use a chlorhexidine-free, alcohol-free rinse like Listerine Zero or CloSYS after brushing. Alcohol-containing rinses can irritate inflamed pregnancy gums and are not recommended during pregnancy.</div>
+          <div class="rec-tags">
+            <span class="rec-tag" style="background: #FEF3E2; color: #D97706;">Products</span>
+            <span class="rec-tag" style="background: var(--border); color: var(--text-mid);">Gum Health</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rec-card priority-medium">
+        <div class="rec-icon-wrap" style="background: #FEF3E2;">💧</div>
+        <div class="rec-content">
+          <div class="rec-meta">
+            <span class="rec-priority" style="color: #D97706;">Medium Priority</span>
+            <span class="rec-time">Ongoing</span>
+          </div>
+          <div class="rec-title">Manage dry mouth with hydration + xylitol</div>
+          <div class="rec-body">Drink at least 8–10 cups of water daily. Dry mouth reduces saliva, which protects against cavities. Xylitol gum stimulates saliva safely during pregnancy and inhibits bacteria growth.</div>
+          <div class="rec-tags">
+            <span class="rec-tag" style="background: #FEF3E2; color: #D97706;">Dry Mouth</span>
+            <span class="rec-tag" style="background: var(--teal-pale); color: var(--teal);">Pregnancy Safe</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rec-card priority-low">
+        <div class="rec-icon-wrap" style="background: var(--teal-pale);">🦷</div>
+        <div class="rec-content">
+          <div class="rec-meta">
+            <span class="rec-priority" style="color: var(--teal);">Routine</span>
+            <span class="rec-time">Twice Daily</span>
+          </div>
+          <div class="rec-title">Use fluoride toothpaste (1000–1450 ppm)</div>
+          <div class="rec-body">Fluoride toothpaste is safe throughout pregnancy and essential for enamel protection. Your enamel score is currently good — maintain it. Avoid whitening toothpastes which can increase sensitivity.</div>
+          <div class="rec-tags">
+            <span class="rec-tag" style="background: var(--teal-pale); color: var(--teal);">Enamel</span>
+            <span class="rec-tag" style="background: var(--border); color: var(--text-mid);">Daily Habit</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rec-card priority-low">
+        <div class="rec-icon-wrap" style="background: var(--teal-pale);">🤢</div>
+        <div class="rec-content">
+          <div class="rec-meta">
+            <span class="rec-priority" style="color: var(--teal);">Preventive</span>
+            <span class="rec-time">As needed</span>
+          </div>
+          <div class="rec-title">After vomiting, wait 30 min before brushing</div>
+          <div class="rec-body">Morning sickness exposes teeth to stomach acid. Brushing immediately can spread acid and erode enamel. Instead, rinse with water or a baking soda solution (1 tsp in 8 oz water) and wait 30 minutes.</div>
+          <div class="rec-tags">
+            <span class="rec-tag" style="background: var(--teal-pale); color: var(--teal);">Morning Sickness</span>
+            <span class="rec-tag" style="background: var(--border); color: var(--text-mid);">Enamel Protection</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rec-card priority-low">
+        <div class="rec-icon-wrap" style="background: #ECFDF5;">🥦</div>
+        <div class="rec-content">
+          <div class="rec-meta">
+            <span class="rec-priority" style="color: #059669;">Nutrition</span>
+            <span class="rec-time">Daily</span>
+          </div>
+          <div class="rec-title">Increase Vitamin C & calcium-rich foods</div>
+          <div class="rec-body">Vitamin C supports gum tissue repair and reduces inflammation. Aim for 85mg/day from citrus, peppers, or strawberries. Calcium protects enamel — dairy, almonds, and leafy greens are great sources.</div>
+          <div class="rec-tags">
+            <span class="rec-tag" style="background: #ECFDF5; color: #059669;">Nutrition</span>
+            <span class="rec-tag" style="background: var(--border); color: var(--text-mid);">Gum Health</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="bottom-nav">
+      <button class="nav-item" onclick="navigate('screen-dashboard', 'back')">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 9.5L11 3L19 9.5V19C19 19.6 18.6 20 18 20H14V15H8V20H4C3.4 20 3 19.6 3 19V9.5Z" stroke="#9EA4A8" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        <span>Home</span>
+      </button>
+      <button class="nav-item" onclick="navigate('screen-scan-instructions', 'forward')">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="3" y="5" width="16" height="13" rx="2" stroke="#9EA4A8" stroke-width="1.6"/><circle cx="11" cy="11.5" r="3" stroke="#9EA4A8" stroke-width="1.6"/><path d="M8 5V4C8 3.4 8.4 3 9 3H13C13.6 3 14 3.4 14 4V5" stroke="#9EA4A8" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <span>Scan</span>
+      </button>
+      <button class="nav-item active">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M7 11H15M7 7H15M7 15H11" stroke="#2E7D7D" stroke-width="1.6" stroke-linecap="round"/><rect x="3" y="3" width="16" height="16" rx="3" stroke="#2E7D7D" stroke-width="1.6"/></svg>
+        <span>Plan</span>
+      </button>
+      <button class="nav-item">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="8" r="4" stroke="#9EA4A8" stroke-width="1.6"/><path d="M4 19C4 15.7 7.1 13 11 13C14.9 13 18 15.7 18 19" stroke="#9EA4A8" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <span>Profile</span>
+      </button>
+    </div>
+  </div>
+
+</div><!-- /app -->
+
+<script>
+  // ─── NAVIGATION ───
+  let currentScreen = 'screen-welcome';
+  const history = ['screen-welcome'];
+
+  function navigate(targetId, direction) {
+    if (targetId === currentScreen) return;
+
+    const current = document.getElementById(currentScreen);
+    const target = document.getElementById(targetId);
+
+    if (!target) return;
+
+    // Update status bar color based on screen
+    const darkScreens = ['screen-welcome', 'screen-scan-instructions'];
+    const statusBar = document.getElementById('statusBar');
+    if (darkScreens.includes(targetId)) {
+      statusBar.style.color = 'white';
+    } else {
+      statusBar.style.color = '';
+    }
+
+    // Animate
+    const outClass = direction === 'forward' ? 'slide-out' : 'slide-back-out';
+    const inClass = direction === 'forward' ? 'slide-in' : 'slide-back-in';
+
+    current.classList.remove('active');
+    current.classList.add(outClass);
+
+    target.style.display = 'flex';
+    target.classList.add(inClass);
+
+    setTimeout(() => {
+      current.classList.remove(outClass);
+      current.style.display = '';
+
+      target.classList.remove(inClass);
+      target.classList.add('active');
+
+      currentScreen = targetId;
+
+      // Scroll to top
+      target.scrollTop = 0;
+
+      // Trigger ring animation on dashboard
+      if (targetId === 'screen-dashboard') {
+        const ring = target.querySelector('.score-ring-fill');
+        if (ring) {
+          ring.style.animation = 'none';
+          ring.offsetHeight;
+          ring.style.animation = '';
+        }
+      }
+    }, 380);
+  }
+
+  // ─── ASSESSMENT STEPS ───
+  let currentAssessStep = 1;
+
+  function goAssessStep(step) {
+    const currentEl = document.getElementById('astep-' + currentAssessStep);
+    const targetEl = document.getElementById('astep-' + step);
+    if (!currentEl || !targetEl) return;
+
+    currentEl.classList.remove('active');
+    targetEl.classList.add('active');
+    currentAssessStep = step;
+
+    const progress = (step / 3) * 100;
+    document.getElementById('assessProgress').style.width = progress + '%';
+  }
+
+  // ─── TRIMESTER SELECTION ───
+  function selectTrimester(btn, num) {
+    document.querySelectorAll('.tri-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+  }
+
+  // ─── SYMPTOM TOGGLE ───
+  function toggleSymptom(item) {
+    item.classList.toggle('checked');
+    const check = item.querySelector('.symptom-check');
+    if (item.classList.contains('checked')) {
+      check.innerHTML = '<svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    } else {
+      check.innerHTML = '';
+    }
+  }
+
+  // ─── DENTAL OPTION ───
+  function selectDental(btn) {
+    document.querySelectorAll('.dental-opt').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+  }
+
+  // ─── FILTER PILLS ───
+  document.querySelectorAll('.filter-pill').forEach(pill => {
+    pill.addEventListener('click', function() {
+      this.closest('.recs-filter').querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+
+  // ─── INIT STATUS BAR ───
+  document.getElementById('statusBar').style.color = 'white';
+
+  // Update clock
+  function updateTime() {
+    const now = new Date();
+    const h = now.getHours().toString().padStart(2, '0');
+    const m = now.getMinutes().toString().padStart(2, '0');
+    document.querySelector('.status-bar .time').textContent = h + ':' + m;
+  }
+  updateTime();
+  setInterval(updateTime, 30000);
+</script>
+</body>
+</html>
