@@ -83,6 +83,8 @@ This project has TWO stylesheet files. Any audit, token replacement, or style ch
 - Do not rewrite entire files unnecessarily
 - Keep edits modular
 - Explain which files will be modified before making changes
+- **Never push to GitHub unless the user explicitly says to push.**
+- **Never commit unless the user explicitly says to commit.** Make file edits only; do not run `git add` or `git commit` until directly instructed.
 
 ## File Structure
 - Shared styles stay in css/style.css

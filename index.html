@@ -6,7 +6,7 @@
 <title>OraCare — Women's Oral Health Companion</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@300;400;500;600;700&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -243,187 +243,186 @@
   .nav-item.active span { color: var(--teal); font-weight: 600; }
 
   /* ════════════════════════════════════════
-     SCREEN 1 — WELCOME  (redesign)
+     SPLASH SCREEN
+  ════════════════════════════════════════ */
+  #screen-splash {
+    background-color: #1F6464;
+    background-image: linear-gradient(158deg, #163F3F 0%, #2E7D7D 52%, #3A9898 100%);
+    align-items: center;
+    justify-content: center;
+    min-height: 100%;
+  }
+
+  /* Glow rendered as real element (see HTML), not ::before */
+  .splash-glow {
+    position: absolute;
+    width: 480px;
+    height: 480px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.07) 0%, transparent 65%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .splash-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    animation: splashReveal 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  @keyframes splashReveal {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes splashFadeOut {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+  }
+
+  #screen-splash.exiting {
+    animation: splashFadeOut 0.75s ease forwards;
+    pointer-events: none;
+  }
+
+  /* ════════════════════════════════════════
+     SCREEN 1 — WELCOME
   ════════════════════════════════════════ */
   #screen-welcome {
     background: var(--bg);
+    align-items: center;
   }
 
-  .welcome-content {
-    flex: 1;
+  /* ── Logo: show icon + wordmark, clip tagline at bottom ── */
+  .welcome-logo-container {
     display: flex;
-    flex-direction: column;
-    padding: 0 28px 36px;
-    position: relative;
-    z-index: 1;
+    justify-content: center;
+    width: 100%;
+    padding-top: 40px;
+    margin-bottom: 24px;
   }
-
-  /* Logo sits directly on the page — no container */
-  .welcome-logo {
-    padding-top: 56px;
+  .welcome-logo-clip {
+    width: 200px;
   }
-  .welcome-logo img {
-    height: 90px;
-    width: auto;
+  .welcome-logo-clip img {
+    width: 100%;
+    height: auto;
     display: block;
   }
 
-  /* ── Hero section with teal glow only here ── */
-  .welcome-hero {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 40px 0 56px;
-    position: relative;
-  }
-
-  /* Teal glow: radial, contained to hero section */
-  .welcome-hero::before {
-    content: '';
-    position: absolute;
-    width: 340px;
-    height: 340px;
-    border-radius: 50%;
-    background: radial-gradient(
-      circle,
-      rgba(46,125,125,0.13) 0%,
-      rgba(46,125,125,0.06) 45%,
-      transparent 70%
-    );
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -54%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .welcome-eyebrow {
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 2.5px;
-    text-transform: uppercase;
-    color: var(--teal);
-    margin-bottom: 18px;
-    position: relative;
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .welcome-eyebrow::before {
-    content: '';
-    display: inline-block;
-    width: 20px;
-    height: 1.5px;
-    background: var(--teal);
-    opacity: 0.5;
-    border-radius: 2px;
-  }
-
+  /* ── Headline ── */
   .welcome-headline {
-    font-family: var(--font-display);
-    font-size: 40px;
-    font-weight: 400;
-    line-height: 1.12;
-    color: var(--text);
-    margin-bottom: 22px;
-    letter-spacing: -0.3px;
-    position: relative;
-    z-index: 1;
+    font-family: 'Outfit', sans-serif;
+    font-size: 34px;
+    font-weight: 600;
+    line-height: 1.15;
+    color: #2B2B2B;
+    text-align: center;
+    padding: 0 28px;
+    margin-bottom: 14px;
+    letter-spacing: -0.2px;
   }
-  .welcome-headline em {
-    font-style: italic;
-    color: var(--salmon);
-  }
+  .welcome-headline .accent { color: var(--salmon); }
 
+  /* ── Body copy ── */
   .welcome-body {
-    font-size: 15px;
-    line-height: 1.75;
-    color: var(--text-mid);
-    font-weight: 300;
-    max-width: 270px;
-    position: relative;
-    z-index: 1;
-  }
-
-  /* ── Stats: borderline style, no pills ── */
-  .welcome-stats {
-    display: flex;
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    padding: 20px 0;
+    font-family: 'Outfit', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: #5F6368;
+    text-align: center;
+    max-width: 82%;
     margin-bottom: 32px;
   }
-  .stat-item {
+
+  /* ── Feature row ── */
+  .feature-row {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    padding: 0 8px;
+    margin-bottom: 36px;
+  }
+  .feature-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
     flex: 1;
-    padding: 0 4px 0 0;
   }
-  .stat-item + .stat-item {
-    padding: 0 0 0 20px;
-    border-left: 1px solid var(--border);
+  .feature-icon-wrap {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-  .stat-num {
-    font-family: var(--font-display);
-    font-size: 28px;
-    color: var(--teal);
+  .fi-teal   { background: rgba(46,125,125,0.10); }
+  .fi-salmon { background: rgba(232,140,125,0.12); }
+  .fi-slate  { background: rgba(100,116,139,0.09); }
+  .feature-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
     font-weight: 500;
-    line-height: 1;
-    margin-bottom: 5px;
-  }
-  .stat-label {
-    font-size: 11px;
-    color: var(--text-light);
-    line-height: 1.45;
-    font-weight: 400;
+    color: #2B2B2B;
+    text-align: center;
+    line-height: 1.35;
   }
 
   /* ── CTA ── */
-  .welcome-cta { display: flex; flex-direction: column; gap: 0; }
-
+  .welcome-cta {
+    width: 100%;
+    padding: 0 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 6px;
+  }
   .btn-welcome-primary {
     width: 100%;
-    padding: 18px;
+    height: 56px;
     background: var(--teal);
     color: white;
     border: none;
-    border-radius: 16px;
-    font-family: var(--font-body);
-    font-size: 16px;
+    border-radius: 28px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 18px;
     font-weight: 600;
     cursor: pointer;
-    letter-spacing: -0.2px;
-    transition: all 0.2s ease;
-    box-shadow: 0 6px 20px rgba(46,125,125,0.28);
-    margin-bottom: 14px;
+    transition: opacity 0.2s ease;
+    margin-bottom: 16px;
   }
-  .btn-welcome-primary:active { transform: scale(0.98); box-shadow: 0 2px 8px rgba(46,125,125,0.2); }
-
+  .btn-welcome-primary:active { opacity: 0.88; }
   .btn-welcome-secondary {
     background: none;
     border: none;
-    font-family: var(--font-body);
-    font-size: 14px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 15px;
     font-weight: 500;
-    color: var(--text-light);
+    color: var(--teal);
     cursor: pointer;
-    text-align: center;
-    padding: 10px;
-    letter-spacing: -0.1px;
-    transition: color 0.2s;
+    padding: 8px;
   }
-  .btn-welcome-secondary:active { color: var(--teal); }
+  .btn-welcome-secondary:active { opacity: 0.7; }
 
-  /* Trust footer */
+  /* ── Footer ── */
   .welcome-footer {
+    margin-top: auto;
+    padding: 12px 32px 28px;
     text-align: center;
-    margin-top: 20px;
-    font-size: 11px;
-    color: var(--text-light);
-    line-height: 1.6;
-    opacity: 0.8;
+    font-family: 'Outfit', sans-serif;
+    font-size: 12px;
+    color: #B0B5BA;
+    line-height: 1.65;
   }
-  .welcome-footer a { color: var(--text-light); text-decoration: underline; text-underline-offset: 2px; }
+  .welcome-footer a { color: #B0B5BA; text-decoration: underline; text-underline-offset: 2px; }
 
   /* ════════════════════════════════════════
      SCREEN 2 — LIFE STAGE
@@ -1007,31 +1006,90 @@
   </div>
 
   <!-- ════════════════════════════
+       SPLASH SCREEN
+  ════════════════════════════ -->
+  <div class="screen active" id="screen-splash">
+    <div class="splash-glow"></div>
+    <div class="splash-center">
+      <img src="assets/OraCare-White.png" alt="OraCare" style="width: 220px; height: auto; display: block;">
+    </div>
+  </div>
+
+  <!-- ════════════════════════════
        SCREEN 1: WELCOME
   ════════════════════════════ -->
-  <div class="screen active" id="screen-welcome">
-    <div class="welcome-content">
+  <div class="screen" id="screen-welcome">
 
-      <!-- Logo sits directly on warm white — no card, no container -->
-      <div class="welcome-logo">
-        <img src="assets/OraCare-02.png" alt="OraCare — Women's Oral Health Companion">
+    <!-- Logo: PNG clipped to hide tagline, show icon + wordmark -->
+    <div class="welcome-logo-container">
+      <div class="welcome-logo-clip">
+        <img src="assets/OraCare-Color.png" alt="OraCare">
       </div>
-
-      <!-- Hero: glow is CSS ::before, no illustration -->
-      <div class="welcome-hero">
-<p class="welcome-body">OraCare helps women monitor, understand, and protect their oral health through every hormonal life stage.</p>
-      </div>
-
-      <!-- CTA -->
-      <div class="welcome-cta">
-        <button class="btn-welcome-primary" onclick="navigate('screen-life-stage', 'forward')">Get Started</button>
-        <button class="btn-welcome-secondary" onclick="navigate('screen-dashboard', 'forward')">Already have an account? Sign in</button>
-      </div>
-
-      <p class="welcome-footer">
-        By continuing you agree to our <a href="#">Terms</a> &amp; <a href="#">Privacy Policy</a>.<br>Your health data is encrypted and never sold.
-      </p>
     </div>
+
+    <!-- Headline -->
+    <h1 class="welcome-headline">
+      Personalized oral health<br>
+      for every hormonal<br>
+      <span class="accent">life stage.</span>
+    </h1>
+
+    <!-- Body copy -->
+    <p class="welcome-body">
+      Track symptoms, understand risks, and protect your oral health through every hormonal stage.
+    </p>
+
+    <!-- Feature row: flat SVG icons, no emojis, no cards, no dividers -->
+    <div class="feature-row">
+
+      <div class="feature-item">
+        <div class="feature-icon-wrap fi-teal">
+          <!-- Tooth / Track Symptoms: rectangular crown + two roots -->
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="5" y="3" width="14" height="12" rx="3.5" stroke="#2E7D7D" stroke-width="1.7"/>
+            <path d="M9 15L9 21" stroke="#2E7D7D" stroke-width="1.7" stroke-linecap="round"/>
+            <path d="M15 15L15 21" stroke="#2E7D7D" stroke-width="1.7" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="feature-label">Track<br>Symptoms</span>
+      </div>
+
+      <div class="feature-item">
+        <div class="feature-icon-wrap fi-salmon">
+          <!-- Sparkle / Personalized Care -->
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L13.4 8.6L20 10L13.4 11.4L12 18L10.6 11.4L4 10L10.6 8.6L12 2Z" stroke="#E88C7D" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/>
+            <path d="M19 15.5L19.9 18.1L22.5 19L19.9 19.9L19 22.5L18.1 19.9L15.5 19L18.1 18.1L19 15.5Z" stroke="#E88C7D" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="feature-label">Personalized<br>Care</span>
+      </div>
+
+      <div class="feature-item">
+        <div class="feature-icon-wrap fi-slate">
+          <!-- Camera / AI Scan Insights -->
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M23 19C23 20.1 22.1 21 21 21H3C1.9 21 1 20.1 1 19V8C1 6.9 1.9 6 3 6H7L9 3H15L17 6H21C22.1 6 23 6.9 23 8V19Z" stroke="#64748B" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="12" cy="13" r="4" stroke="#64748B" stroke-width="1.7"/>
+          </svg>
+        </div>
+        <span class="feature-label">AI Scan<br>Insights</span>
+      </div>
+
+    </div>
+
+    <!-- CTA -->
+    <div class="welcome-cta">
+      <button class="btn-welcome-primary" onclick="navigate('screen-life-stage', 'forward')">Get Started</button>
+      <button class="btn-welcome-secondary" onclick="navigate('screen-dashboard', 'forward')">Already have an account? Sign In</button>
+    </div>
+
+    <!-- Footer -->
+    <p class="welcome-footer">
+      By continuing, you agree to our <a href="#">Terms</a> &amp; <a href="#">Privacy Policy</a>.<br>
+      Your health data is encrypted and never sold.
+    </p>
+
   </div>
 
   <!-- ════════════════════════════
@@ -1059,7 +1117,7 @@
           <div class="stage-name">Puberty</div>
           <div class="stage-desc">Ages 10–18 • Hormonal onset changes</div>
         </div>
-        <span class="stage-badge soon">Soon</span>
+        <span class="stage-badge soon">Coming Soon</span>
       </div>
 
       <div class="stage-card pregnancy-card" onclick="navigate('screen-assessment', 'forward')">
@@ -1078,7 +1136,7 @@
           <div class="stage-name">Postpartum</div>
           <div class="stage-desc">Recovery & nursing period changes</div>
         </div>
-        <span class="stage-badge soon">Soon</span>
+        <span class="stage-badge soon">Coming Soon</span>
       </div>
 
       <div class="stage-card coming-soon">
@@ -1087,7 +1145,7 @@
           <div class="stage-name">Perimenopause</div>
           <div class="stage-desc">Transitional hormonal fluctuations</div>
         </div>
-        <span class="stage-badge soon">Soon</span>
+        <span class="stage-badge soon">Coming Soon</span>
       </div>
 
       <div class="stage-card coming-soon">
@@ -1096,7 +1154,7 @@
           <div class="stage-name">Menopause</div>
           <div class="stage-desc">Estrogen decline oral impacts</div>
         </div>
-        <span class="stage-badge soon">Soon</span>
+        <span class="stage-badge soon">Coming Soon</span>
       </div>
     </div>
   </div>
@@ -1823,8 +1881,8 @@
 
 <script>
   // ─── NAVIGATION ───
-  let currentScreen = 'screen-welcome';
-  const history = ['screen-welcome'];
+  let currentScreen = 'screen-splash';
+  const history = ['screen-splash'];
 
   function navigate(targetId, direction) {
     if (targetId === currentScreen) return;
@@ -1835,7 +1893,7 @@
     if (!target) return;
 
     // Update status bar color based on screen
-    const darkScreens = ['screen-scan-instructions'];
+    const darkScreens = ['screen-splash', 'screen-scan-instructions'];
     const statusBar = document.getElementById('statusBar');
     if (darkScreens.includes(targetId)) {
       statusBar.style.color = 'white';
@@ -1925,7 +1983,21 @@
   });
 
   // ─── INIT STATUS BAR ───
-  // Welcome screen is now light — no override needed
+  // Splash is dark — start with white status bar
+  document.getElementById('statusBar').style.color = 'white';
+
+  // ─── SPLASH AUTO-ADVANCE ───
+  setTimeout(() => {
+    const splash = document.getElementById('screen-splash');
+    const welcome = document.getElementById('screen-welcome');
+    splash.classList.add('exiting');
+    setTimeout(() => {
+      splash.classList.remove('active', 'exiting');
+      welcome.classList.add('active');
+      currentScreen = 'screen-welcome';
+      document.getElementById('statusBar').style.color = '';
+    }, 760);
+  }, 2600);
 
   // Update clock
   function updateTime() {
