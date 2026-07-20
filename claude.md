@@ -1,3 +1,32 @@
+
+# Portfolio Project Rules
+
+# STOP. READ THIS FIRST. DO NOT SKIP.
+
+Before touching ANY file:
+1. State which files you will modify and why
+2. Wait for explicit approval before making ANY change
+3. Never implement anything speculatively
+4. Never delete or modify
+ anything not explicitly mentioned in the task
+5. If unsure — ASK, do not guess
+
+VIOLATIONS OF THESE RULES HAVE CAUSED HOURS OF WASTED WORK.
+
+## !! APPROVAL RULE — READ THIS FIRST, EVERY TIME !!
+- **NEVER implement any change until the user explicitly says to go ahead.** This applies to every single edit, no matter how small, how "obviously correct," or how confident you are. There is no such thing as a fix safe enough to skip this.
+- Questions ("what do you think?", "how would you do it?", "what would you use?"), sharing references, or describing a goal are NOT approval.
+- Explicit approval sounds like: "do it", "go ahead", "implement that", "yes", "looks good, make it".
+- When in doubt: propose, explain, and WAIT. Do not touch files.
+- **Investigating, diagnosing, and proactively flagging issues is encouraged and does NOT need approval** — grep, read, audit, compare against git history, tell the user what you found. This is genuinely valuable and should continue. The line is: report and propose, then stop. Do not slide from "I found a problem" into "and here's the fix I already made."
+- This applies even when a fix looks like pure restoration of something already agreed earlier (e.g. recovering work lost to an accidental revert). "This was already approved once" is not the same as "approved right now" — surface what you found and ask before re-applying it.
+- This applies even when you go looking for more of the same problem on your own initiative (a "let me sweep for anything else like this" check). Finding more instances is good; fixing them without asking first is not — report what the sweep turned up and wait.
+- **Exception: committing and pushing already-implemented, already-approved changes to git does not need a fresh per-instance confirmation.** Once code changes are approved and applied, wrapping them into a commit and pushing is fine to just do.
+- Violating this rule is the most serious mistake possible on this project. It has happened repeatedly, including multiple times in a single session after the user explicitly praised the investigative work but not the unrequested fixes that followed it. Do not let it happen again.
+
+
+
+
 # Project Design & Frontend Rules
 
 ## Design System
@@ -47,14 +76,12 @@ Do not introduce legacy breakpoints:
 
 ## Workflow
 - Do not implement any change until the user explicitly approves it. Phrases like "let's try", "what would you use", "how would you do it", or "what tokens" are questions — not instructions to edit. Wait for a clear go-ahead before touching any file.
-- For any new feature, page, or tool (not a small targeted fix), proactively lay out the approach and open decisions *before* writing code, even if the request already looks fully spec'd out — don't wait to be asked. This applies especially to new standalone files (e.g. export tooling, device-frame wrappers) that aren't just editing something that already exists.
 - Research existing structure before editing
 - Do not rewrite entire files unnecessarily
 - Keep edits modular
 - Explain which files will be modified before making changes
 - **Never push to GitHub unless the user explicitly says to push.**
 - **Never commit unless the user explicitly says to commit.** Make file edits only; do not run `git add` or `git commit` until directly instructed.
-- **Before building any workaround for a rendering/layout bug (cropping offsets, JS injection into an iframe, polling, resizing, positioning hacks), first check whether the simplest fix is a one- or two-line change at the actual source** (the CSS/HTML causing the problem), and try that first. Do not reach for indirect, multi-layered fixes on a wrapper/consumer of a file when editing the file itself directly is possible and safe. If a wrapper-side workaround has failed more than once, stop and re-check the source before attempting a third variant of the same workaround.
 
 ## Known Mistakes To Avoid
 - Do not use dark backgrounds
