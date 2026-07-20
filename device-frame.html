@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OraCare — Device Preview</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    overflow: hidden;
+  }
+
+  /* Responsive stage: centers and scales the whole device as one unit */
+  .stage {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ─── Fixed-size device frame (scaled responsively via JS transform) ─── */
+  .device {
+    --bezel: 14px;
+    --radius-outer: 56px;
+    --radius-inner: 44px; /* matches #app's own border-radius exactly */
+    --screen-w: 375px;
+    --screen-h: 812px;
+
+    width: calc(var(--screen-w) + var(--bezel) * 2);
+    height: calc(var(--screen-h) + var(--bezel) * 2);
+    border-radius: var(--radius-outer);
+    background: linear-gradient(160deg, #3a3d42 0%, #1c1d20 55%, #101113 100%);
+    box-shadow:
+      0 24px 60px rgba(0, 0, 0, 0.22),
+      0 4px 14px rgba(0, 0, 0, 0.12),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  /* Side buttons — purely decorative */
+  .btn-mute, .btn-vol-up, .btn-vol-down, .btn-power {
+    position: absolute;
+    background: linear-gradient(90deg, #2a2b2e, #131416);
+    border-radius: 3px;
+  }
+  .btn-vol-up, .btn-vol-down, .btn-mute {
+    left: -3px;
+    width: 3px;
+  }
+  .btn-mute { top: 90px; height: 28px; }
+  .btn-vol-up { top: 140px; height: 52px; }
+  .btn-vol-down { top: 202px; height: 52px; }
+  .btn-power {
+    right: -3px;
+    top: 160px;
+    width: 3px;
+    height: 80px;
+  }
+
+  /* Screen cutout: masks the iframe to the bezel's rounded corners */
+  .screen {
+    position: absolute;
+    top: var(--bezel);
+    left: var(--bezel);
+    width: var(--screen-w);
+    height: var(--screen-h);
+    border-radius: var(--radius-inner);
+    overflow: hidden;
+    background: #E8E4E2;
+  }
+
+  .screen iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 375px;
+    height: 812px;
+    border: 0;
+    display: block;
+  }
+
+  /* Notch sits inside the status bar's own 44px-tall band (0–44px from
+     the top of #app), well clear of the 54px point where header content
+     (back buttons etc.) begins on every screen — verified against the
+     screen that broke last time (Life-Stage), see device-frame-notes.md. */
+  .notch {
+    position: absolute;
+    top: calc(var(--bezel) + 12px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90px;
+    height: 20px;
+    background: #000;
+    border-radius: 12px;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  /* Home indicator overlays the very bottom of the screen content,
+     matching real Face-ID iPhones (it floats over app content, not in
+     a separate margin) */
+  .home-indicator {
+    position: absolute;
+    bottom: calc(var(--bezel) + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.55);
+    border-radius: 2px;
+    z-index: 2;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+  <div class="stage" id="stage">
+    <div class="device" id="device">
+      <div class="btn-mute"></div>
+      <div class="btn-vol-up"></div>
+      <div class="btn-vol-down"></div>
+      <div class="btn-power"></div>
+      <div class="screen">
+        <iframe src="index.html" title="OraCare prototype" scrolling="no"></iframe>
+      </div>
+      <div class="notch"></div>
+      <div class="home-indicator"></div>
+    </div>
+  </div>
+
+<script>
+  // Scale the fixed-size device as one unit to fit whatever container
+  // this page is embedded in (e.g. a portfolio iframe of any size).
+  const stage = document.getElementById('stage');
+  const device = document.getElementById('device');
+  const baseW = device.offsetWidth;
+  const baseH = device.offsetHeight;
+
+  function fit() {
+    const scale = Math.min(stage.clientWidth / baseW, stage.clientHeight / baseH, 1);
+    device.style.transform = 'scale(' + scale + ')';
+  }
+
+  new ResizeObserver(fit).observe(stage);
+  fit();
+</script>
+</body>
+</html>

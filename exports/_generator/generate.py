@@ -111,6 +111,30 @@ def fix_asset_paths(block):
     return block.replace('src="assets/', 'src="file://{}/assets/'.format(PROJECT))
 
 
+def apply_analyzing_completed_state(block):
+    """The raw markup for screen-scan-analyzing is its 0%/unchecked initial
+    state (the real 0->100% fill and checkmarks only happen via the
+    startScan()/markDone() JS timers, which don't run in a static export).
+    For the portfolio screenshot we want the "nearly done" look instead,
+    matching exactly what markDone() produces at each checkpoint -- items
+    1-3 get a checkmark, item 4 only has its hourglass cleared (the real
+    JS never gives item 4 a checkmark either, since check-icon-4 has no
+    <svg> for markDone()'s querySelector to find -- replicating that
+    faithfully rather than "fixing" it, since this export must not change
+    app behavior, just capture a later moment of it)."""
+    block = block.replace('id="analyzePercent">0%<', 'id="analyzePercent">100%<')
+    block = block.replace(
+        '<circle class="analyze-ring-fill" id="analyzeRingFill" cx="90" cy="90" r="70"/>',
+        '<circle class="analyze-ring-fill" id="analyzeRingFill" cx="90" cy="90" r="70" style="stroke-dashoffset: 0;"/>'
+    )
+    for i in (1, 2, 3):
+        block = block.replace('class="check-item" id="check-{}"'.format(i), 'class="check-item done" id="check-{}"'.format(i))
+    block = block.replace('style="display:none"', 'style="display:block"')
+    block = block.replace('class="check-item" id="check-4"', 'class="check-item done" id="check-4"')
+    block = block.replace('<span id="check-spinner-4">⏳</span>', '<span id="check-spinner-4"></span>')
+    return block
+
+
 def write_render(slug, screen_block, extra_style="", dark=False, is_splash=False):
     screen_block = fix_asset_paths(screen_block)
     extra_class = " status-bar--splash" if is_splash else (" status-bar--dark" if dark else "")
@@ -127,6 +151,8 @@ def write_render(slug, screen_block, extra_style="", dark=False, is_splash=False
 for screen_id, slug, extra_style in SCREENS:
     block = extract_screen(screen_id)
     block = re.sub(r'class="screen[^"]*"', 'class="screen active"', block, count=1)
+    if slug == "analyzing":
+        block = apply_analyzing_completed_state(block)
     write_render(slug, block, extra_style=extra_style,
                  dark=(screen_id in DARK_SCREENS), is_splash=(screen_id == "screen-splash"))
 

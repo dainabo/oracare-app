@@ -33,10 +33,10 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    padding: 24px 0 48px;
   }
 
   /* ─── PHONE SHELL ─── */
+  
   #app {
     width: 375px;
     min-height: 812px;

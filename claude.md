@@ -47,12 +47,14 @@ Do not introduce legacy breakpoints:
 
 ## Workflow
 - Do not implement any change until the user explicitly approves it. Phrases like "let's try", "what would you use", "how would you do it", or "what tokens" are questions — not instructions to edit. Wait for a clear go-ahead before touching any file.
+- For any new feature, page, or tool (not a small targeted fix), proactively lay out the approach and open decisions *before* writing code, even if the request already looks fully spec'd out — don't wait to be asked. This applies especially to new standalone files (e.g. export tooling, device-frame wrappers) that aren't just editing something that already exists.
 - Research existing structure before editing
 - Do not rewrite entire files unnecessarily
 - Keep edits modular
 - Explain which files will be modified before making changes
 - **Never push to GitHub unless the user explicitly says to push.**
 - **Never commit unless the user explicitly says to commit.** Make file edits only; do not run `git add` or `git commit` until directly instructed.
+- **Before building any workaround for a rendering/layout bug (cropping offsets, JS injection into an iframe, polling, resizing, positioning hacks), first check whether the simplest fix is a one- or two-line change at the actual source** (the CSS/HTML causing the problem), and try that first. Do not reach for indirect, multi-layered fixes on a wrapper/consumer of a file when editing the file itself directly is possible and safe. If a wrapper-side workaround has failed more than once, stop and re-check the source before attempting a third variant of the same workaround.
 
 ## Known Mistakes To Avoid
 - Do not use dark backgrounds
