@@ -1,4 +1,4 @@
-# Portfolio Project Rules
+# Project Design & Frontend Rules
 
 ## Design System
 - Use 8pt spacing system
@@ -16,29 +16,12 @@
 - Body text default: 20px
 - Sora headings use font-weight 500 only
 - Maintain typography consistency
-- Rename "CV" to "Resume" everywhere
 - Do not use font-weight 600, 700 or 800 for Sora — 500 only unless explicitly requested or set by the user manually
 
 ## Accessibility
 - Always maintain WCAG contrast ratios
 - Never use white text on orange buttons
 - Accessibility before decoration
-
-## Container System
-
-Use container tokens before introducing new width values.
-
-Approved containers:
-- `--container-reading: 720px`
-- `--container-default: 1280px`
-- `--container-wide: 1440px`
-
-Rules:
-- Do not introduce new max-width values unless a clear layout requirement exists.
-- Prefer existing container tokens over hardcoded widths.
-- New page sections should align to the container system before custom widths are considered.
-- Hero, content, card, and case-study layouts should reference container tokens whenever practical.
-- When a new width is proposed, first check whether an existing container token already satisfies the requirement.
 
 ## CSS Rules
 - Never use inline styles
@@ -61,21 +44,6 @@ Do not introduce legacy breakpoints:
 960px, 900px, 768px, 560px
 - When merging or reorganising breakpoints, identify and remove intermediate overrides that are made redundant by the merge
 - Avoid independently scaling related UI elements (e.g. decorative background text + foreground content). Use proportional clamp() relationships so connected elements scale together across breakpoints.
-- Every case study page must include:
-  - way back to homepage
-  - previous/next case study navigation
-
-## Inline CSS Pages
-- `about.html` and `visual-work.html` contain their own inline `<style>` blocks and do NOT load `css/style.css`
-- ANY change to shared components (footer, nav, global layout) MUST be applied in all three locations: `css/style.css`, `about.html` inline style, `visual-work.html` inline style
-- Forgetting one of these files is the most common source of inconsistent styling across pages
-
-## CSS File Coverage — Never Miss These
-This project has TWO stylesheet files. Any audit, token replacement, or style change MUST cover both:
-- `css/style.css` — main styles
-- `css/case-study.css` — case study page styles (loaded by case study HTML files, NOT inline)
-- Searching only HTML files will miss `css/case-study.css` entirely. Always grep CSS files directly.
-- When asked to audit or replace any value across the project, run the search on `*.css` files explicitly, not HTML files.
 
 ## Workflow
 - Do not implement any change until the user explicitly approves it. Phrases like "let's try", "what would you use", "how would you do it", or "what tokens" are questions — not instructions to edit. Wait for a clear go-ahead before touching any file.
@@ -85,11 +53,6 @@ This project has TWO stylesheet files. Any audit, token replacement, or style ch
 - Explain which files will be modified before making changes
 - **Never push to GitHub unless the user explicitly says to push.**
 - **Never commit unless the user explicitly says to commit.** Make file edits only; do not run `git add` or `git commit` until directly instructed.
-
-## File Structure
-- Shared styles stay in css/style.css
-- Images go in assets/images/
-- Case study pages stay in root directory
 
 ## Known Mistakes To Avoid
 - Do not use dark backgrounds
@@ -115,25 +78,7 @@ This project has TWO stylesheet files. Any audit, token replacement, or style ch
 - Never mix absolute positioning for content with normal flow for related content in the same visual group.
 - When debugging overflow, check computed width in dev tools before guessing fixes.
 - Footer layout failures follow a pattern: absolute positioning, negative margins, and aspect-ratio hacks all break. The fix is always structural — put related elements in the same parent and use flex layout. Stop tweaking values and fix the container.
-- The three-file rule is easy to forget under rapid targeted edits. about.html and visual-work.html will drift from css/style.css if not synced immediately. Accumulated drift is expensive to fix later — sync all three in the same task, every time.
 - Always grep for the current string before editing. External edits change files between tool calls. A failed string match means the file was modified — find the current content first, then edit.
-
-Any change to shared nav or footer HTML/CSS must be applied to ALL THREE files:
-
-1. index.html
-2. about.html (contains inline <style> block)
-3. visual-work.html (contains inline <style> block)
-
-Never update only one file.
-
-When changing:
-- nav HTML
-- footer HTML
-- nav CSS
-- footer CSS
-- responsive nav/footer behavior
-
-always sync all three files in the same task.
 
 ## Continuous Improvement
 - Add recurring Claude mistakes to this file after correcting them
@@ -308,9 +253,9 @@ Do not normalize intentional editorial spacing unless it creates obvious layout 
 
 ---
 
-# Portfolio UX & Accessibility Standards
+# UX & Accessibility Standards
 
-Apply these principles across portfolio layouts, case studies, interactions, components, responsive behavior, and frontend implementation.
+Apply these principles across layouts, screens, interactions, components, responsive behavior, and frontend implementation.
 
 Focus: clarity, accessibility, structure, readability, and maintainable UX.
 
@@ -422,20 +367,6 @@ SHOULD support autofill and paste behavior
 NEVER rely on placeholders as labels
 NEVER validate aggressively while typing
 NEVER use ambiguous error language
-
----
-
-## Case Study Standards
-
-MUST explain problem, reasoning, and outcomes clearly
-MUST demonstrate UX thinking, not only visuals
-MUST explain accessibility and usability considerations
-MUST show hierarchy, structure, and decision-making
-SHOULD discuss tradeoffs and constraints honestly
-SHOULD explain why decisions improved usability
-NEVER present mockups without context
-NEVER prioritize aesthetics over UX reasoning
-NEVER use filler case study content
 
 ---
 

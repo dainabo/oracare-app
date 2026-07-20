@@ -67,6 +67,13 @@
     position: absolute;
     top: 0; left: 0; right: 0;
     z-index: 100;
+    background: var(--bg);
+  }
+  .status-bar.status-bar--dark {
+    background: var(--teal);
+  }
+  .status-bar.status-bar--splash {
+    background: transparent;
   }
   .status-bar .time { font-size: 15px; font-weight: 600; letter-spacing: -0.3px; }
   .status-bar .icons { display: flex; gap: 6px; align-items: center; }
@@ -413,6 +420,17 @@
     padding: 8px;
   }
   .btn-welcome-secondary:active { opacity: 0.7; }
+  .btn-welcome-tertiary {
+    background: none;
+    border: none;
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-light);
+    cursor: pointer;
+    padding: 4px;
+  }
+  .btn-welcome-tertiary:active { opacity: 0.7; }
 
   /* ── Footer ── */
   .welcome-footer {
@@ -1296,6 +1314,59 @@
   }
 
   /* ════════════════════════════════════════
+     SCREEN — PROFILE
+  ════════════════════════════════════════ */
+  .profile-header { padding: 54px 24px 4px; flex-shrink: 0; }
+  .profile-body { flex: 1; padding: 20px 24px 0; }
+
+  .profile-user-card {
+    background: white;
+    border-radius: var(--r-lg);
+    box-shadow: var(--shadow-sm);
+    padding: 20px;
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+  .profile-avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--teal-pale);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+  }
+  .profile-user-info { flex: 1; }
+  .profile-user-name { font-family: var(--font-display); font-size: 19px; margin-bottom: 3px; }
+  .profile-user-meta { font-size: 13px; color: var(--text-mid); margin-bottom: 2px; }
+  .profile-user-due { font-size: 13px; color: var(--text-mid); margin-bottom: 10px; }
+
+  .profile-card {
+    background: white;
+    border-radius: var(--r-lg);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+  .profile-row {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .profile-row:last-child { border-bottom: none; }
+  .profile-row-label { font-size: 14px; color: var(--text); }
+  .profile-row-value { font-size: 14px; font-weight: 600; color: var(--text); }
+  .profile-account-label { font-size: 14px; color: var(--text); }
+  .profile-account-sub { font-size: 12px; color: var(--text-light); margin-top: 2px; }
+
+  /* ════════════════════════════════════════
      UTILITIES
   ════════════════════════════════════════ */
   .spacer { flex: 1; }
@@ -1327,7 +1398,7 @@
   <!-- ════════════════════════════
        SPLASH SCREEN
   ════════════════════════════ -->
-  <div class="screen active" id="screen-splash">
+  <div class="screen active" id="screen-splash" onclick="exitSplash()">
     <div class="splash-glow"></div>
     <div class="splash-center">
       <img src="assets/OraCare-White.png" alt="OraCare" style="width: 220px; height: auto; display: block;">
@@ -1380,6 +1451,7 @@
     <div class="welcome-cta">
       <button class="btn-welcome-primary" onclick="navigate('screen-life-stage', 'forward')">Get Started</button>
       <button class="btn-welcome-secondary" onclick="navigate('screen-dashboard', 'forward')">Already have an account? Sign In</button>
+      <button class="btn-welcome-tertiary" onclick="navigate('screen-dashboard', 'forward')">Skip for now</button>
     </div>
 
     <!-- Footer -->
@@ -1403,7 +1475,6 @@
     </div>
 
     <div class="life-stage-intro" style="padding: 0 24px 8px;">
-      <p class="label" style="margin-bottom: 8px;">Step 1 of 3</p>
       <h2 class="heading">Where are you in your journey?</h2>
       <p class="body" style="margin-top: 8px;">OraCare personalizes guidance based on your hormonal life stage.</p>
     </div>
@@ -1699,7 +1770,7 @@
           <div class="dash-name">Week 18 · 2nd Trimester</div>
         </div>
         <button class="notif-btn">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2C10 2 7 4.5 7 9.5V12.5L5.5 14H14.5L13 12.5V9.5C13 4.5 10 2 10 2Z" stroke="white" stroke-width="1.5" stroke-linejoin="round"/><path d="M8 14C8 15.1 8.9 16 10 16C11.1 16 12 15.1 12 14" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M18 8.5C18 6.5 17 5 15.5 4C14.5 3.3 13.3 3 12 3C10.7 3 9.5 3.3 8.5 4C7 5 6 6.5 6 8.5C6 14.5 4 16.5 4 16.5H20C20 16.5 18 14.5 18 8.5Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M13.7 20C13.4 20.6 12.7 21 12 21C11.3 21 10.6 20.6 10.3 20" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           <span class="notif-dot"></span>
         </button>
       </div>
@@ -1823,7 +1894,7 @@
         <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M7 11H15M7 7H15M7 15H11" stroke="#9EA4A8" stroke-width="1.6" stroke-linecap="round"/><rect x="3" y="3" width="16" height="16" rx="3" stroke="#9EA4A8" stroke-width="1.6"/></svg>
         <span>Plan</span>
       </button>
-      <button class="nav-item">
+      <button class="nav-item" onclick="navigate('screen-profile', 'forward')">
         <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="8" r="4" stroke="#9EA4A8" stroke-width="1.6"/><path d="M4 19C4 15.7 7.1 13 11 13C14.9 13 18 15.7 18 19" stroke="#9EA4A8" stroke-width="1.6" stroke-linecap="round"/></svg>
         <span>Profile</span>
       </button>
@@ -1931,7 +2002,7 @@
         <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M7 11H15M7 7H15M7 15H11" stroke="#9EA4A8" stroke-width="1.6" stroke-linecap="round"/><rect x="3" y="3" width="16" height="16" rx="3" stroke="#9EA4A8" stroke-width="1.6"/></svg>
         <span>Plan</span>
       </button>
-      <button class="nav-item">
+      <button class="nav-item" onclick="navigate('screen-profile', 'forward')">
         <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="8" r="4" stroke="#9EA4A8" stroke-width="1.6"/><path d="M4 19C4 15.7 7.1 13 11 13C14.9 13 18 15.7 18 19" stroke="#9EA4A8" stroke-width="1.6" stroke-linecap="round"/></svg>
         <span>Profile</span>
       </button>
@@ -2326,7 +2397,7 @@
         <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M7 11H15M7 7H15M7 15H11" stroke="#9EA4A8" stroke-width="1.6" stroke-linecap="round"/><rect x="3" y="3" width="16" height="16" rx="3" stroke="#9EA4A8" stroke-width="1.6"/></svg>
         <span>Plan</span>
       </button>
-      <button class="nav-item">
+      <button class="nav-item" onclick="navigate('screen-profile', 'forward')">
         <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="8" r="4" stroke="#9EA4A8" stroke-width="1.6"/><path d="M4 19C4 15.7 7.1 13 11 13C14.9 13 18 15.7 18 19" stroke="#9EA4A8" stroke-width="1.6" stroke-linecap="round"/></svg>
         <span>Profile</span>
       </button>
@@ -2363,15 +2434,15 @@
     </div>
 
     <div class="recs-filter">
-      <button class="filter-pill active">All (7)</button>
-      <button class="filter-pill">Daily Habits</button>
-      <button class="filter-pill">Products</button>
-      <button class="filter-pill">Appointments</button>
+      <button class="filter-pill active" data-filter="all">All (7)</button>
+      <button class="filter-pill" data-filter="habits">Daily Habits (3)</button>
+      <button class="filter-pill" data-filter="products">Products (3)</button>
+      <button class="filter-pill" data-filter="appointments">Appointments (1)</button>
     </div>
 
     <div class="recs-list">
 
-      <div class="rec-card priority-high">
+      <div class="rec-card priority-high" data-category="products">
         <div class="rec-icon-wrap" style="background: var(--salmon-pale);">🩸</div>
         <div class="rec-content">
           <div class="rec-meta">
@@ -2382,12 +2453,12 @@
           <div class="rec-body">Your scan indicates gum inflammation. Hard bristles worsen pregnancy gingivitis. Use a soft or extra-soft brush and apply gentle, circular motions at a 45° angle to the gum line.</div>
           <div class="rec-tags">
             <span class="rec-tag" style="background: var(--salmon-pale); color: var(--salmon);">Gingivitis</span>
-            <span class="rec-tag" style="background: var(--border); color: var(--text-mid);">Daily Habit</span>
+            <span class="rec-tag" style="background: var(--border); color: var(--text-mid);">Products</span>
           </div>
         </div>
       </div>
 
-      <div class="rec-card priority-high">
+      <div class="rec-card priority-high" data-category="appointments">
         <div class="rec-icon-wrap" style="background: var(--salmon-pale);">📅</div>
         <div class="rec-content">
           <div class="rec-meta">
@@ -2403,7 +2474,7 @@
         </div>
       </div>
 
-      <div class="rec-card priority-medium">
+      <div class="rec-card priority-medium" data-category="products">
         <div class="rec-icon-wrap" style="background: #FEF3E2;">💊</div>
         <div class="rec-content">
           <div class="rec-meta">
@@ -2419,7 +2490,7 @@
         </div>
       </div>
 
-      <div class="rec-card priority-medium">
+      <div class="rec-card priority-medium" data-category="habits">
         <div class="rec-icon-wrap" style="background: #FEF3E2;">💧</div>
         <div class="rec-content">
           <div class="rec-meta">
@@ -2435,7 +2506,7 @@
         </div>
       </div>
 
-      <div class="rec-card priority-low">
+      <div class="rec-card priority-low" data-category="products">
         <div class="rec-icon-wrap" style="background: var(--teal-pale);">🦷</div>
         <div class="rec-content">
           <div class="rec-meta">
@@ -2446,12 +2517,12 @@
           <div class="rec-body">Fluoride toothpaste is safe throughout pregnancy and essential for enamel protection. Your enamel score is currently good — maintain it. Avoid whitening toothpastes which can increase sensitivity.</div>
           <div class="rec-tags">
             <span class="rec-tag" style="background: var(--teal-pale); color: var(--teal);">Enamel</span>
-            <span class="rec-tag" style="background: var(--border); color: var(--text-mid);">Daily Habit</span>
+            <span class="rec-tag" style="background: var(--border); color: var(--text-mid);">Products</span>
           </div>
         </div>
       </div>
 
-      <div class="rec-card priority-low">
+      <div class="rec-card priority-low" data-category="habits">
         <div class="rec-icon-wrap" style="background: var(--teal-pale);">🤢</div>
         <div class="rec-content">
           <div class="rec-meta">
@@ -2467,7 +2538,7 @@
         </div>
       </div>
 
-      <div class="rec-card priority-low">
+      <div class="rec-card priority-low" data-category="habits">
         <div class="rec-icon-wrap" style="background: #ECFDF5;">🥦</div>
         <div class="rec-content">
           <div class="rec-meta">
@@ -2498,8 +2569,97 @@
         <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M7 11H15M7 7H15M7 15H11" stroke="#2E7D7D" stroke-width="1.6" stroke-linecap="round"/><rect x="3" y="3" width="16" height="16" rx="3" stroke="#2E7D7D" stroke-width="1.6"/></svg>
         <span>Plan</span>
       </button>
-      <button class="nav-item">
+      <button class="nav-item" onclick="navigate('screen-profile', 'forward')">
         <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="8" r="4" stroke="#9EA4A8" stroke-width="1.6"/><path d="M4 19C4 15.7 7.1 13 11 13C14.9 13 18 15.7 18 19" stroke="#9EA4A8" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <span>Profile</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════
+       SCREEN: PROFILE
+  ════════════════════════════ -->
+  <div class="screen" id="screen-profile">
+    <div class="profile-header">
+      <h1 class="heading">Profile</h1>
+    </div>
+
+    <div class="profile-body">
+      <div class="profile-user-card">
+        <div class="profile-avatar">👤</div>
+        <div class="profile-user-info">
+          <div class="profile-user-name">Sarah Johnson</div>
+          <div class="profile-user-meta">Week 18 · 2nd Trimester</div>
+          <div class="profile-user-due">Due Date: October 14</div>
+          <span class="chip chip-teal">Premium Trial Active</span>
+        </div>
+      </div>
+
+      <div class="section-title">Pregnancy Summary</div>
+      <div class="profile-card">
+        <div class="profile-row">
+          <span class="profile-row-label">Current Trimester</span>
+          <span class="profile-row-value">2nd Trimester</span>
+        </div>
+        <div class="profile-row">
+          <span class="profile-row-label">Oral Health Score</span>
+          <span class="profile-row-value">72</span>
+        </div>
+        <div class="profile-row">
+          <span class="profile-row-label">Last AI Scan</span>
+          <span class="profile-row-value">Today</span>
+        </div>
+        <div class="profile-row">
+          <span class="profile-row-label">Current Care Plan</span>
+          <span class="profile-row-value">7 recommendations</span>
+        </div>
+      </div>
+
+      <div class="section-title">Account</div>
+      <div class="profile-card">
+        <div class="profile-row">
+          <span class="profile-account-label">Notifications</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="color: var(--text-light); flex-shrink:0;"><path d="M6 4L10 8L6 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="profile-row">
+          <div>
+            <div class="profile-account-label">Scan History</div>
+            <div class="profile-account-sub">Last scan: Today, 9:41 AM</div>
+          </div>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="color: var(--text-light); flex-shrink:0;"><path d="M6 4L10 8L6 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="profile-row">
+          <span class="profile-account-label">Subscription</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="color: var(--text-light); flex-shrink:0;"><path d="M6 4L10 8L6 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="profile-row">
+          <span class="profile-account-label">Privacy &amp; Data</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="color: var(--text-light); flex-shrink:0;"><path d="M6 4L10 8L6 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="profile-row">
+          <span class="profile-account-label">Help &amp; Support</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="color: var(--text-light); flex-shrink:0;"><path d="M6 4L10 8L6 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+
+      <p style="text-align: center; font-size: 12px; color: var(--text-light); padding: 4px 0 24px;">Version 1.0 – Hackathon MVP</p>
+    </div>
+
+    <div class="bottom-nav">
+      <button class="nav-item" onclick="navigate('screen-dashboard', 'back')">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 9.5L11 3L19 9.5V19C19 19.6 18.6 20 18 20H14V15H8V20H4C3.4 20 3 19.6 3 19V9.5Z" stroke="#9EA4A8" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        <span>Home</span>
+      </button>
+      <button class="nav-item" onclick="navigate('screen-scan-instructions', 'forward')">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="3" y="5" width="16" height="13" rx="2" stroke="#9EA4A8" stroke-width="1.6"/><circle cx="11" cy="11.5" r="3" stroke="#9EA4A8" stroke-width="1.6"/><path d="M8 5V4C8 3.4 8.4 3 9 3H13C13.6 3 14 3.4 14 4V5" stroke="#9EA4A8" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <span>Scan</span>
+      </button>
+      <button class="nav-item" onclick="navigate('screen-recommendations', 'forward')">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M7 11H15M7 7H15M7 15H11" stroke="#9EA4A8" stroke-width="1.6" stroke-linecap="round"/><rect x="3" y="3" width="16" height="16" rx="3" stroke="#9EA4A8" stroke-width="1.6"/></svg>
+        <span>Plan</span>
+      </button>
+      <button class="nav-item active">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="8" r="4" stroke="#2E7D7D" stroke-width="1.6"/><path d="M4 19C4 15.7 7.1 13 11 13C14.9 13 18 15.7 18 19" stroke="#2E7D7D" stroke-width="1.6" stroke-linecap="round"/></svg>
         <span>Profile</span>
       </button>
     </div>
@@ -2511,6 +2671,9 @@
   // ─── NAVIGATION ───
   let currentScreen = 'screen-splash';
   const history = ['screen-splash'];
+  // Screens with a dark, scrollable hero — status bar gets a matching dark background + white text.
+  // (screen-splash is handled separately below: white text, but no background — it never scrolls.)
+  const darkScreens = ['screen-dashboard', 'screen-premium', 'screen-scan-instructions'];
 
   function navigate(targetId, direction) {
     if (targetId === currentScreen) return;
@@ -2520,13 +2683,14 @@
 
     if (!target) return;
 
-    // Update status bar color based on screen
-    const darkScreens = ['screen-splash', 'screen-scan-instructions'];
+    // Update status bar based on screen
     const statusBar = document.getElementById('statusBar');
     if (darkScreens.includes(targetId)) {
       statusBar.style.color = 'white';
+      statusBar.classList.add('status-bar--dark');
     } else {
       statusBar.style.color = '';
+      statusBar.classList.remove('status-bar--dark');
     }
 
     // Animate
@@ -2631,6 +2795,11 @@
     pill.addEventListener('click', function() {
       this.closest('.recs-filter').querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
       this.classList.add('active');
+
+      const filter = this.dataset.filter;
+      document.querySelectorAll('.rec-card').forEach(card => {
+        card.style.display = (filter === 'all' || card.dataset.category === filter) ? '' : 'none';
+      });
     });
   });
 
@@ -2694,11 +2863,15 @@
   }
 
   // ─── INIT STATUS BAR ───
-  // Splash is dark — start with white status bar
+  // Splash never scrolls, so it needs white text and a transparent background (its own gradient shows through)
   document.getElementById('statusBar').style.color = 'white';
+  document.getElementById('statusBar').classList.add('status-bar--splash');
 
-  // ─── SPLASH AUTO-ADVANCE ───
-  setTimeout(() => {
+  // ─── SPLASH AUTO-ADVANCE (and tap-to-skip) ───
+  let splashExited = false;
+  function exitSplash() {
+    if (splashExited) return;
+    splashExited = true;
     const splash = document.getElementById('screen-splash');
     const welcome = document.getElementById('screen-welcome');
     splash.classList.add('exiting');
@@ -2707,8 +2880,10 @@
       welcome.classList.add('active');
       currentScreen = 'screen-welcome';
       document.getElementById('statusBar').style.color = '';
+      document.getElementById('statusBar').classList.remove('status-bar--dark', 'status-bar--splash');
     }, 760);
-  }, 2600);
+  }
+  setTimeout(exitSplash, 2600);
 
   // Update clock
   function updateTime() {
