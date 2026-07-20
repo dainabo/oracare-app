@@ -130,6 +130,75 @@
     });
   });
 
+  // ─── SCAN MODE (trial vs demo) ───
+  let scanMode = 'trial';
+
+  function updateCaptureCta() {
+    const btn = document.getElementById('captureCta');
+    if (btn) btn.textContent = scanMode === 'demo' ? 'Try Demo Scan' : 'Scan My Smile';
+  }
+
+  // Toggles analyzing/results copy between the real-scan and demo-scan wording.
+  function applyScanMode() {
+    const isDemo = scanMode === 'demo';
+
+    const analyzingTitle = document.getElementById('analyzingTitle');
+    if (analyzingTitle) analyzingTitle.textContent = isDemo ? 'Analyzing Demo Scan' : 'Analyzing Your Scan';
+
+    const badge = document.getElementById('resultsDemoBadge');
+    if (badge) badge.style.display = isDemo ? 'inline-flex' : 'none';
+
+    const callout = document.getElementById('resultsDemoCallout');
+    if (callout) callout.style.display = isDemo ? 'flex' : 'none';
+
+    const heading = document.getElementById('resultsHeading');
+    if (heading) heading.innerHTML = isDemo ? 'Sample Oral Health<br>Report' : 'Your Oral Health<br>Report';
+  }
+
+  function startTrialScan() {
+    scanMode = 'trial';
+    updateCaptureCta();
+    navigate('screen-scan-instructions', 'forward');
+  }
+
+  function startDemoScan() {
+    scanMode = 'demo';
+    navigate('screen-scan-analyzing', 'forward');
+    setTimeout(runAnalysis, 400);
+  }
+
+  function backFromResults() {
+    navigate(scanMode === 'demo' ? 'screen-scan-teaser' : 'screen-scan-instructions', 'back');
+  }
+
+  function enterCapture() {
+    navigate('screen-scan-capture', 'forward');
+    setTimeout(runCaptureChecklist, 400);
+  }
+
+  function runCaptureChecklist() {
+    for (let i = 1; i <= 5; i++) {
+      const item = document.getElementById('capture-check-' + i);
+      const icon = document.getElementById('capture-check-icon-' + i);
+      if (!item) continue;
+      item.classList.remove('done');
+      const svg = icon.querySelector('svg');
+      if (svg) svg.style.display = 'none';
+    }
+    for (let i = 1; i <= 5; i++) {
+      setTimeout(() => markCaptureCheck(i), 300 + (i - 1) * 260);
+    }
+  }
+
+  function markCaptureCheck(i) {
+    const item = document.getElementById('capture-check-' + i);
+    const icon = document.getElementById('capture-check-icon-' + i);
+    if (!item) return;
+    item.classList.add('done');
+    const svg = icon.querySelector('svg');
+    if (svg) svg.style.display = 'block';
+  }
+
   // ─── SCAN ANALYSIS ───
   let analyzeTimer = null;
 
@@ -140,6 +209,8 @@
   }
 
   function runAnalysis() {
+    applyScanMode();
+
     // Reset all checklist items
     [1,2,3,4].forEach(i => {
       const item = document.getElementById('check-' + i);
