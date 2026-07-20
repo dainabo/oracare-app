@@ -1,0 +1,81 @@
+<svg width="640" height="1222" viewBox="0 0 640 1222" xmlns="http://www.w3.org/2000/svg">
+
+  <defs>
+    <filter id="cardShadow" x="-20%" y="-30%" width="140%" height="180%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#2F3133" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+  <rect width="640" height="1222" fill="#FFFFFF"/>
+
+  <text x="320.0" y="44" text-anchor="middle" font-family="'Manrope', system-ui, sans-serif" font-size="24" font-weight="700" fill="#2F3133">OraCare — User Flow</text>
+  <text x="320.0" y="66" text-anchor="middle" font-family="'Manrope', system-ui, sans-serif" font-size="12.5" font-weight="500" fill="#5A5E62">Primary journey: onboarding to personalized care plan</text>
+<rect x="172.0" y="96" width="296" height="64" rx="16" fill="#FFFFFF" stroke="#EDE9E7" stroke-width="1" filter="url(#cardShadow)"/>
+
+  <circle cx="206.0" cy="128.0" r="16" fill="#E8F4F4"/>
+  <g transform="translate(195.0,117.0) scale(0.92)"><circle cx="12" cy="12" r="9" stroke="#2E7D7D" stroke-width="2" fill="none"/><path d="M10 8.5 L15.5 12 L10 15.5 Z" stroke="#2E7D7D" stroke-width="2" fill="none" stroke-linejoin="round"/></g>
+<text x="236.0" y="125.0" font-family="'Manrope', system-ui, sans-serif" font-size="14.5" font-weight="700" fill="#2F3133">Welcome</text>
+<text x="236.0" y="143.0" font-family="'Manrope', system-ui, sans-serif" font-size="11.5" font-weight="500" fill="#5A5E62">Get started</text>
+  <line x1="320.0" y1="166" x2="320.0" y2="191" stroke="#5A5E62" stroke-width="1.5"/>
+  <path d="M 315.5 188 L 320.0 195 L 324.5 188" stroke="#5A5E62" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="172.0" y="200" width="296" height="64" rx="16" fill="#FFFFFF" stroke="#EDE9E7" stroke-width="1" filter="url(#cardShadow)"/>
+
+  <circle cx="206.0" cy="232.0" r="16" fill="#E8F4F4"/>
+  <g transform="translate(195.0,221.0) scale(0.92)"><rect x="5" y="3" width="14" height="18" rx="2" stroke="#2E7D7D" stroke-width="2" fill="none"/><path d="M8.5 9 L11 11.5 L16 6.5" stroke="#2E7D7D" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.5 15.5 H15.5" stroke="#2E7D7D" stroke-width="2" fill="none" stroke-linecap="round"/></g>
+<text x="236.0" y="229.0" font-family="'Manrope', system-ui, sans-serif" font-size="14.5" font-weight="700" fill="#2F3133">Onboarding</text>
+<text x="236.0" y="247.0" font-family="'Manrope', system-ui, sans-serif" font-size="11.5" font-weight="500" fill="#5A5E62">Quick setup</text>
+  <line x1="320.0" y1="270" x2="320.0" y2="295" stroke="#5A5E62" stroke-width="1.5"/>
+  <path d="M 315.5 292 L 320.0 299 L 324.5 292" stroke="#5A5E62" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="172.0" y="304" width="296" height="64" rx="16" fill="#FFFFFF" stroke="#EDE9E7" stroke-width="1" filter="url(#cardShadow)"/>
+
+  <circle cx="206.0" cy="336.0" r="16" fill="#E8F4F4"/>
+  <g transform="translate(195.0,325.0) scale(0.92)"><rect x="5" y="4" width="14" height="17" rx="2" stroke="#2E7D7D" stroke-width="2" fill="none"/><path d="M9 3.5 H15 V6 H9 Z" stroke="#2E7D7D" stroke-width="2" fill="none" stroke-linejoin="round"/><path d="M8.5 12 H15.5 M8.5 16 H13" stroke="#2E7D7D" stroke-width="2" fill="none" stroke-linecap="round"/></g>
+<text x="236.0" y="333.0" font-family="'Manrope', system-ui, sans-serif" font-size="14.5" font-weight="700" fill="#2F3133">Assessment</text>
+<text x="236.0" y="351.0" font-family="'Manrope', system-ui, sans-serif" font-size="11.5" font-weight="500" fill="#5A5E62">Life stage</text>
+  <line x1="320.0" y1="374" x2="320.0" y2="399" stroke="#5A5E62" stroke-width="1.5"/>
+  <path d="M 315.5 396 L 320.0 403 L 324.5 396" stroke="#5A5E62" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="172.0" y="408" width="296" height="64" rx="16" fill="#FFFFFF" stroke="#EDE9E7" stroke-width="1" filter="url(#cardShadow)"/>
+
+  <circle cx="206.0" cy="440.0" r="16" fill="#E8F4F4"/>
+  <g transform="translate(195.0,429.0) scale(0.92)"><path d="M4 10.5 L12 4 L20 10.5 V20 C20 20.6 19.6 21 19 21 H15 V15 H9 V21 H5 C4.4 21 4 20.6 4 20 Z" stroke="#2E7D7D" stroke-width="2" fill="none" stroke-linejoin="round"/></g>
+<text x="236.0" y="437.0" font-family="'Manrope', system-ui, sans-serif" font-size="14.5" font-weight="700" fill="#2F3133">Dashboard</text>
+<text x="236.0" y="455.0" font-family="'Manrope', system-ui, sans-serif" font-size="11.5" font-weight="500" fill="#5A5E62">Health overview</text><line x1="320.0" y1="472" x2="320.0" y2="492" stroke="#5A5E62" stroke-width="1.5"/><path d="M 168 492 L 176 492 Q 320.0 492 320.0 492 Q 464 492 472 492" stroke="none" fill="none"/><path d="M 168 492 L 472 492" stroke="#5A5E62" stroke-width="1.5"/><circle cx="320.0" cy="492" r="3" fill="#5A5E62"/>
+  <line x1="168" y1="492" x2="168" y2="507" stroke="#5A5E62" stroke-width="1.5"/>
+  <path d="M 163.5 504 L 168 511 L 172.5 504" stroke="#5A5E62" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><line x1="472" y1="492" x2="472" y2="504" stroke="#5A5E62" stroke-width="1.5"/><rect x="52.0" y="520" width="232" height="64" rx="16" fill="#FFFFFF" stroke="#EDE9E7" stroke-width="1" filter="url(#cardShadow)"/>
+
+  <circle cx="86.0" cy="552.0" r="16" fill="#E8F4F4"/>
+  <g transform="translate(75.0,541.0) scale(0.92)"><rect x="3" y="6" width="18" height="14" rx="2.5" stroke="#2E7D7D" stroke-width="2" fill="none"/><circle cx="12" cy="13" r="3.4" stroke="#2E7D7D" stroke-width="2" fill="none"/><path d="M8.5 6 V4.5 C8.5 3.7 9.1 3 10 3 H14 C14.9 3 15.5 3.7 15.5 4.5 V6" stroke="#2E7D7D" stroke-width="2" fill="none" stroke-linecap="round"/></g>
+<text x="116.0" y="549.0" font-family="'Manrope', system-ui, sans-serif" font-size="14.5" font-weight="700" fill="#2F3133">AI Scan</text>
+<text x="116.0" y="567.0" font-family="'Manrope', system-ui, sans-serif" font-size="11.5" font-weight="500" fill="#5A5E62">Capture image</text>
+  <line x1="168" y1="590" x2="168" y2="617.0" stroke="#5A5E62" stroke-width="1.5"/>
+  <path d="M 163.5 614.0 L 168 621.0 L 172.5 614.0" stroke="#5A5E62" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M 168 624.0 L 252.0 650 L 168 676.0 L 84.0 650 Z" fill="#FDF0EE" stroke="#E88C7D" stroke-width="1.5" stroke-linejoin="round"/><text x="168" y="654" text-anchor="middle" font-family="'Manrope', system-ui, sans-serif" font-size="12.5" font-weight="700" fill="#E88C7D">Premium Trial?</text><path d="M 168 676.0 L 168 688.0 Q 168 698.0 160 698.0 L 96 698.0 Q 88 698.0 88 708.0 L 88 707.0" stroke="#E88C7D" stroke-width="1.5" fill="none"/><path d="M 83.5 704.0 L 88 711.0 L 92.5 704.0" stroke="#E88C7D" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M 168 676.0 L 168 688.0 Q 168 698.0 176 698.0 L 240 698.0 Q 248 698.0 248 708.0 L 248 707.0" stroke="#5A5E62" stroke-width="1.5" fill="none"/><path d="M 243.5 704.0 L 248 711.0 L 252.5 704.0" stroke="#5A5E62" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><text x="74" y="692.0" text-anchor="end" font-family="'Manrope', system-ui, sans-serif" font-size="10.5" font-weight="700" fill="#E88C7D">YES</text><text x="262" y="692.0" text-anchor="start" font-family="'Manrope', system-ui, sans-serif" font-size="10.5" font-weight="700" fill="#5A5E62">NO</text><rect x="29.0" y="716.0" width="118" height="30" rx="15" fill="#FFFFFF" stroke="#E88C7D" stroke-width="1.5"/><text x="88" y="735.0" text-anchor="middle" font-family="'Manrope', system-ui, sans-serif" font-size="11" font-weight="600" fill="#E88C7D">Free Trial</text><rect x="189.0" y="716.0" width="118" height="30" rx="15" fill="#FFFFFF" stroke="#5A5E62" stroke-width="1.5"/><text x="248" y="735.0" text-anchor="middle" font-family="'Manrope', system-ui, sans-serif" font-size="11" font-weight="600" fill="#5A5E62">Limited Access</text><path d="M 88 746.0 L 88 758.0 Q 88 768.0 96 768.0 L 160 768.0 Q 168 768.0 168 778.0" stroke="#E88C7D" stroke-width="1.5" fill="none"/><path d="M 248 746.0 L 248 758.0 Q 248 768.0 240 768.0 L 176 768.0 Q 168 768.0 168 778.0" stroke="#5A5E62" stroke-width="1.5" fill="none"/>
+  <line x1="168" y1="778.0" x2="168" y2="773.0" stroke="#5A5E62" stroke-width="1.5"/>
+  <path d="M 163.5 770.0 L 168 777.0 L 172.5 770.0" stroke="#5A5E62" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="52.0" y="782.0" width="232" height="64" rx="16" fill="#FFFFFF" stroke="#EDE9E7" stroke-width="1" filter="url(#cardShadow)"/>
+
+  <circle cx="86.0" cy="814.0" r="16" fill="#E8F4F4"/>
+  <g transform="translate(75.0,803.0) scale(0.92)"><circle cx="12" cy="12" r="8" stroke="#2E7D7D" stroke-width="2" fill="none"/><circle cx="12" cy="12" r="3.4" stroke="#2E7D7D" stroke-width="2" fill="none"/></g>
+<text x="116.0" y="811.0" font-family="'Manrope', system-ui, sans-serif" font-size="14.5" font-weight="700" fill="#2F3133">Capture Smile</text>
+<text x="116.0" y="829.0" font-family="'Manrope', system-ui, sans-serif" font-size="11.5" font-weight="500" fill="#5A5E62">Take photo</text>
+  <line x1="168" y1="852.0" x2="168" y2="877.0" stroke="#5A5E62" stroke-width="1.5"/>
+  <path d="M 163.5 874.0 L 168 881.0 L 172.5 874.0" stroke="#5A5E62" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="52.0" y="886.0" width="232" height="64" rx="16" fill="#FFFFFF" stroke="#EDE9E7" stroke-width="1" filter="url(#cardShadow)"/>
+
+  <circle cx="86.0" cy="918.0" r="16" fill="#E8F4F4"/>
+  <g transform="translate(75.0,907.0) scale(0.92)"><path d="M12 3 V6 M12 18 V21 M3 12 H6 M18 12 H21" stroke="#2E7D7D" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="12" cy="12" r="5.5" stroke="#2E7D7D" stroke-width="2" fill="none"/></g>
+<text x="116.0" y="915.0" font-family="'Manrope', system-ui, sans-serif" font-size="14.5" font-weight="700" fill="#2F3133">Analysis</text>
+<text x="116.0" y="933.0" font-family="'Manrope', system-ui, sans-serif" font-size="11.5" font-weight="500" fill="#5A5E62">AI processing</text>
+  <line x1="168" y1="956.0" x2="168" y2="981.0" stroke="#5A5E62" stroke-width="1.5"/>
+  <path d="M 163.5 978.0 L 168 985.0 L 172.5 978.0" stroke="#5A5E62" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="52.0" y="990.0" width="232" height="64" rx="16" fill="#FFFFFF" stroke="#EDE9E7" stroke-width="1" filter="url(#cardShadow)"/>
+
+  <circle cx="86.0" cy="1022.0" r="16" fill="#E8F4F4"/>
+  <g transform="translate(75.0,1011.0) scale(0.92)"><rect x="6" y="3" width="12" height="18" rx="2" stroke="#2E7D7D" stroke-width="2" fill="none"/><path d="M9 16 V13 M12 16 V10.5 M15 16 V12" stroke="#2E7D7D" stroke-width="2" fill="none" stroke-linecap="round"/></g>
+<text x="116.0" y="1019.0" font-family="'Manrope', system-ui, sans-serif" font-size="14.5" font-weight="700" fill="#2F3133">Report</text>
+<text x="116.0" y="1037.0" font-family="'Manrope', system-ui, sans-serif" font-size="11.5" font-weight="500" fill="#5A5E62">Scan results</text><rect x="356.0" y="520" width="232" height="64" rx="16" fill="#FFFFFF" stroke="#EDE9E7" stroke-width="1" filter="url(#cardShadow)"/>
+
+  <circle cx="390.0" cy="552.0" r="16" fill="#E8F4F4"/>
+  <g transform="translate(379.0,541.0) scale(0.92)"><rect x="3" y="3" width="16" height="16" rx="3" stroke="#2E7D7D" stroke-width="1.6" fill="none"/><path d="M7 11 H15 M7 7 H15 M7 15 H11" stroke="#2E7D7D" stroke-width="1.6" fill="none" stroke-linecap="round"/></g>
+<text x="420.0" y="549.0" font-family="'Manrope', system-ui, sans-serif" font-size="14.5" font-weight="700" fill="#2F3133">Care Plan</text>
+<text x="420.0" y="567.0" font-family="'Manrope', system-ui, sans-serif" font-size="11.5" font-weight="500" fill="#5A5E62">Daily guidance</text><path d="M 168 1054.0 L 168 1062.0 Q 168 1070.0 176 1070.0 L 312.0 1070.0 Q 320.0 1070.0 320.0 1078.0 L 320.0 1086.0" stroke="#5A5E62" stroke-width="1.5" fill="none"/><path d="M 472 584 L 472 827.0 Q 472 835.0 464 835.0 L 328.0 835.0 Q 320.0 835.0 320.0 843.0 L 320.0 1086.0" stroke="#5A5E62" stroke-width="1.5" fill="none"/><circle cx="320.0" cy="1086.0" r="3" fill="#5A5E62"/>
+  <line x1="320.0" y1="1086.0" x2="320.0" y2="1101.0" stroke="#5A5E62" stroke-width="1.5"/>
+  <path d="M 315.5 1098.0 L 320.0 1105.0 L 324.5 1098.0" stroke="#5A5E62" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="172.0" y="1110.0" width="296" height="64" rx="16" fill="#FFFFFF" stroke="#EDE9E7" stroke-width="1" filter="url(#cardShadow)"/>
+
+  <circle cx="206.0" cy="1142.0" r="16" fill="#E8F4F4"/>
+  <g transform="translate(195.0,1131.0) scale(0.92)"><circle cx="11" cy="8" r="4" stroke="#2E7D7D" stroke-width="1.6" fill="none"/><path d="M4 19 C4 15.7 7.1 13 11 13 C14.9 13 18 15.7 18 19" stroke="#2E7D7D" stroke-width="1.6" fill="none" stroke-linecap="round"/></g>
+<text x="236.0" y="1139.0" font-family="'Manrope', system-ui, sans-serif" font-size="14.5" font-weight="700" fill="#2F3133">Profile &amp; Progress</text>
+<text x="236.0" y="1157.0" font-family="'Manrope', system-ui, sans-serif" font-size="11.5" font-weight="500" fill="#5A5E62">History</text>
+</svg>
