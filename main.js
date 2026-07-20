@@ -42,9 +42,6 @@
 
       currentScreen = targetId;
 
-      // Scroll to top
-      target.scrollTop = 0;
-
       // Trigger ring animation on dashboard
       if (targetId === 'screen-dashboard') {
         const ring = target.querySelector('.score-ring-fill');
@@ -54,7 +51,7 @@
           ring.style.animation = '';
         }
       }
-    }, 380);
+    }, 300);
   }
 
   // ─── ASSESSMENT STEPS ───

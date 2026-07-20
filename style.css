@@ -85,16 +85,16 @@
 
   /* Transition animations */
   .screen.slide-in {
-    animation: slideIn 0.38s cubic-bezier(0.32, 0.72, 0, 1) forwards;
+    animation: slideIn 0.3s cubic-bezier(0.32, 0.72, 0, 1) forwards;
   }
   .screen.slide-out {
-    animation: slideOut 0.38s cubic-bezier(0.32, 0.72, 0, 1) forwards;
+    animation: slideOut 0.3s cubic-bezier(0.32, 0.72, 0, 1) forwards;
   }
   .screen.slide-back-in {
-    animation: slideBackIn 0.38s cubic-bezier(0.32, 0.72, 0, 1) forwards;
+    animation: slideBackIn 0.3s cubic-bezier(0.32, 0.72, 0, 1) forwards;
   }
   .screen.slide-back-out {
-    animation: slideBackOut 0.38s cubic-bezier(0.32, 0.72, 0, 1) forwards;
+    animation: slideBackOut 0.3s cubic-bezier(0.32, 0.72, 0, 1) forwards;
   }
   @keyframes slideIn { from { transform: translateX(100%); opacity: 0.6; } to { transform: translateX(0); opacity: 1; } }
   @keyframes slideOut { from { transform: translateX(0); opacity: 1; } to { transform: translateX(-30%); opacity: 0; } }
