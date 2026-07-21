@@ -138,21 +138,44 @@
   .comp-block-title { font-size: 15px; font-weight: 700; margin: 0 0 20px; }
   .comp-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: flex-start; }
 
-  /* form controls */
-  .tri-btn { width: 140px; padding: 20px 12px; border-radius: var(--r-md); border: 1px solid var(--border); text-align: center; background: white; }
-  .tri-btn.selected { border: 1.5px solid var(--teal); background: var(--teal-pale); }
-  .tri-num { font-family: var(--font-display); font-size: 24px; color: var(--teal); display: block; }
-  .tri-label { font-size: 13px; margin-top: 4px; display: block; }
-  .tri-weeks { font-size: 11px; color: var(--text-light); display: block; }
-  .symptom-row { display: flex; align-items: center; gap: 12px; padding: 16px; background: white; border: 1px solid var(--border); border-radius: var(--r-md); width: 280px; }
-  .symptom-check { width: 22px; height: 22px; border-radius: 7px; border: 1.5px solid var(--border); flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
-  .symptom-check.checked { background: var(--teal); border-color: var(--teal); color: white; font-size: 12px; }
-  .symptom-text { font-size: 14px; }
+  /* form controls — values match .tri-btn / .symptom-item in style.css exactly */
+  .tri-btn { width: 110px; padding: 16px 10px; border-radius: 16px; border: 1.5px solid var(--border); text-align: center; background: white; font-family: var(--font-body); }
+  .tri-btn.selected { border-color: var(--teal); background: var(--teal-pale); box-shadow: 0 0 0 3px rgba(46,125,125,0.1); }
+  .tri-btn .tri-num { font-family: var(--font-display); font-size: 28px; color: var(--teal); display: block; }
+  .tri-btn .tri-label { font-size: 11px; color: var(--text-light); margin-top: 4px; font-weight: 500; display: block; }
+  .tri-btn .tri-weeks { font-size: 10px; color: var(--text-light); margin-top: 2px; display: block; }
+  .tri-btn.selected .tri-label, .tri-btn.selected .tri-weeks { color: var(--teal); }
 
-  /* progress bar */
-  .metric-bar-demo { width: 320px; }
-  .metric-bar-track { height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; margin-top: 10px; }
-  .metric-bar-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, #34D399, #10B981); width: 82%; }
+  .symptom-item { display: flex; align-items: center; gap: 14px; padding: 16px 18px; background: white; border: 1.5px solid var(--border); border-radius: 14px; width: 300px; }
+  .symptom-item.checked { border-color: var(--teal); background: var(--teal-pale); }
+  .symptom-check { width: 22px; height: 22px; border-radius: 7px; border: 1.5px solid var(--border); background: white; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+  .symptom-item.checked .symptom-check { background: var(--teal); border-color: var(--teal); }
+  .symptom-icon { font-size: 20px; }
+  .symptom-text { flex: 1; }
+  .symptom-name { font-size: 15px; font-weight: 500; }
+  .symptom-sub { font-size: 12px; color: var(--text-light); margin-top: 2px; }
+
+  /* checklist checkmark — matches .check-item / .check-icon in style.css exactly */
+  .check-item { display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: white; border-radius: 14px; font-size: 14px; font-weight: 500; color: var(--text-light); box-shadow: var(--shadow-sm); width: 280px; }
+  .check-item.done { color: var(--text); }
+  .check-icon { width: 26px; height: 26px; border-radius: 50%; background: var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .check-item.done .check-icon { background: var(--teal); }
+
+  /* premium check circle — matches .premium-check-circle in style.css exactly */
+  .premium-check-circle { width: 26px; height: 26px; border-radius: 50%; background: var(--teal-pale); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
+  /* assessment progress bar — matches .assessment-progress in style.css exactly */
+  .assessment-progress-demo { width: 280px; height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
+  .assessment-progress-demo-fill { height: 100%; width: 43%; background: linear-gradient(90deg, var(--teal), var(--teal-light)); border-radius: 2px; }
+
+  /* progress / metric bar — matches .metric-bar in style.css exactly, all 3 real variants */
+  .metric-bar-demo { width: 280px; }
+  .metric-bar-demo-label { font-size: 12px; color: var(--text-light); margin: 0 0 10px; }
+  .metric-bar-track { height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
+  .metric-bar-fill { height: 100%; border-radius: 4px; }
+  .bar-good { background: linear-gradient(90deg, #34D399, #10B981); width: 82%; }
+  .bar-warn { background: linear-gradient(90deg, #FCD34D, #F59E0B); width: 54%; }
+  .bar-poor { background: linear-gradient(90deg, var(--salmon-light), var(--salmon)); width: 42%; }
 
   /* icons */
   .icon-grid { display: flex; gap: 16px; flex-wrap: wrap; }
@@ -223,10 +246,10 @@
         </div>
         <div class="hero-cell">
           <div class="m-nav">
-            <div class="m-nav-item active">🏠<span>Home</span></div>
-            <div class="m-nav-item">📷<span>Scan</span></div>
-            <div class="m-nav-item">📋<span>Plan</span></div>
-            <div class="m-nav-item">👤<span>Profile</span></div>
+            <div class="m-nav-item active"><svg width="20" height="20" viewBox="0 0 22 22" fill="none"><path d="M3 9.5L11 3L19 9.5V19C19 19.6 18.6 20 18 20H14V15H8V20H4C3.4 20 3 19.6 3 19V9.5Z" stroke="#2E7D7D" stroke-width="1.6" stroke-linejoin="round"/></svg><span>Home</span></div>
+            <div class="m-nav-item"><svg width="20" height="20" viewBox="0 0 22 22" fill="none"><rect x="3" y="5" width="16" height="13" rx="2" stroke="#9EA4A8" stroke-width="1.6"/><circle cx="11" cy="11.5" r="3" stroke="#9EA4A8" stroke-width="1.6"/><path d="M8 5V4C8 3.4 8.4 3 9 3H13C13.6 3 14 3.4 14 4V5" stroke="#9EA4A8" stroke-width="1.6" stroke-linecap="round"/></svg><span>Scan</span></div>
+            <div class="m-nav-item"><svg width="20" height="20" viewBox="0 0 22 22" fill="none"><path d="M7 11H15M7 7H15M7 15H11" stroke="#9EA4A8" stroke-width="1.6" stroke-linecap="round"/><rect x="3" y="3" width="16" height="16" rx="3" stroke="#9EA4A8" stroke-width="1.6"/></svg><span>Plan</span></div>
+            <div class="m-nav-item"><svg width="20" height="20" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="8" r="4" stroke="#9EA4A8" stroke-width="1.6"/><path d="M4 19C4 15.7 7.1 13 11 13C14.9 13 18 15.7 18 19" stroke="#9EA4A8" stroke-width="1.6" stroke-linecap="round"/></svg><span>Profile</span></div>
           </div>
           <span class="hero-cell-caption">Bottom Nav</span>
         </div>
@@ -257,10 +280,15 @@
     <h2 class="sec-title">Brand</h2>
     <div style="display:flex; gap:80px; flex-wrap:wrap;">
       <div style="flex: 1; min-width:480px; max-width:560px;">
-        <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px;">
-          <div style="width:40px;height:40px;border-radius:50%;background:var(--teal);"></div>
-          <p style="font-family:var(--font-display); font-size:30px; margin:0;">OraCare</p>
+        <div style="display:flex; gap:24px; margin-bottom:24px;">
+          <div style="background:white; border:1px solid var(--border); border-radius:var(--r-md); padding:24px 32px; display:flex; align-items:center; justify-content:center;">
+            <img src="assets/OraCare-Color.png" alt="OraCare" style="width:160px; height:auto; display:block;">
+          </div>
+          <div style="background:var(--teal); border-radius:var(--r-md); padding:24px 32px; display:flex; align-items:center; justify-content:center;">
+            <img src="assets/OraCare-White.png" alt="OraCare" style="width:160px; height:auto; display:block;">
+          </div>
         </div>
+        <p style="font-size:13px; color:var(--text-light); margin:0 0 20px;">Color lockup on light surfaces (Welcome screen) · White lockup on dark/teal surfaces (Splash screen)</p>
         <p style="font-size:17px; line-height:1.6; color:var(--text-mid); margin:0;">OraCare is a women's oral health companion that adapts to hormonal life stages — starting with pregnancy. It pairs an AI smile scan with trimester-aware guidance, turning clinical oral-health advice into a calm, personal daily routine.</p>
       </div>
       <div style="flex:1; min-width:420px; display:flex; flex-direction:column; gap:20px;">
@@ -451,11 +479,50 @@
     </div>
 
     <div class="comp-block">
-      <p class="comp-block-title">Progress Bar</p>
+      <p class="comp-block-title">Progress Bar — Metric Bar (3 states)</p>
       <div class="comp-row">
         <div class="metric-bar-demo">
-          <p style="font-size:12px;color:var(--text-light); margin:0;">Enamel · 82/100</p>
-          <div class="metric-bar-track"><div class="metric-bar-fill"></div></div>
+          <p class="metric-bar-demo-label">Enamel · 82/100 — Good</p>
+          <div class="metric-bar-track"><div class="metric-bar-fill bar-good"></div></div>
+        </div>
+        <div class="metric-bar-demo">
+          <p class="metric-bar-demo-label">Gum Health · 54/100 — Needs Attention</p>
+          <div class="metric-bar-track"><div class="metric-bar-fill bar-warn"></div></div>
+        </div>
+        <div class="metric-bar-demo">
+          <p class="metric-bar-demo-label">Sensitivity Risk · 42/100 — Elevated</p>
+          <div class="metric-bar-track"><div class="metric-bar-fill bar-poor"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="comp-block">
+      <p class="comp-block-title">Progress Bar — Assessment Step Indicator</p>
+      <div class="comp-row">
+        <div class="assessment-progress-demo"><div class="assessment-progress-demo-fill"></div></div>
+      </div>
+    </div>
+
+    <div class="comp-block">
+      <p class="comp-block-title">Checklist Checkmark</p>
+      <div class="comp-row">
+        <div class="check-item">
+          <div class="check-icon"></div>
+          Upper teeth visible
+        </div>
+        <div class="check-item done">
+          <div class="check-icon"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          Lower teeth visible
+        </div>
+      </div>
+    </div>
+
+    <div class="comp-block">
+      <p class="comp-block-title">Premium Check Circle</p>
+      <div class="comp-row">
+        <div style="display:flex; align-items:center; gap:12px; font-size:14px;">
+          <div class="premium-check-circle"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1" stroke="#2E7D7D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          Monthly AI oral health scans
         </div>
       </div>
     </div>
@@ -464,21 +531,36 @@
       <p class="comp-block-title">Bottom Navigation</p>
       <div class="comp-row">
         <div class="m-nav">
-          <div class="m-nav-item active">🏠<span>Home</span></div>
-          <div class="m-nav-item">📷<span>Scan</span></div>
-          <div class="m-nav-item">📋<span>Plan</span></div>
-          <div class="m-nav-item">👤<span>Profile</span></div>
+          <div class="m-nav-item active"><svg width="20" height="20" viewBox="0 0 22 22" fill="none"><path d="M3 9.5L11 3L19 9.5V19C19 19.6 18.6 20 18 20H14V15H8V20H4C3.4 20 3 19.6 3 19V9.5Z" stroke="#2E7D7D" stroke-width="1.6" stroke-linejoin="round"/></svg><span>Home</span></div>
+          <div class="m-nav-item"><svg width="20" height="20" viewBox="0 0 22 22" fill="none"><rect x="3" y="5" width="16" height="13" rx="2" stroke="#9EA4A8" stroke-width="1.6"/><circle cx="11" cy="11.5" r="3" stroke="#9EA4A8" stroke-width="1.6"/><path d="M8 5V4C8 3.4 8.4 3 9 3H13C13.6 3 14 3.4 14 4V5" stroke="#9EA4A8" stroke-width="1.6" stroke-linecap="round"/></svg><span>Scan</span></div>
+          <div class="m-nav-item"><svg width="20" height="20" viewBox="0 0 22 22" fill="none"><path d="M7 11H15M7 7H15M7 15H11" stroke="#9EA4A8" stroke-width="1.6" stroke-linecap="round"/><rect x="3" y="3" width="16" height="16" rx="3" stroke="#9EA4A8" stroke-width="1.6"/></svg><span>Plan</span></div>
+          <div class="m-nav-item"><svg width="20" height="20" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="8" r="4" stroke="#9EA4A8" stroke-width="1.6"/><path d="M4 19C4 15.7 7.1 13 11 13C14.9 13 18 15.7 18 19" stroke="#9EA4A8" stroke-width="1.6" stroke-linecap="round"/></svg><span>Profile</span></div>
         </div>
       </div>
     </div>
 
     <div class="comp-block">
       <p class="comp-block-title">Form Controls — Trimester Selector &amp; Symptom Checkbox</p>
+      <p style="font-size:13px; color:var(--text-light); margin:-8px 0 20px;">No native radio/checkbox inputs are used anywhere in the app — every selection control is a custom-styled button or row like these two.</p>
       <div class="comp-row">
         <div class="tri-btn"><span class="tri-num">1st</span><span class="tri-label">Trimester</span><span class="tri-weeks">Weeks 1–12</span></div>
         <div class="tri-btn selected"><span class="tri-num">2nd</span><span class="tri-label">Trimester</span><span class="tri-weeks">Weeks 13–26</span></div>
-        <div class="symptom-row"><div class="symptom-check checked">✓</div><span class="symptom-text">Bleeding gums</span></div>
-        <div class="symptom-row"><div class="symptom-check"></div><span class="symptom-text">Tooth sensitivity</span></div>
+        <div class="symptom-item checked">
+          <div class="symptom-check"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="symptom-icon">🩸</span>
+          <div class="symptom-text">
+            <div class="symptom-name">Bleeding gums</div>
+            <div class="symptom-sub">When brushing or flossing</div>
+          </div>
+        </div>
+        <div class="symptom-item">
+          <div class="symptom-check"></div>
+          <span class="symptom-icon">⚡</span>
+          <div class="symptom-text">
+            <div class="symptom-name">Tooth sensitivity</div>
+            <div class="symptom-sub">To hot, cold, or sweet foods</div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -487,25 +569,87 @@
   <section>
     <p class="sec-kicker">FOUNDATIONS</p>
     <h2 class="sec-title">Icons</h2>
-    <p style="font-size:15px; color:var(--text-mid); max-width:70ch; margin:0 0 32px;">Two registers, used deliberately: emoji for warm, illustrative moments (feature icons, quick actions, symptom markers), and hand-drawn line icons (1.5–2px stroke, rounded caps/joins, <code style="font-size:13px;">currentColor</code>) for functional UI chrome — navigation, back buttons, checkmarks.</p>
+    <p style="font-size:15px; color:var(--text-mid); max-width:70ch; margin:0 0 32px;">Two registers, used deliberately: emoji for warm, illustrative moments (life stages, symptoms, quick actions, tips &amp; recommendations), and hand-drawn line icons (1.5–2px stroke, rounded caps/joins, <code style="font-size:13px;">currentColor</code>) for functional UI chrome. Every glyph below is pulled from the prototype — nothing invented.</p>
+
     <div class="group">
-      <p class="group-label">ILLUSTRATIVE (emoji)</p>
+      <p class="group-label">ILLUSTRATIVE — LIFE STAGES</p>
+      <div class="icon-grid">
+        <div class="icon-cell"><span class="icon-cell-glyph">🌸</span><span class="icon-cell-label">Puberty</span></div>
+        <div class="icon-cell"><span class="icon-cell-glyph">🤰</span><span class="icon-cell-label">Pregnancy</span></div>
+        <div class="icon-cell"><span class="icon-cell-glyph">👶</span><span class="icon-cell-label">Postpartum</span></div>
+        <div class="icon-cell"><span class="icon-cell-glyph">🌿</span><span class="icon-cell-label">Perimenopause</span></div>
+        <div class="icon-cell"><span class="icon-cell-glyph">🌺</span><span class="icon-cell-label">Menopause</span></div>
+      </div>
+    </div>
+
+    <div class="group">
+      <p class="group-label">ILLUSTRATIVE — SYMPTOMS</p>
+      <div class="icon-grid">
+        <div class="icon-cell"><span class="icon-cell-glyph">🩸</span><span class="icon-cell-label">Bleeding Gums</span></div>
+        <div class="icon-cell"><span class="icon-cell-glyph">💧</span><span class="icon-cell-label">Dry Mouth</span></div>
+        <div class="icon-cell"><span class="icon-cell-glyph">😬</span><span class="icon-cell-label">Gum Swelling</span></div>
+        <div class="icon-cell"><span class="icon-cell-glyph">🤢</span><span class="icon-cell-label">Morning Sickness</span></div>
+        <div class="icon-cell"><span class="icon-cell-glyph">🦷</span><span class="icon-cell-label">Tooth Pain</span></div>
+        <div class="icon-cell"><span class="icon-cell-glyph">⚡</span><span class="icon-cell-label">Sensitivity</span></div>
+      </div>
+    </div>
+
+    <div class="group">
+      <p class="group-label">ILLUSTRATIVE — QUICK ACTIONS &amp; FEATURES</p>
       <div class="icon-grid">
         <div class="icon-cell"><span class="icon-cell-glyph">📷</span><span class="icon-cell-label">Scan</span></div>
         <div class="icon-cell"><span class="icon-cell-glyph">✨</span><span class="icon-cell-label">Care Plan</span></div>
-        <div class="icon-cell"><span class="icon-cell-glyph">🦷</span><span class="icon-cell-label">Enamel</span></div>
-        <div class="icon-cell"><span class="icon-cell-glyph">🩸</span><span class="icon-cell-label">Gingivitis</span></div>
-        <div class="icon-cell"><span class="icon-cell-glyph">💧</span><span class="icon-cell-label">Dry Mouth</span></div>
-        <div class="icon-cell"><span class="icon-cell-glyph">🤰</span><span class="icon-cell-label">Pregnancy</span></div>
+        <div class="icon-cell"><span class="icon-cell-glyph">📅</span><span class="icon-cell-label">Log</span></div>
+        <div class="icon-cell"><span class="icon-cell-glyph">💬</span><span class="icon-cell-label">Ask AI</span></div>
       </div>
     </div>
+
     <div class="group">
-      <p class="group-label">FUNCTIONAL (line icons, 1.5–2px stroke)</p>
+      <p class="group-label">ILLUSTRATIVE — TIPS &amp; RECOMMENDATIONS</p>
+      <div class="icon-grid">
+        <div class="icon-cell"><span class="icon-cell-glyph">🔬</span><span class="icon-cell-label">AI Gum Scan</span></div>
+        <div class="icon-cell"><span class="icon-cell-glyph">💊</span><span class="icon-cell-label">Mouthwash</span></div>
+        <div class="icon-cell"><span class="icon-cell-glyph">🥦</span><span class="icon-cell-label">Nutrition</span></div>
+      </div>
+    </div>
+
+    <div class="group">
+      <p class="group-label">ILLUSTRATIVE — MISC / CHROME</p>
+      <div class="icon-grid">
+        <div class="icon-cell"><span class="icon-cell-glyph">✦</span><span class="icon-cell-label">Premium Badge</span></div>
+        <div class="icon-cell"><span class="icon-cell-glyph">👤</span><span class="icon-cell-label">Profile Avatar</span></div>
+        <div class="icon-cell"><span class="icon-cell-glyph">⚠️</span><span class="icon-cell-label">Disclaimer</span></div>
+      </div>
+    </div>
+
+    <div class="group">
+      <p class="group-label">FUNCTIONAL — UI CHROME (line icons, 1.5–2px stroke)</p>
       <div class="icon-grid">
         <div class="icon-cell"><svg width="20" height="20" viewBox="0 0 18 18" fill="none"><path d="M11 14L6 9L11 4" stroke="#2F3133" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="icon-cell-label">Back</span></div>
+        <div class="icon-cell"><svg width="20" height="20" viewBox="0 0 16 16" fill="none"><path d="M6 4L10 8L6 12" stroke="#6A6A6A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="icon-cell-label">Disclosure Chevron</span></div>
+        <div class="icon-cell"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M8 5L13 10L8 15" stroke="#2E7D7D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="icon-cell-label">Stage Arrow</span></div>
+        <div class="icon-cell"><svg width="20" height="20" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1" stroke="#2E7D7D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="icon-cell-label">Checkmark</span></div>
+        <div class="icon-cell"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M18 8.5C18 6.5 17 5 15.5 4C14.5 3.3 13.3 3 12 3C10.7 3 9.5 3.3 8.5 4C7 5 6 6.5 6 8.5C6 14.5 4 16.5 4 16.5H20C20 16.5 18 14.5 18 8.5Z" stroke="#2F3133" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M13.7 20C13.4 20.6 12.7 21 12 21C11.3 21 10.6 20.6 10.3 20" stroke="#2F3133" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="icon-cell-label">Notification Bell</span></div>
+        <div class="icon-cell"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="4" fill="#2E7D7D"/><path d="M10 4 L10 2 M10 18 L10 16 M4 10 L2 10 M18 10 L16 10 M5.5 5.5 L4 4 M15.5 15.5 L14 14 M14.5 5.5 L16 4 M4.5 15.5 L6 14" stroke="#2E7D7D" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/></svg><span class="icon-cell-label">AI Sparkle</span></div>
+      </div>
+    </div>
+
+    <div class="group">
+      <p class="group-label">FUNCTIONAL — BOTTOM NAV SET (shown together, as used)</p>
+      <div class="icon-grid">
         <div class="icon-cell"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 9.5L11 3L19 9.5V19C19 19.6 18.6 20 18 20H14V15H8V20H4C3.4 20 3 19.6 3 19V9.5Z" stroke="#2E7D7D" stroke-width="1.6" stroke-linejoin="round"/></svg><span class="icon-cell-label">Home</span></div>
-        <div class="icon-cell"><svg width="20" height="20" viewBox="0 0 16 16" fill="none"><path d="M6 4L10 8L6 12" stroke="#6A6A6A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="icon-cell-label">Chevron</span></div>
-        <div class="icon-cell"><svg width="20" height="20" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1" stroke="#2E7D7D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="icon-cell-label">Check</span></div>
+        <div class="icon-cell"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="3" y="5" width="16" height="13" rx="2" stroke="#9EA4A8" stroke-width="1.6"/><circle cx="11" cy="11.5" r="3" stroke="#9EA4A8" stroke-width="1.6"/><path d="M8 5V4C8 3.4 8.4 3 9 3H13C13.6 3 14 3.4 14 4V5" stroke="#9EA4A8" stroke-width="1.6" stroke-linecap="round"/></svg><span class="icon-cell-label">Scan</span></div>
+        <div class="icon-cell"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M7 11H15M7 7H15M7 15H11" stroke="#9EA4A8" stroke-width="1.6" stroke-linecap="round"/><rect x="3" y="3" width="16" height="16" rx="3" stroke="#9EA4A8" stroke-width="1.6"/></svg><span class="icon-cell-label">Plan</span></div>
+        <div class="icon-cell"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="8" r="4" stroke="#9EA4A8" stroke-width="1.6"/><path d="M4 19C4 15.7 7.1 13 11 13C14.9 13 18 15.7 18 19" stroke="#9EA4A8" stroke-width="1.6" stroke-linecap="round"/></svg><span class="icon-cell-label">Profile</span></div>
+      </div>
+    </div>
+
+    <div class="group">
+      <p class="group-label">FUNCTIONAL — STATUS BAR (decorative OS chrome)</p>
+      <div class="icon-grid">
+        <div class="icon-cell" style="color:#2F3133;"><svg width="20" height="15" viewBox="0 0 16 12" fill="none"><rect x="0" y="3" width="3" height="9" rx="1" fill="currentColor"/><rect x="4.5" y="2" width="3" height="10" rx="1" fill="currentColor" opacity="0.4"/><rect x="9" y="0" width="3" height="12" rx="1" fill="currentColor" opacity="0.3"/><rect x="13.5" y="0" width="2.5" height="12" rx="1" fill="currentColor" opacity="0.2"/></svg><span class="icon-cell-label">Cellular</span></div>
+        <div class="icon-cell" style="color:#2F3133;"><svg width="20" height="15" viewBox="0 0 16 12" fill="none"><path d="M8 2.5C10.5 2.5 12.7 3.5 14.2 5.2L15.5 3.7C13.6 1.4 10.9 0 8 0C5.1 0 2.4 1.4 0.5 3.7L1.8 5.2C3.3 3.5 5.5 2.5 8 2.5Z" fill="currentColor"/><path d="M8 5.5C9.7 5.5 11.2 6.2 12.3 7.3L13.6 5.8C12.1 4.3 10.1 3.5 8 3.5C5.9 3.5 3.9 4.3 2.4 5.8L3.7 7.3C4.8 6.2 6.3 5.5 8 5.5Z" fill="currentColor" opacity="0.7"/><circle cx="8" cy="10" r="2" fill="currentColor"/></svg><span class="icon-cell-label">Wi-Fi</span></div>
+        <div class="icon-cell" style="color:#2F3133;"><svg width="28" height="15" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="currentColor" stroke-opacity="0.35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="currentColor"/><path d="M23 4.5V7.5C23.8 7.2 24.5 6.5 24.5 6C24.5 5.5 23.8 4.8 23 4.5Z" fill="currentColor" opacity="0.4"/></svg><span class="icon-cell-label">Battery</span></div>
       </div>
     </div>
   </section>
