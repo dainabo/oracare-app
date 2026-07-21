@@ -1,5 +1,6 @@
 {
-  "rewrites": [
-    { "source": "/", "destination": "/device-frame.html" }
+  "routes": [
+    { "src": "/$", "dest": "/device-frame.html" },
+    { "handle": "filesystem" }
   ]
 }
