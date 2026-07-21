@@ -73,6 +73,11 @@ setTimeout(function() {{
 DARK_SCREENS = {"screen-dashboard", "screen-premium", "screen-scan-instructions"}
 
 # (screen_id, output_slug, extra_style)
+# capture/analyzing/results are shared by trial and demo mode at runtime
+# (toggled via JS based on scanMode) -- the "-demo" slugs below reuse the
+# same screen_id but apply a static equivalent of that JS toggle so the
+# demo-mode copy/state gets its own export instead of just capturing
+# whatever the default (trial) HTML happens to say.
 SCREENS = [
     ("screen-splash", "splash", ""),
     ("screen-welcome", "welcome", ""),
@@ -81,8 +86,11 @@ SCREENS = [
     ("screen-scan-instructions", "scan-instructions", ""),
     ("screen-premium", "premium", ""),
     ("screen-scan-capture", "capture", ""),
+    ("screen-scan-capture", "capture-demo", ""),
     ("screen-scan-analyzing", "analyzing", ""),
+    ("screen-scan-analyzing", "analyzing-demo", ""),
     ("screen-scan-results", "results", ""),
+    ("screen-scan-results", "results-demo", ""),
     ("screen-recommendations", "care-plan", ""),
     ("screen-profile", "profile", ""),
 ]
@@ -135,6 +143,71 @@ def apply_analyzing_completed_state(block):
     return block
 
 
+def apply_capture_demo_state(block):
+    """Static equivalent of updateCaptureCopy() with scanMode='demo'."""
+    block = block.replace(
+        '<h1 class="capture-title" id="captureTitle">Capture Your Smile</h1>',
+        '<h1 class="capture-title" id="captureTitle">Explore AI Analysis</h1>'
+    )
+    block = block.replace(
+        '<p class="capture-subtitle" id="captureSubtitle">Position your teeth and gums inside the frame.</p>',
+        '<p class="capture-subtitle" id="captureSubtitle">See how OraCare evaluates oral health using a sample scan.</p>'
+    )
+    block = block.replace(
+        '''<button class="btn-primary" id="captureCta" onclick="startScan()" style="width:100%; background: linear-gradient(135deg, var(--teal), #3A9A9A);">
+        Scan My Smile
+      </button>''',
+        '''<button class="btn-primary" id="captureCta" onclick="startScan()" style="width:100%; background: linear-gradient(135deg, var(--teal), #3A9A9A);">
+        Try Sample Scan
+      </button>'''
+    )
+    block = block.replace(
+        '<div class="analysis-checklist" id="captureChecklist" style="margin-bottom: 24px;">',
+        '<div class="analysis-checklist" id="captureChecklist" style="margin-bottom: 24px; display:none;">'
+    )
+    return block
+
+
+def apply_capture_partial_checklist_state(block):
+    """Trial-only: checks the first 3 of 5 items so the portfolio shot shows
+    both the done and pending look, rather than all-blank or all-done."""
+    for i in (1, 2, 3):
+        block = block.replace(
+            'class="check-item" id="capture-check-{}"'.format(i),
+            'class="check-item done" id="capture-check-{}"'.format(i)
+        )
+        block = block.replace(
+            '<div class="check-icon" id="capture-check-icon-{}"><svg width="12" height="10" viewBox="0 0 12 10" fill="none" style="display:none">'.format(i),
+            '<div class="check-icon" id="capture-check-icon-{}"><svg width="12" height="10" viewBox="0 0 12 10" fill="none" style="display:block">'.format(i)
+        )
+    return block
+
+
+def apply_analyzing_demo_state(block):
+    """Static equivalent of applyScanMode() with scanMode='demo' -- title only."""
+    return block.replace(
+        '<h1 class="analyzing-title" id="analyzingTitle">Analyzing Your Scan</h1>',
+        '<h1 class="analyzing-title" id="analyzingTitle">Analyzing Demo Scan</h1>'
+    )
+
+
+def apply_results_demo_state(block):
+    """Static equivalent of applyScanMode() with scanMode='demo' -- badge, heading, callout."""
+    block = block.replace(
+        '<span class="chip chip-teal" id="resultsDemoBadge" style="display:none; margin-bottom: 8px;">Demo Mode</span>',
+        '<span class="chip chip-teal" id="resultsDemoBadge" style="display:inline-flex; margin-bottom: 8px;">Demo Mode</span>'
+    )
+    block = block.replace(
+        '<h2 id="resultsHeading" style="font-family: var(--font-display); font-size: 24px; line-height: 1.2;">Your Oral Health<br>Report</h2>',
+        '<h2 id="resultsHeading" style="font-family: var(--font-display); font-size: 24px; line-height: 1.2;">Sample Oral<br>Health Report</h2>'
+    )
+    block = block.replace(
+        '<div class="ai-note" id="resultsDemoCallout" style="display:none;">',
+        '<div class="ai-note" id="resultsDemoCallout" style="display:flex;">'
+    )
+    return block
+
+
 def write_render(slug, screen_block, extra_style="", dark=False, is_splash=False):
     screen_block = fix_asset_paths(screen_block)
     extra_class = " status-bar--splash" if is_splash else (" status-bar--dark" if dark else "")
@@ -153,6 +226,15 @@ for screen_id, slug, extra_style in SCREENS:
     block = re.sub(r'class="screen[^"]*"', 'class="screen active"', block, count=1)
     if slug == "analyzing":
         block = apply_analyzing_completed_state(block)
+    elif slug == "capture":
+        block = apply_capture_partial_checklist_state(block)
+    elif slug == "capture-demo":
+        block = apply_capture_demo_state(block)
+    elif slug == "analyzing-demo":
+        block = apply_analyzing_completed_state(block)
+        block = apply_analyzing_demo_state(block)
+    elif slug == "results-demo":
+        block = apply_results_demo_state(block)
     write_render(slug, block, extra_style=extra_style,
                  dark=(screen_id in DARK_SCREENS), is_splash=(screen_id == "screen-splash"))
 
