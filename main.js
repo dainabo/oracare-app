@@ -133,9 +133,20 @@
   // ─── SCAN MODE (trial vs demo) ───
   let scanMode = 'trial';
 
-  function updateCaptureCta() {
+  // Capture screen is shared by both modes -- title, subtitle, CTA text,
+  // and checklist visibility all differ between trial and demo.
+  function updateCaptureCopy() {
+    const isDemo = scanMode === 'demo';
+    const title = document.getElementById('captureTitle');
+    const subtitle = document.getElementById('captureSubtitle');
     const btn = document.getElementById('captureCta');
-    if (btn) btn.textContent = scanMode === 'demo' ? 'Try Demo Scan' : 'Scan My Smile';
+    const checklist = document.getElementById('captureChecklist');
+    if (title) title.textContent = isDemo ? 'Explore AI Analysis' : 'Capture Your Smile';
+    if (subtitle) subtitle.textContent = isDemo
+      ? 'See how OraCare evaluates oral health using a sample scan.'
+      : 'Position your teeth and gums inside the frame.';
+    if (btn) btn.textContent = isDemo ? 'Try Sample Scan' : 'Scan My Smile';
+    if (checklist) checklist.style.display = isDemo ? 'none' : 'flex';
   }
 
   // Toggles analyzing/results copy between the real-scan and demo-scan wording.
@@ -152,26 +163,31 @@
     if (callout) callout.style.display = isDemo ? 'flex' : 'none';
 
     const heading = document.getElementById('resultsHeading');
-    if (heading) heading.innerHTML = isDemo ? 'Sample Oral Health<br>Report' : 'Your Oral Health<br>Report';
+    if (heading) heading.innerHTML = isDemo ? 'Sample Oral<br>Health Report' : 'Your Oral Health<br>Report';
   }
 
   function startTrialScan() {
     scanMode = 'trial';
-    updateCaptureCta();
     navigate('screen-scan-instructions', 'forward');
   }
 
-  function startDemoScan() {
+  function beginDemo() {
     scanMode = 'demo';
-    navigate('screen-scan-analyzing', 'forward');
-    setTimeout(runAnalysis, 400);
+    updateCaptureCopy();
+    navigate('screen-scan-capture', 'forward');
   }
 
   function backFromResults() {
-    navigate(scanMode === 'demo' ? 'screen-scan-teaser' : 'screen-scan-instructions', 'back');
+    navigate(scanMode === 'demo' ? 'screen-scan-capture' : 'screen-scan-instructions', 'back');
+  }
+
+  function backFromCapture() {
+    navigate(scanMode === 'demo' ? 'screen-premium' : 'screen-scan-instructions', 'back');
   }
 
   function enterCapture() {
+    scanMode = 'trial';
+    updateCaptureCopy();
     navigate('screen-scan-capture', 'forward');
     setTimeout(runCaptureChecklist, 400);
   }

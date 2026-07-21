@@ -7,8 +7,7 @@ Before touching ANY file:
 1. State which files you will modify and why
 2. Wait for explicit approval before making ANY change
 3. Never implement anything speculatively
-4. Never delete or modify
- anything not explicitly mentioned in the task
+4. Never delete or modify anything not explicitly mentioned in the task
 5. If unsure — ASK, do not guess
 
 VIOLATIONS OF THESE RULES HAVE CAUSED HOURS OF WASTED WORK.
