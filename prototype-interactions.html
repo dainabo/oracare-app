@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OraCare — Prototype Walkthrough</title>
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background: #e8e4e2;
+    overflow: hidden;
+  }
+  .stage-frame {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+  /* Figma-style click cue. One of these is created per interactive element
+     per click -- position/size are set in JS at creation time. */
+  .click-highlight {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    box-sizing: border-box;
+    border: 1.5px solid rgba(59, 130, 246, 0.9);
+    background: rgba(59, 130, 246, 0.15);
+    opacity: 0;
+    transition: opacity 100ms ease;
+  }
+  .click-highlight.visible {
+    opacity: 1;
+  }
+</style>
+</head>
+<body>
+  <iframe class="stage-frame" src="device-frame.html" title="OraCare prototype walkthrough"></iframe>
+
+<script>
+  // This page only works served over http(s) -- reaching into nested
+  // iframes to attach listeners and measure element positions is blocked
+  // by the browser across file:// origins.
+  const outerFrame = document.querySelector('.stage-frame');
+  let activeHighlights = [];
+  let holdTimer = null;
+  let fadeOutTimer = null;
+
+  // Fades in fast, holds, then fades out slowly (eased) -- matches Figma's
+  // own prototype click-cue feel and gives people enough time to actually
+  // register it. FADE_OUT_MS must stay short enough to finish before
+  // main.js's 300ms screen-transition animation *when nothing interrupts
+  // it*, but a navigating click can't be predicted from in here, so
+  // watchForNavigation() below is the real guarantee against lingering on
+  // the next screen, not this timing.
+  const FADE_IN_MS = 100;
+  const HOLD_MS = 350;
+  const FADE_OUT_MS = 650;
+
+  // Calls cb(frameEl.contentDocument) once frameEl has finished loading.
+  // A plain 'load' listener isn't enough on its own: an iframe can finish
+  // loading before its own load listener gets attached (nested iframes in
+  // particular start loading as soon as their parent markup is parsed, not
+  // gated by any ancestor's load event), so check readyState first.
+  function onFrameReady(frameEl, cb) {
+    let doc;
+    try {
+      doc = frameEl.contentDocument;
+    } catch (e) {
+      console.warn('Cannot reach ' + frameEl.src + ' -- serve this over http(s), not as a local file.', e);
+      return;
+    }
+    // readyState alone isn't enough: an iframe briefly holds an "about:blank"
+    // placeholder document before it navigates to its real src, and that
+    // placeholder is also (trivially) "complete" with an empty body. Guard
+    // against catching that instead of the real page.
+    if (doc.readyState === 'complete' && doc.body && doc.body.childElementCount > 0) {
+      cb(doc);
+    } else {
+      frameEl.addEventListener('load', () => cb(frameEl.contentDocument));
+    }
+  }
+
+  onFrameReady(outerFrame, (deviceFrameDoc) => {
+    const innerFrame = deviceFrameDoc.querySelector('iframe');
+    if (!innerFrame) return;
+    onFrameReady(innerFrame, (prototypeDoc) => {
+      attachHighlighting(prototypeDoc, innerFrame, outerFrame);
+    });
+  });
+
+  function attachHighlighting(prototypeDoc, innerFrame, outerFrame) {
+    // Tapping empty/decorative space reveals every interactive element on
+    // the current screen at once (Figma's "show hotspots" behavior) --
+    // that's for when someone's unsure what's clickable. Tapping directly
+    // on an interactive element is the opposite case: they already know
+    // what they want, so it should just do its thing (native selection/
+    // filter state is its own feedback) rather than also lighting up every
+    // *other* button on the screen, which reads as "all of these just got
+    // activated" instead of "you picked one of these."
+    prototypeDoc.addEventListener('click', (event) => {
+      // Everything interactive in the prototype either has an inline
+      // onclick handler, or (the Care Plan filter pills) is a .filter-pill
+      // with an addEventListener. Anything else is just layout/decoration.
+      if (event.target.closest('[onclick], .filter-pill')) return;
+
+      const screen = prototypeDoc.querySelector('.screen.active');
+      if (!screen) return;
+      const candidates = screen.querySelectorAll('[onclick], .filter-pill');
+      const targets = Array.prototype.filter.call(candidates, (el) =>
+        isOnScreen(el, prototypeDoc.defaultView)
+      );
+      showHighlights(targets, innerFrame, outerFrame);
+    }, true);
+
+    watchForNavigation(prototypeDoc);
+  }
+
+  // Two things can make a matched element wrong to highlight even though
+  // it's genuinely inside the active screen:
+  //  - it belongs to a *different* step/panel within that same screen that
+  //    happens to be hidden right now (e.g. the assessment steps other than
+  //    the current one all live inside the same .screen.active, just with
+  //    display:none) -- offsetParent is null for those.
+  //  - it's scrolled out of the currently visible viewport -- its rect
+  //    exists but sits above/below/beside what's actually on screen.
+  function isOnScreen(el, win) {
+    if (el.offsetParent === null) return false;
+    const r = el.getBoundingClientRect();
+    if (r.width === 0 || r.height === 0) return false;
+    // Fully within the viewport, not just partially overlapping it -- the
+    // highlight box itself isn't clipped by the phone's own scroll
+    // container, so a barely-peeking element would otherwise still get a
+    // full-size box drawn, part of which sits outside what's actually
+    // visible on screen.
+    return r.top >= 0 && r.bottom <= win.innerHeight && r.left >= 0 && r.right <= win.innerWidth;
+  }
+
+  // A screen change means every highlight currently showing belongs to the
+  // screen being left -- letting them fade out normally would mean they're
+  // still visible (mid-fade) over whatever screen just slid in. main.js
+  // toggles classes on the .screen element itself for every transition, so
+  // watching for that is a reliable, non-invasive way to detect "the screen
+  // just changed" from outside the prototype's own code.
+  function watchForNavigation(prototypeDoc) {
+    const observer = new MutationObserver((mutations) => {
+      for (const m of mutations) {
+        const cl = m.target.classList;
+        // .screen covers screen-to-screen navigation; .assessment-step
+        // covers the "Continue" between onboarding questions, which swaps
+        // content within the *same* screen-assessment screen and so never
+        // touches a .screen element at all. Deliberately not matching
+        // .filter-pill here -- selecting a Care Plan filter shouldn't cut
+        // its own highlight short, nothing is actually navigating away.
+        if (cl && (cl.contains('screen') || cl.contains('assessment-step'))) {
+          clearHighlights();
+          return;
+        }
+      }
+    });
+    observer.observe(prototypeDoc.body, { attributes: true, attributeFilter: ['class'], subtree: true });
+  }
+
+  // Maps a rect from an iframe's own document up into its parent
+  // document's coordinate space, accounting for any CSS scale transform
+  // applied to the iframe's ancestors (getBoundingClientRect reflects the
+  // as-rendered size; offsetWidth/Height give the pre-transform size, so
+  // their ratio is the effective scale factor at this level).
+  function mapRectUp(rect, iframeEl) {
+    const frameRect = iframeEl.getBoundingClientRect();
+    const scaleX = frameRect.width / iframeEl.offsetWidth;
+    const scaleY = frameRect.height / iframeEl.offsetHeight;
+    return {
+      left: frameRect.left + rect.left * scaleX,
+      top: frameRect.top + rect.top * scaleY,
+      width: rect.width * scaleX,
+      height: rect.height * scaleY,
+      scale: scaleX
+    };
+  }
+
+  function clearHighlights() {
+    if (holdTimer) clearTimeout(holdTimer);
+    if (fadeOutTimer) clearTimeout(fadeOutTimer);
+    holdTimer = fadeOutTimer = null;
+    activeHighlights.forEach((el) => el.remove());
+    activeHighlights = [];
+  }
+
+  function showHighlights(elements, innerFrame, outerFrame) {
+    clearHighlights();
+
+    elements.forEach((el) => {
+      const rect = el.getBoundingClientRect();
+
+      let mapped = mapRectUp(rect, innerFrame);
+      mapped = mapRectUp(mapped, outerFrame);
+
+      // Always a plain rectangle, regardless of the element's own shape --
+      // matching a highlight's corners to a rounded/circular element (back
+      // buttons, pills, chips, nav items) makes it nearly invisible, since
+      // it just blends into the button underneath. A square outline reads
+      // clearly against any shape, which is also how Figma's own hotspot
+      // highlight behaves.
+      const box = document.createElement('div');
+      box.className = 'click-highlight';
+      box.style.left = mapped.left + 'px';
+      box.style.top = mapped.top + 'px';
+      box.style.width = mapped.width + 'px';
+      box.style.height = mapped.height + 'px';
+      document.body.appendChild(box);
+      activeHighlights.push(box);
+    });
+
+    if (activeHighlights.length === 0) return;
+
+    void document.body.offsetWidth; // force reflow so opacity re-triggers the transition
+    activeHighlights.forEach((el) => {
+      el.style.transition = 'opacity ' + FADE_IN_MS + 'ms ease';
+      el.classList.add('visible');
+    });
+
+    // Fade in fast, hold, then switch to a slow eased fade-out -- a
+    // navigating click gets cut short by watchForNavigation() above well
+    // before any of this finishes, so this timing is free to prioritize
+    // feeling clearly visible over finishing quickly.
+    holdTimer = setTimeout(() => {
+      activeHighlights.forEach((el) => {
+        el.style.transition = 'opacity ' + FADE_OUT_MS + 'ms ease-out';
+        el.classList.remove('visible');
+      });
+      fadeOutTimer = setTimeout(clearHighlights, FADE_OUT_MS);
+    }, HOLD_MS);
+  }
+</script>
+</body>
+</html>
