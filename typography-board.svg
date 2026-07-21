@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900">
+  <title>OraCare Typography</title>
+  <defs>
+    <style>
+      <![CDATA[
+      @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Manrope:wght@300;400;500;600;700&display=swap');
+      .display-font { font-family: 'DM Serif Display', Georgia, serif; }
+      .body-font { font-family: 'Manrope', system-ui, sans-serif; }
+      .kicker { font-family: 'Manrope', system-ui, sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; fill: #6A6A6A; }
+      .role-name { font-family: 'Manrope', system-ui, sans-serif; font-size: 15px; font-weight: 700; fill: #2F3133; }
+      .meta-line { font-family: 'Manrope', system-ui, sans-serif; font-size: 12px; font-weight: 500; fill: #6A6A6A; }
+      ]]>
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1600" height="900" fill="#F8F5F4"/>
+
+  <text x="120" y="64" class="kicker">Typography</text>
+
+
+  <!-- Display -->
+  <g>
+    <text x="120" y="164" class="role-name">Display</text>
+    <text x="120" y="186" class="meta-line">DM Serif Display</text>
+    <text x="120" y="204" class="meta-line">36px · Line-height 1.15</text>
+    <text x="420" y="189" class="display-font" font-size="36" font-weight="400" fill="#2F3133" letter-spacing="-0.5px">Personalized care</text>
+  </g>
+  <line x1="120" y1="242" x2="1480" y2="242" stroke="#EDE9E7" stroke-width="1"/>
+
+  <!-- Heading -->
+  <g>
+    <text x="120" y="292" class="role-name">Heading</text>
+    <text x="120" y="314" class="meta-line">DM Serif Display</text>
+    <text x="120" y="332" class="meta-line">26px · Line-height 1.25</text>
+    <text x="420" y="314" class="display-font" font-size="26" font-weight="400" fill="#2F3133" letter-spacing="-0.3px">Your Oral Health Report</text>
+  </g>
+  <line x1="120" y1="370" x2="1480" y2="370" stroke="#EDE9E7" stroke-width="1"/>
+
+  <!-- Subheading -->
+  <g>
+    <text x="120" y="420" class="role-name">Subheading</text>
+    <text x="120" y="442" class="meta-line">Manrope SemiBold</text>
+    <text x="120" y="460" class="meta-line">18px · Line-height 1.2</text>
+    <text x="420" y="439" class="body-font" font-size="18" font-weight="600" fill="#2F3133" letter-spacing="-0.2px">Which trimester are you in?</text>
+  </g>
+  <line x1="120" y1="498" x2="1480" y2="498" stroke="#EDE9E7" stroke-width="1"/>
+
+  <!-- Body -->
+  <g>
+    <text x="120" y="548" class="role-name">Body</text>
+    <text x="120" y="570" class="meta-line">Manrope Light</text>
+    <text x="120" y="588" class="meta-line">15px · Line-height 1.6</text>
+    <text x="420" y="566" class="body-font" font-size="15" font-weight="300" fill="#5A5E62" letter-spacing="0">Elevated progesterone increases inflammation. Second trimester is peak risk—see your tip plan.</text>
+  </g>
+  <line x1="120" y1="626" x2="1480" y2="626" stroke="#EDE9E7" stroke-width="1"/>
+
+  <!-- Label -->
+  <g>
+    <text x="120" y="676" class="role-name">Label</text>
+    <text x="120" y="698" class="meta-line">Manrope SemiBold</text>
+    <text x="120" y="716" class="meta-line">12px · Uppercase · Line-height 1.2</text>
+    <text x="420" y="693" class="body-font" font-size="12" font-weight="600" fill="#6A6A6A" letter-spacing="0.8px">ATTENTION NEEDED</text>
+  </g>
+  <line x1="120" y1="754" x2="1480" y2="754" stroke="#EDE9E7" stroke-width="1"/>
+
+  <!-- Caption -->
+  <g>
+    <text x="120" y="804" class="role-name">Caption</text>
+    <text x="120" y="826" class="meta-line">Manrope Regular</text>
+    <text x="120" y="844" class="meta-line">13px · Line-height 1.5</text>
+    <text x="420" y="822" class="body-font" font-size="13" font-weight="400" fill="#6A6A6A" letter-spacing="0">Scanned Today • 9:41 AM</text>
+  </g>
+
+</svg>
