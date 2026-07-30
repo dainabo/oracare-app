@@ -1,2 +1,6 @@
 .DS_Store
 **/.DS_Store
+
+# Impeccable: keep critique snapshots, ignore runtime state
+.impeccable/*
+!.impeccable/critique/
