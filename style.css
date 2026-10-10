@@ -469,6 +469,8 @@
     box-shadow: 0 0 0 4px var(--teal-pale), var(--shadow-md);
   }
   .stage-card.pregnancy-card { border-color: var(--teal); background: linear-gradient(135deg, #FAFFFE, #F0FAFA); }
+  .stage-card.pregnancy-card .stage-name,
+  .stage-card.pregnancy-card .stage-arrow { color: var(--teal); }
   .stage-card.coming-soon { opacity: 0.55; cursor: default; }
 
   .stage-icon {
