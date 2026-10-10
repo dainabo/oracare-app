@@ -135,6 +135,7 @@
     overflow: hidden;
   }
   .btn-primary:active { transform: scale(0.98); }
+  .btn-primary:disabled { opacity: 0.4; cursor: default; transform: none; }
 
   .btn-secondary {
     width: 100%;

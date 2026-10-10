@@ -70,10 +70,18 @@
     document.getElementById('assessProgress').style.width = progress + '%';
   }
 
+  // Continue stays disabled until the current question has an answer
+  function updateStepContinue(el) {
+    const step = el.closest('.assessment-step');
+    const btn = step && step.querySelector('.step-footer .btn-primary');
+    if (btn) btn.disabled = !step.querySelector('.selected, .checked');
+  }
+
   // ─── TRIMESTER SELECTION ───
   function selectTrimester(btn, num) {
     document.querySelectorAll('.tri-btn').forEach(b => b.classList.remove('selected'));
     btn.classList.add('selected');
+    updateStepContinue(btn);
   }
 
   // ─── SYMPTOM TOGGLE ───
@@ -85,36 +93,42 @@
     } else {
       check.innerHTML = '';
     }
+    updateStepContinue(item);
   }
 
   // ─── DENTAL OPTION ───
   function selectDental(btn) {
     document.querySelectorAll('.dental-opt').forEach(b => b.classList.remove('selected'));
     btn.classList.add('selected');
+    updateStepContinue(btn);
   }
 
   // ─── FLOSS OPTION ───
   function selectFloss(btn) {
     document.querySelectorAll('.floss-opt').forEach(b => b.classList.remove('selected'));
     btn.classList.add('selected');
+    updateStepContinue(btn);
   }
 
   // ─── NAUSEA OPTION ───
   function selectNausea(btn) {
     document.querySelectorAll('.nausea-opt').forEach(b => b.classList.remove('selected'));
     btn.classList.add('selected');
+    updateStepContinue(btn);
   }
 
   // ─── BRUSH OPTION ───
   function selectBrush(btn) {
     document.querySelectorAll('.brush-opt').forEach(b => b.classList.remove('selected'));
     btn.classList.add('selected');
+    updateStepContinue(btn);
   }
 
   // ─── ORAL HEALTH OPTION ───
   function selectOral(btn) {
     document.querySelectorAll('.oral-opt').forEach(b => b.classList.remove('selected'));
     btn.classList.add('selected');
+    updateStepContinue(btn);
   }
 
   // ─── FILTER PILLS ───

@@ -289,7 +289,7 @@
           <div class="tri-label">Trimester</div>
           <div class="tri-weeks">Weeks 1–12</div>
         </button>
-        <button class="tri-btn selected" onclick="selectTrimester(this, 2)">
+        <button class="tri-btn" onclick="selectTrimester(this, 2)">
           <div class="tri-num">2nd</div>
           <div class="tri-label">Trimester</div>
           <div class="tri-weeks">Weeks 13–26</div>
@@ -301,7 +301,7 @@
         </button>
       </div>
       <div class="step-footer">
-        <button class="btn-primary" onclick="goAssessStep(2)">Continue</button>
+        <button class="btn-primary" disabled onclick="goAssessStep(2)">Continue</button>
       </div>
     </div>
 
@@ -311,8 +311,8 @@
       <h2 class="step-title">Are you experiencing any of these?</h2>
       <p class="step-body">Select all symptoms that apply. This helps us personalize your care plan.</p>
       <div class="symptom-list">
-        <div class="symptom-item checked" onclick="toggleSymptom(this)">
-          <div class="symptom-check"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="symptom-item" onclick="toggleSymptom(this)">
+          <div class="symptom-check"></div>
           <span class="symptom-icon">🩸</span>
           <div class="symptom-text">
             <div class="symptom-name">Bleeding gums</div>
@@ -327,8 +327,8 @@
             <div class="symptom-sub">To hot, cold, or sweet foods</div>
           </div>
         </div>
-        <div class="symptom-item checked" onclick="toggleSymptom(this)">
-          <div class="symptom-check"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="symptom-item" onclick="toggleSymptom(this)">
+          <div class="symptom-check"></div>
           <span class="symptom-icon">💧</span>
           <div class="symptom-text">
             <div class="symptom-name">Dry mouth</div>
@@ -361,7 +361,7 @@
         </div>
       </div>
       <div class="step-footer">
-        <button class="btn-primary" onclick="goAssessStep(3)">Continue</button>
+        <button class="btn-primary" disabled onclick="goAssessStep(3)">Continue</button>
         <button class="btn-ghost" style="align-self: center;" onclick="goAssessStep(3)">None of these apply</button>
       </div>
     </div>
@@ -378,7 +378,7 @@
         <button class="floss-opt" onclick="selectFloss(this)">
           <span class="dental-opt-dot"></span>A few times a week
         </button>
-        <button class="floss-opt selected" onclick="selectFloss(this)">
+        <button class="floss-opt" onclick="selectFloss(this)">
           <span class="dental-opt-dot"></span>Rarely
         </button>
         <button class="floss-opt" onclick="selectFloss(this)">
@@ -386,7 +386,7 @@
         </button>
       </div>
       <div class="step-footer">
-        <button class="btn-primary" onclick="goAssessStep(4)">Continue</button>
+        <button class="btn-primary" disabled onclick="goAssessStep(4)">Continue</button>
       </div>
     </div>
 
@@ -399,7 +399,7 @@
         <button class="dental-opt" onclick="selectDental(this)">
           <span class="dental-opt-dot"></span>Within the last 3 months
         </button>
-        <button class="dental-opt selected" onclick="selectDental(this)">
+        <button class="dental-opt" onclick="selectDental(this)">
           <span class="dental-opt-dot"></span>3–6 months ago
         </button>
         <button class="dental-opt" onclick="selectDental(this)">
@@ -413,7 +413,7 @@
         </button>
       </div>
       <div class="step-footer">
-        <button class="btn-primary" onclick="goAssessStep(5)">Continue</button>
+        <button class="btn-primary" disabled onclick="goAssessStep(5)">Continue</button>
       </div>
     </div>
 
@@ -426,7 +426,7 @@
         <button class="nausea-opt" onclick="selectNausea(this)">
           <span class="dental-opt-dot"></span>Frequently
         </button>
-        <button class="nausea-opt selected" onclick="selectNausea(this)">
+        <button class="nausea-opt" onclick="selectNausea(this)">
           <span class="dental-opt-dot"></span>Occasionally
         </button>
         <button class="nausea-opt" onclick="selectNausea(this)">
@@ -437,7 +437,7 @@
         </button>
       </div>
       <div class="step-footer">
-        <button class="btn-primary" onclick="goAssessStep(6)">Continue</button>
+        <button class="btn-primary" disabled onclick="goAssessStep(6)">Continue</button>
       </div>
     </div>
 
@@ -453,7 +453,7 @@
         <button class="brush-opt" onclick="selectBrush(this)">
           <span class="dental-opt-dot"></span>Once daily
         </button>
-        <button class="brush-opt selected" onclick="selectBrush(this)">
+        <button class="brush-opt" onclick="selectBrush(this)">
           <span class="dental-opt-dot"></span>Twice daily
         </button>
         <button class="brush-opt" onclick="selectBrush(this)">
@@ -461,7 +461,7 @@
         </button>
       </div>
       <div class="step-footer">
-        <button class="btn-primary" onclick="goAssessStep(7)">Continue</button>
+        <button class="btn-primary" disabled onclick="goAssessStep(7)">Continue</button>
       </div>
     </div>
 
@@ -474,7 +474,7 @@
         <button class="oral-opt" onclick="selectOral(this)">
           <span class="dental-opt-dot"></span>Excellent
         </button>
-        <button class="oral-opt selected" onclick="selectOral(this)">
+        <button class="oral-opt" onclick="selectOral(this)">
           <span class="dental-opt-dot"></span>Good
         </button>
         <button class="oral-opt" onclick="selectOral(this)">
@@ -485,7 +485,7 @@
         </button>
       </div>
       <div class="step-footer">
-        <button class="btn-primary" onclick="navigate('screen-dashboard', 'forward')">Build My Care Plan</button>
+        <button class="btn-primary" disabled onclick="navigate('screen-dashboard', 'forward')">Build My Care Plan</button>
       </div>
     </div>
   </div>
@@ -497,7 +497,7 @@
     <div class="dashboard-header">
       <div class="dash-top">
         <div>
-          <div class="dash-greeting">Good morning</div>
+          <div class="dash-greeting">Good morning, Sarah</div>
           <div class="dash-name">Week 18 · 2nd Trimester</div>
         </div>
         <button class="notif-btn">
