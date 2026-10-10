@@ -450,6 +450,7 @@
     flex: 1;
   }
 
+  .stages-grid .label { margin-top: 16px; }
   .stage-card {
     background: var(--bg-card);
     border-radius: var(--r-lg);
