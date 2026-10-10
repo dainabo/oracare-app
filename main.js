@@ -196,7 +196,7 @@
   }
 
   function backFromCapture() {
-    navigate(scanMode === 'demo' ? 'screen-premium' : 'screen-scan-instructions', 'back');
+    navigate(scanMode === 'demo' ? 'screen-premium' : 'screen-photo-diary', 'back');
   }
 
   function enterCapture() {
@@ -233,7 +233,30 @@
   let analyzeTimer = null;
 
   function startScan() {
+    // Today's photo joins the diary and the dashboard count
+    const thumb = document.getElementById('diaryThumb18');
+    if (thumb) thumb.hidden = false;
+    const count = document.getElementById('photoCount');
+    if (count) count.textContent = '5';
     navigate('screen-photo-saved', 'forward');
+  }
+
+  // ─── PHOTO DIARY ───
+  const diaryPhotos = {
+    18: { date: 'Oct 10', note: '' },
+    17: { date: 'Oct 3', note: 'Note: gums bleed when flossing' },
+    16: { date: 'Sep 26', note: '' },
+    15: { date: 'Sep 19', note: '' },
+    14: { date: 'Sep 12', note: '' }
+  };
+
+  function openPhoto(week) {
+    const photo = diaryPhotos[week];
+    document.getElementById('photoDetailTitle').textContent = 'Week ' + week + ' · ' + photo.date;
+    const note = document.getElementById('photoDetailNote');
+    note.textContent = photo.note;
+    note.hidden = !photo.note;
+    navigate('screen-photo-detail', 'forward');
   }
 
   function runAnalysis() {
