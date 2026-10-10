@@ -708,6 +708,20 @@
   }
   .metric-dot { width: 6px; height: 6px; border-radius: 50%; }
 
+  .progress-stats { display: flex; width: 100%; }
+  .progress-stat {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    text-align: center;
+    color: white;
+  }
+  .progress-stat + .progress-stat { border-left: 1px solid rgba(255,255,255,0.2); }
+  .progress-value { font-family: var(--font-display); font-size: 20px; line-height: 1.2; }
+  .progress-label { font-size: 11px; line-height: 1.3; padding: 0 4px; }
+
   .dashboard-body { flex: 1; padding: 20px 24px 0; }
 
   .section-title {
@@ -766,6 +780,9 @@
   .tip-label { font-size: 10px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 4px; }
   .tip-title { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
   .tip-body { font-size: 12px; color: var(--text-light); line-height: 1.5; }
+  .tip-label--teal { color: var(--teal); }
+  .tip-arrow { color: var(--text-light); flex-shrink: 0; margin-top: 2px; }
+  .reviewed-mark { font-size: 11px; font-weight: 600; color: var(--teal); margin-top: 8px; }
 
   .symptom-log {
     background: white;
