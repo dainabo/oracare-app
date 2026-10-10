@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OraCare — Women's Oral Health Companion</title>
+<title>OraCare — Oral Health Companion</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -725,13 +725,13 @@
     <!-- Header -->
     <div class="premium-hero">
       <div class="nav-row" style="justify-content: flex-start; margin-bottom: 16px;">
-        <button class="back-btn" style="background: rgba(255,255,255,0.15); box-shadow: none;" onclick="navigate('screen-dashboard', 'back')">
+        <button class="back-btn" style="background: rgba(255,255,255,0.15); box-shadow: none;" onclick="navigate('screen-profile', 'back')">
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M11 14L6 9L11 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
       </div>
-      <div class="premium-badge">✦ OraCare Premium</div>
-      <h1 class="premium-hero-title">Unlock AI Oral Health Monitoring</h1>
-      <p class="premium-hero-sub">Get ongoing AI-powered oral health monitoring throughout your pregnancy. Track changes, identify risks early, and receive personalized guidance every month.</p>
+      <div class="premium-badge">✦ OraCare Plus</div>
+      <h1 class="premium-hero-title">Everything for your family’s oral care</h1>
+      <p class="premium-hero-sub">Prevention at home for you and your family, with lessons reviewed by a dentist.</p>
     </div>
 
     <!-- Feature list -->
@@ -740,55 +740,51 @@
         <div class="premium-check-circle">
           <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1" stroke="#2E7D7D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
-        Monthly AI oral health scans
+        AI-guided photo diary
       </div>
       <div class="premium-feature">
         <div class="premium-check-circle">
           <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1" stroke="#2E7D7D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
-        Pregnancy-specific risk monitoring
+        Lessons for every life stage, reviewed by a dentist
       </div>
       <div class="premium-feature">
         <div class="premium-check-circle">
           <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1" stroke="#2E7D7D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
-        Progress tracking over time
+        Reminders and check-up nudges
       </div>
       <div class="premium-feature">
         <div class="premium-check-circle">
           <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1" stroke="#2E7D7D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
-        Personalized care plans
+        Your oral-health history to share with your dentist
       </div>
       <div class="premium-feature">
         <div class="premium-check-circle">
           <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1" stroke="#2E7D7D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
-        Dentist-ready reports
-      </div>
-      <div class="premium-feature">
-        <div class="premium-check-circle">
-          <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1" stroke="#2E7D7D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        AI oral health assistant
+        Family sharing: invite your partner, add kids’ profiles
       </div>
     </div>
 
     <!-- Pricing -->
     <div class="premium-pricing">
-      <div class="premium-trial-tag">30-Day Free Trial</div>
-      <div class="premium-price-main">€4.99<span style="font-size: 16px; font-family: var(--font-body); font-weight: 400;">/month</span></div>
-      <div class="premium-price-sub">after free trial · cancel anytime</div>
+      <div class="premium-trial-tag">7-day free trial</div>
+      <div class="premium-price-main">€24.99<span style="font-size: 16px; font-family: var(--font-body); font-weight: 400;">/year</span></div>
+      <div class="premium-price-sub">or €2.99/month · cancel anytime</div>
     </div>
 
     <!-- CTAs -->
     <div class="premium-cta">
       <button class="btn-primary" onclick="startTrialScan()" style="background: linear-gradient(135deg, var(--teal), #256868);">
-        Start Free Trial
+        Start 7-day free trial
       </button>
       <button class="btn-secondary" onclick="beginDemo()">
         Try Demo
       </button>
+      <button class="btn-capture-back" onclick="document.getElementById('insurerNote').hidden = false">Covered by your insurer? Activate here</button>
+      <p class="premium-insurer-note" id="insurerNote" hidden>Insurer activation is coming soon.</p>
     </div>
 
   </div>
@@ -908,7 +904,8 @@
       <div class="recs-summary-text">
         <div class="recs-summary-label">Pregnancy · Week 18</div>
         <div class="recs-summary-title">Your personalized oral health action plan</div>
-        <div class="recs-summary-count">7 recommendations · Based on your scan + symptoms</div>
+        <div class="recs-summary-count">7 recommendations · Based on your answers</div>
+        <div class="recs-summary-reviewed">✓ Reviewed by a dentist</div>
       </div>
       <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
         <circle cx="28" cy="28" r="28" fill="rgba(255,255,255,0.12)"/>
@@ -934,7 +931,7 @@
             <span class="rec-time">Daily</span>
           </div>
           <div class="rec-title">Switch to a soft-bristled toothbrush</div>
-          <div class="rec-body">Your scan indicates gum inflammation. Hard bristles worsen pregnancy gingivitis. Use a soft or extra-soft brush and apply gentle, circular motions at a 45° angle to the gum line.</div>
+          <div class="rec-body">Gums can become more sensitive during pregnancy, and hard bristles can irritate them. Use a soft or extra-soft brush and apply gentle, circular motions at a 45° angle to the gum line.</div>
           <div class="rec-tags">
             <span class="rec-tag" style="background: var(--salmon-pale); color: var(--salmon-text);">Gingivitis</span>
             <span class="rec-tag" style="background: var(--border); color: var(--text-mid);">Products</span>
@@ -966,7 +963,7 @@
             <span class="rec-time">Daily</span>
           </div>
           <div class="rec-title">Rinse with alcohol-free antibacterial mouthwash</div>
-          <div class="rec-body">Use a chlorhexidine-free, alcohol-free rinse like Listerine Zero or CloSYS after brushing. Alcohol-containing rinses can irritate inflamed pregnancy gums and are not recommended during pregnancy.</div>
+          <div class="rec-body">Use an alcohol-free mouthwash after brushing. Alcohol-containing rinses can irritate inflamed pregnancy gums and are not recommended during pregnancy.</div>
           <div class="rec-tags">
             <span class="rec-tag" style="background: #FEF3E2; color: var(--amber-text);">Products</span>
             <span class="rec-tag" style="background: var(--border); color: var(--text-mid);">Gum Health</span>
@@ -998,7 +995,7 @@
             <span class="rec-time">Twice Daily</span>
           </div>
           <div class="rec-title">Use fluoride toothpaste (1000–1450 ppm)</div>
-          <div class="rec-body">Fluoride toothpaste is safe throughout pregnancy and essential for enamel protection. Your enamel score is currently good — maintain it. Avoid whitening toothpastes which can increase sensitivity.</div>
+          <div class="rec-body">Fluoride toothpaste is safe throughout pregnancy and essential for enamel protection. Avoid whitening toothpastes which can increase sensitivity.</div>
           <div class="rec-tags">
             <span class="rec-tag" style="background: var(--teal-pale); color: var(--teal);">Enamel</span>
             <span class="rec-tag" style="background: var(--border); color: var(--text-mid);">Products</span>
@@ -1074,8 +1071,8 @@
         <div class="profile-user-info">
           <div class="profile-user-name">Sarah Johnson</div>
           <div class="profile-user-meta">Week 18 · 2nd Trimester</div>
-          <div class="profile-user-due">Due Date: October 14</div>
-          <span class="chip chip-teal">Premium Trial Active</span>
+          <div class="profile-user-due">Due Date: March 13</div>
+          <span class="chip chip-teal">OraCare Plus · Free trial</span>
         </div>
       </div>
 
@@ -1084,14 +1081,6 @@
         <div class="profile-row">
           <span class="profile-row-label">Current Trimester</span>
           <span class="profile-row-value">2nd Trimester</span>
-        </div>
-        <div class="profile-row">
-          <span class="profile-row-label">Oral Health Score</span>
-          <span class="profile-row-value">72</span>
-        </div>
-        <div class="profile-row">
-          <span class="profile-row-label">Last AI Scan</span>
-          <span class="profile-row-value">Today</span>
         </div>
         <div class="profile-row">
           <span class="profile-row-label">Current Care Plan</span>
@@ -1107,12 +1096,16 @@
         </div>
         <div class="profile-row">
           <div>
-            <div class="profile-account-label">Scan History</div>
-            <div class="profile-account-sub">Last scan: Today, 9:41 AM</div>
+            <div class="profile-account-label">Photo diary</div>
+            <div class="profile-account-sub">Last photo: Today</div>
           </div>
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="color: var(--text-light); flex-shrink:0;"><path d="M6 4L10 8L6 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
         <div class="profile-row">
+          <span class="profile-account-label">Family</span>
+          <span class="profile-row-value">Coming soon</span>
+        </div>
+        <div class="profile-row profile-row--link" onclick="navigate('screen-premium', 'forward')">
           <span class="profile-account-label">Subscription</span>
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="color: var(--text-light); flex-shrink:0;"><path d="M6 4L10 8L6 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
@@ -1126,7 +1119,7 @@
         </div>
       </div>
 
-      <p style="text-align: center; font-size: 12px; color: var(--text-light); padding: 4px 0 24px;">Version 1.0 – Hackathon MVP</p>
+      <p style="text-align: center; font-size: 12px; color: var(--text-light); padding: 4px 0 24px;">Version 1.0</p>
     </div>
 
     <div class="bottom-nav">

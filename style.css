@@ -969,6 +969,7 @@
     gap: 10px;
     flex-shrink: 0;
   }
+  .premium-insurer-note { font-size: 13px; color: var(--text-mid); text-align: center; }
   .scan-trial-hint {
     text-align: center;
     font-size: 12px;
@@ -1271,6 +1272,7 @@
   .recs-summary-label { font-size: 12px; color: rgba(255,255,255,0.95); margin-bottom: 4px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; }
   .recs-summary-title { font-family: var(--font-display); font-size: 20px; line-height: 1.3; }
   .recs-summary-count { font-size: 13px; color: rgba(255,255,255,0.95); margin-top: 6px; }
+  .recs-summary-reviewed { font-size: 12px; font-weight: 600; color: white; margin-top: 8px; }
 
   .recs-filter { padding: 0 24px 16px; display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; flex-shrink: 0; }
   .recs-filter::-webkit-scrollbar { display: none; }
@@ -1375,6 +1377,7 @@
     gap: 12px;
     border-bottom: 1px solid var(--border);
   }
+  .profile-row--link { cursor: pointer; }
   .profile-row:last-child { border-bottom: none; }
   .profile-row-label { font-size: 14px; color: var(--text); }
   .profile-row-value { font-size: 14px; font-weight: 600; color: var(--text); }
