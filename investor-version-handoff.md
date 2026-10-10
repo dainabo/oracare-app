@@ -13,6 +13,25 @@ Created 2026-10-10.
 
 ---
 
+## TODO — set up the short women's-health link
+
+The auto-generated branch URL (below) is long. Add a short alias for it:
+**`oracare-womens-health.vercel.app`** (looked unclaimed on 2026-10-10).
+
+1. Vercel → **oracare** project → **Settings → Domains**.
+2. **Add Domain** → type `oracare-womens-health.vercel.app`.
+3. If asked for an environment/branch: choose **Preview**, Git branch
+   **`womens-health`**. Do **not** pick Production — that's the main link.
+4. Save. Open the new link and check it shows the women's-health version.
+5. Open it in a private window too. If it shows a Vercel login wall and it
+   needs to be public, turn off Vercel Authentication under
+   **Settings → Deployment Protection**.
+6. Tell Claude it's done so these notes get updated with the short link.
+
+The long URL keeps working either way.
+
+---
+
 ## Current state
 
 - Vercel production branch: **`main`**
