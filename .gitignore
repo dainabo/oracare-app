@@ -4,3 +4,5 @@
 # Impeccable: keep critique snapshots, ignore runtime state
 .impeccable/*
 !.impeccable/critique/
+
+.playwright-mcp/
