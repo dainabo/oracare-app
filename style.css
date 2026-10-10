@@ -981,7 +981,8 @@
   /* ════════════════════════════════════════
      SCREEN 5a2 — SCAN CAPTURE
   ════════════════════════════════════════ */
-  #screen-scan-capture {
+  #screen-scan-capture,
+  #screen-photo-saved {
     background: var(--bg);
     align-items: center;
     padding: 54px 24px 40px;
@@ -1069,6 +1070,23 @@
     cursor: pointer;
     padding: 8px;
   }
+
+  .svg-sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+  /* ── Photo saved: side-by-side comparison ── */
+  .photo-compare { display: flex; gap: 16px; width: 100%; margin-bottom: 24px; flex-shrink: 0; }
+  .photo-compare-item { flex: 1; min-width: 0; margin: 0; }
+  .photo-compare-frame {
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    margin-bottom: 8px;
+  }
+  .photo-compare-frame svg { display: block; width: 100%; height: auto; }
+  .photo-compare-frame--current { outline: 2px solid var(--teal); outline-offset: 2px; }
+  .photo-compare-label { font-size: 13px; font-weight: 600; color: var(--text-mid); text-align: center; }
+  .photo-compare-note { font-size: 14px; color: var(--text-mid); text-align: center; margin-bottom: 32px; flex-shrink: 0; }
+  #screen-photo-saved .capture-footer { margin-top: auto; }
 
   /* ════════════════════════════════════════
      SCREEN 5b — SCAN ANALYZING

@@ -22,6 +22,74 @@
     </div>
   </div>
 
+  <!-- Shared SVG art (kept rendered so gradients paint inside <use>) -->
+  <svg class="svg-sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="camVig" cx="50%" cy="50%" r="70%">
+            <stop offset="0%" stop-color="#1E2E2E"/>
+            <stop offset="100%" stop-color="#0C1A1A"/>
+          </radialGradient>
+          <radialGradient id="gumHighlight" cx="50%" cy="30%" r="60%">
+            <stop offset="0%" stop-color="#F5A090" stop-opacity="0.5"/>
+            <stop offset="100%" stop-color="#D97B6E" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+
+        <g id="teethArt">
+        <!-- Dark camera background -->
+        <rect width="327" height="210" fill="url(#camVig)"/>
+
+        <!-- Upper gum tissue -->
+        <path d="M48 102 Q90 78 163 74 Q236 78 279 102 L279 116 Q236 92 163 88 Q90 92 48 116 Z" fill="#D97B6E"/>
+        <path d="M48 102 Q90 78 163 74 Q236 78 279 102" stroke="#F0907E" stroke-width="1.5" fill="none" opacity="0.6"/>
+
+        <!-- Upper teeth — 8 teeth centred -->
+        <!-- Far-left partial -->
+        <rect x="50" y="102" width="22" height="46" rx="4" fill="#F2F0EB" opacity="0.9"/>
+        <!-- Teeth 2–7 -->
+        <rect x="74" y="98"  width="25" height="51" rx="4" fill="#F8F8F5"/>
+        <rect x="101" y="95" width="26" height="55" rx="4" fill="#FFFFFF"/>
+        <rect x="129" y="93" width="28" height="58" rx="4" fill="#FFFFFF"/>
+        <rect x="159" y="93" width="28" height="58" rx="4" fill="#FFFFFF"/>
+        <rect x="189" y="95" width="26" height="55" rx="4" fill="#FFFFFF"/>
+        <rect x="217" y="98" width="25" height="51" rx="4" fill="#F8F8F5"/>
+        <!-- Far-right partial -->
+        <rect x="244" y="102" width="22" height="46" rx="4" fill="#F2F0EB" opacity="0.9"/>
+
+        <!-- Subtle tooth gap lines -->
+        <line x1="74"  y1="98"  x2="74"  y2="149" stroke="#D0CFC8" stroke-width="0.8" opacity="0.5"/>
+        <line x1="101" y1="95"  x2="101" y2="150" stroke="#D0CFC8" stroke-width="0.8" opacity="0.5"/>
+        <line x1="129" y1="93"  x2="129" y2="151" stroke="#D0CFC8" stroke-width="0.8" opacity="0.5"/>
+        <line x1="159" y1="93"  x2="159" y2="151" stroke="#D0CFC8" stroke-width="0.8" opacity="0.5"/>
+        <line x1="189" y1="93"  x2="189" y2="151" stroke="#D0CFC8" stroke-width="0.8" opacity="0.5"/>
+        <line x1="217" y1="95"  x2="217" y2="150" stroke="#D0CFC8" stroke-width="0.8" opacity="0.5"/>
+        <line x1="244" y1="98"  x2="244" y2="149" stroke="#D0CFC8" stroke-width="0.8" opacity="0.5"/>
+
+        <!-- Tooth surface highlights -->
+        <rect x="131" y="95" width="6" height="28" rx="3" fill="white" opacity="0.35"/>
+        <rect x="161" y="95" width="6" height="28" rx="3" fill="white" opacity="0.35"/>
+        <rect x="103" y="97" width="5" height="22" rx="2" fill="white" opacity="0.25"/>
+        <rect x="191" y="97" width="5" height="22" rx="2" fill="white" opacity="0.25"/>
+
+        <!-- Dark mouth interior between teeth rows -->
+        <rect x="48" y="149" width="231" height="10" fill="#0A1414"/>
+
+        <!-- Lower gum tissue (partial) -->
+        <path d="M48 159 Q163 152 279 159 L279 172 Q163 165 48 172 Z" fill="#C96E62" opacity="0.85"/>
+
+        <!-- Lower teeth (tips only) -->
+        <rect x="82"  y="153" width="21" height="12" rx="3" fill="#F0EDE6" opacity="0.75"/>
+        <rect x="105" y="151" width="24" height="14" rx="3" fill="#F8F8F5" opacity="0.85"/>
+        <rect x="131" y="149" width="27" height="16" rx="3" fill="#FFFFFF" opacity="0.9"/>
+        <rect x="160" y="149" width="27" height="16" rx="3" fill="#FFFFFF" opacity="0.9"/>
+        <rect x="189" y="151" width="24" height="14" rx="3" fill="#F8F8F5" opacity="0.85"/>
+        <rect x="215" y="153" width="21" height="12" rx="3" fill="#F0EDE6" opacity="0.75"/>
+
+        <!-- Dark area below lower teeth -->
+        <rect x="0" y="165" width="327" height="45" fill="#0C1A1A"/>
+        </g>
+  </svg>
+
   <!-- ════════════════════════════
        SPLASH SCREEN
   ════════════════════════════ -->
@@ -549,7 +617,7 @@
   <div class="screen" id="screen-scan-instructions">
     <div class="scan-hero">
       <div class="nav-row" style="justify-content: flex-start; margin-bottom: 16px;">
-        <button class="back-btn" style="background: rgba(255,255,255,0.15); box-shadow: none;" onclick="navigate('screen-premium', 'back')">
+        <button class="back-btn" style="background: rgba(255,255,255,0.15); box-shadow: none;" onclick="navigate('screen-dashboard', 'back')">
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M11 14L6 9L11 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
       </div>
@@ -583,8 +651,8 @@
         <path d="M126 40 L127.5 45 L132 44 L128.5 47 L130 52 L126 49 L122 52 L123.5 47 L120 44 L124.5 45 Z" fill="white" opacity="0.9"/>
       </svg>
 
-      <h1 class="scan-hero-title">How AI Scan Works</h1>
-      <p class="scan-hero-sub">A 30-second photo scan powered by AI. No special equipment needed.</p>
+      <h1 class="scan-hero-title">How to take a good photo</h1>
+      <p class="scan-hero-sub">Takes 30 seconds. OraCare guides you through it.</p>
     </div>
 
     <div class="scan-steps">
@@ -606,21 +674,21 @@
         <div class="step-bubble">3</div>
         <div class="scan-step-content">
           <div class="scan-step-title">Open wide and smile</div>
-          <div class="scan-step-body">Pull lips back to expose your teeth and gums. The AI analyzes gum color, texture, and inflammation markers.</div>
+          <div class="scan-step-body">Pull lips back to expose your teeth and gums. Make sure your gum line is visible.</div>
         </div>
       </div>
       <div class="scan-step-item">
         <div class="step-bubble">4</div>
         <div class="scan-step-content">
           <div class="scan-step-title">Keep still and tap capture</div>
-          <div class="scan-step-body">Hold steady for 2 seconds while the AI captures and processes your image.</div>
+          <div class="scan-step-body">Hold steady for 2 seconds, then tap capture.</div>
         </div>
       </div>
     </div>
 
     <div class="scan-warning">
       <span style="font-size: 18px; flex-shrink: 0;">⚠️</span>
-      <div class="scan-warning-text"><strong>Medical disclaimer:</strong> OraCare AI scans provide health monitoring support only and do not replace professional dental diagnosis. Always consult your dentist for clinical evaluation.</div>
+      <div class="scan-warning-text"><strong>Medical disclaimer:</strong> Photos are for your own records and to share with your dentist. OraCare does not diagnose. Always consult your dentist.</div>
     </div>
 
     <div class="scan-footer">
@@ -739,68 +807,7 @@
     <div class="capture-preview-wrap">
       <!-- Teeth illustration SVG -->
       <svg class="teeth-illustration" viewBox="0 0 327 210" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <radialGradient id="camVig" cx="50%" cy="50%" r="70%">
-            <stop offset="0%" stop-color="#1E2E2E"/>
-            <stop offset="100%" stop-color="#0C1A1A"/>
-          </radialGradient>
-          <radialGradient id="gumHighlight" cx="50%" cy="30%" r="60%">
-            <stop offset="0%" stop-color="#F5A090" stop-opacity="0.5"/>
-            <stop offset="100%" stop-color="#D97B6E" stop-opacity="0"/>
-          </radialGradient>
-        </defs>
-
-        <!-- Dark camera background -->
-        <rect width="327" height="210" fill="url(#camVig)"/>
-
-        <!-- Upper gum tissue -->
-        <path d="M48 102 Q90 78 163 74 Q236 78 279 102 L279 116 Q236 92 163 88 Q90 92 48 116 Z" fill="#D97B6E"/>
-        <path d="M48 102 Q90 78 163 74 Q236 78 279 102" stroke="#F0907E" stroke-width="1.5" fill="none" opacity="0.6"/>
-
-        <!-- Upper teeth — 8 teeth centred -->
-        <!-- Far-left partial -->
-        <rect x="50" y="102" width="22" height="46" rx="4" fill="#F2F0EB" opacity="0.9"/>
-        <!-- Teeth 2–7 -->
-        <rect x="74" y="98"  width="25" height="51" rx="4" fill="#F8F8F5"/>
-        <rect x="101" y="95" width="26" height="55" rx="4" fill="#FFFFFF"/>
-        <rect x="129" y="93" width="28" height="58" rx="4" fill="#FFFFFF"/>
-        <rect x="159" y="93" width="28" height="58" rx="4" fill="#FFFFFF"/>
-        <rect x="189" y="95" width="26" height="55" rx="4" fill="#FFFFFF"/>
-        <rect x="217" y="98" width="25" height="51" rx="4" fill="#F8F8F5"/>
-        <!-- Far-right partial -->
-        <rect x="244" y="102" width="22" height="46" rx="4" fill="#F2F0EB" opacity="0.9"/>
-
-        <!-- Subtle tooth gap lines -->
-        <line x1="74"  y1="98"  x2="74"  y2="149" stroke="#D0CFC8" stroke-width="0.8" opacity="0.5"/>
-        <line x1="101" y1="95"  x2="101" y2="150" stroke="#D0CFC8" stroke-width="0.8" opacity="0.5"/>
-        <line x1="129" y1="93"  x2="129" y2="151" stroke="#D0CFC8" stroke-width="0.8" opacity="0.5"/>
-        <line x1="159" y1="93"  x2="159" y2="151" stroke="#D0CFC8" stroke-width="0.8" opacity="0.5"/>
-        <line x1="189" y1="93"  x2="189" y2="151" stroke="#D0CFC8" stroke-width="0.8" opacity="0.5"/>
-        <line x1="217" y1="95"  x2="217" y2="150" stroke="#D0CFC8" stroke-width="0.8" opacity="0.5"/>
-        <line x1="244" y1="98"  x2="244" y2="149" stroke="#D0CFC8" stroke-width="0.8" opacity="0.5"/>
-
-        <!-- Tooth surface highlights -->
-        <rect x="131" y="95" width="6" height="28" rx="3" fill="white" opacity="0.35"/>
-        <rect x="161" y="95" width="6" height="28" rx="3" fill="white" opacity="0.35"/>
-        <rect x="103" y="97" width="5" height="22" rx="2" fill="white" opacity="0.25"/>
-        <rect x="191" y="97" width="5" height="22" rx="2" fill="white" opacity="0.25"/>
-
-        <!-- Dark mouth interior between teeth rows -->
-        <rect x="48" y="149" width="231" height="10" fill="#0A1414"/>
-
-        <!-- Lower gum tissue (partial) -->
-        <path d="M48 159 Q163 152 279 159 L279 172 Q163 165 48 172 Z" fill="#C96E62" opacity="0.85"/>
-
-        <!-- Lower teeth (tips only) -->
-        <rect x="82"  y="153" width="21" height="12" rx="3" fill="#F0EDE6" opacity="0.75"/>
-        <rect x="105" y="151" width="24" height="14" rx="3" fill="#F8F8F5" opacity="0.85"/>
-        <rect x="131" y="149" width="27" height="16" rx="3" fill="#FFFFFF" opacity="0.9"/>
-        <rect x="160" y="149" width="27" height="16" rx="3" fill="#FFFFFF" opacity="0.9"/>
-        <rect x="189" y="151" width="24" height="14" rx="3" fill="#F8F8F5" opacity="0.85"/>
-        <rect x="215" y="153" width="21" height="12" rx="3" fill="#F0EDE6" opacity="0.75"/>
-
-        <!-- Dark area below lower teeth -->
-        <rect x="0" y="165" width="327" height="45" fill="#0C1A1A"/>
+        <use href="#teethArt"/>
       </svg>
 
       <!-- Teal scan frame corners -->
@@ -840,7 +847,7 @@
 
     <div class="capture-footer">
       <button class="btn-primary" id="captureCta" onclick="startScan()" style="width:100%; background: linear-gradient(135deg, var(--teal), #256868);">
-        Scan My Smile
+        Save photo
       </button>
       <button class="btn-capture-back" onclick="backFromCapture()">Back</button>
     </div>
@@ -848,234 +855,37 @@
   </div>
 
   <!-- ════════════════════════════
-       SCREEN 5b: SCAN ANALYZING
+       SCREEN 6: PHOTO SAVED
   ════════════════════════════ -->
-  <div class="screen" id="screen-scan-analyzing">
+  <div class="screen" id="screen-photo-saved">
 
-    <div class="analyzing-top">
-      <h1 class="analyzing-title" id="analyzingTitle">Analyzing Your Scan</h1>
-      <p class="analyzing-sub">Our AI is assessing your oral health indicators and generating personalized recommendations based on your pregnancy stage and reported symptoms.</p>
+    <div class="capture-header">
+      <h1 class="capture-title">Photo saved</h1>
+      <p class="capture-subtitle">Added to your photo diary.</p>
     </div>
 
-    <!-- Circular progress ring -->
-    <div class="analyze-ring-wrap">
-      <svg width="180" height="180" viewBox="0 0 180 180">
-        <circle class="analyze-ring-bg" cx="90" cy="90" r="70"/>
-        <circle class="analyze-ring-fill" id="analyzeRingFill" cx="90" cy="90" r="70"/>
-      </svg>
-      <div class="analyze-center">
-        <span class="analyze-percent" id="analyzePercent">0%</span>
-        <span class="analyze-label">Analyzing</span>
-      </div>
-    </div>
-
-    <!-- Analysis checklist -->
-    <div class="analysis-checklist">
-      <div class="check-item" id="check-1">
-        <div class="check-icon" id="check-icon-1">
-          <svg width="12" height="10" viewBox="0 0 12 10" fill="none" style="display:none"><path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div class="photo-compare">
+      <figure class="photo-compare-item">
+        <div class="photo-compare-frame">
+          <svg viewBox="0 0 327 210" xmlns="http://www.w3.org/2000/svg"><use href="#teethArt"/></svg>
         </div>
-        Detecting gum inflammation
-      </div>
-      <div class="check-item" id="check-2">
-        <div class="check-icon" id="check-icon-2">
-          <svg width="12" height="10" viewBox="0 0 12 10" fill="none" style="display:none"><path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <figcaption class="photo-compare-label">Week 17</figcaption>
+      </figure>
+      <figure class="photo-compare-item">
+        <div class="photo-compare-frame photo-compare-frame--current">
+          <svg viewBox="0 0 327 210" xmlns="http://www.w3.org/2000/svg"><use href="#teethArt"/></svg>
         </div>
-        Assessing enamel condition
-      </div>
-      <div class="check-item" id="check-3">
-        <div class="check-icon" id="check-icon-3">
-          <svg width="12" height="10" viewBox="0 0 12 10" fill="none" style="display:none"><path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        Evaluating pregnancy-related oral health risks
-      </div>
-      <div class="check-item" id="check-4">
-        <div class="check-icon" id="check-icon-4"><span id="check-spinner-4">⏳</span></div>
-        Generating personalized care plan
-      </div>
+        <figcaption class="photo-compare-label">Week 18 · today</figcaption>
+      </figure>
     </div>
 
-  </div>
+    <p class="photo-compare-note">Compare over time, or share with your dentist.</p>
 
-  <!-- ════════════════════════════
-       SCREEN 6: AI SCAN RESULTS
-  ════════════════════════════ -->
-  <div class="screen" id="screen-scan-results">
-    <div class="results-header">
-      <div class="nav-row">
-        <button class="back-btn" onclick="backFromResults()">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M11 14L6 9L11 4" stroke="#2F3133" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-        <div style="flex: 1; text-align: center;">
-          <span style="font-size: 16px; font-weight: 600;">Scan Results</span>
-        </div>
-        <button style="background: none; border: none; cursor: pointer; font-size: 14px; color: var(--teal); font-weight: 600; font-family: var(--font-body);">Share</button>
-      </div>
-      <div style="display: flex; justify-content: space-between; align-items: flex-end;">
-        <div>
-          <span class="chip chip-teal" id="resultsDemoBadge" style="display:none; margin-bottom: 8px;">Demo Mode</span>
-          <p class="label" style="margin-bottom: 6px;">Analysis Complete</p>
-          <h2 id="resultsHeading" style="font-family: var(--font-display); font-size: 24px; line-height: 1.2;">Your Oral Health <br>Report</h2>
-        </div>
-        <span class="chip chip-amber">Attention Needed</span>
-      </div>
-      <div class="results-chip-row">
-        <span class="chip chip-teal">2nd Trimester</span>
-        <span class="chip" style="background: var(--border); color: var(--text-mid);">Scanned Today 9:41 AM</span>
-      </div>
+    <div class="capture-footer">
+      <button class="btn-primary" onclick="navigate('screen-recommendations', 'forward')">View care plan</button>
+      <button class="btn-capture-back" onclick="navigate('screen-dashboard', 'back')">Back to home</button>
     </div>
 
-    <div class="ai-note" id="resultsDemoCallout" style="display:none;">
-      <div class="ai-avatar">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="4" fill="white"/><path d="M10 4 L10 2 M10 18 L10 16 M4 10 L2 10 M18 10 L16 10 M5.5 5.5 L4 4 M15.5 15.5 L14 14 M14.5 5.5 L16 4 M4.5 15.5 L6 14" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/></svg>
-      </div>
-      <div class="ai-note-content">
-        <div class="ai-note-from">Sample Report</div>
-        <div class="ai-note-text">This report was generated from a sample scan and demonstrates OraCare's AI analysis. Start your free trial to receive a personalized report based on your own smile.</div>
-      </div>
-    </div>
-
-    <!-- Simulated scan image -->
-    <div class="scan-result-image">
-      <svg width="327" height="180" viewBox="0 0 327 180" fill="none" style="display: block; width: 100%; height: auto;">
-        <!-- Background mouth/dark area -->
-        <rect width="327" height="180" fill="#1A1A1A"/>
-        <!-- Lip areas (top and bottom) -->
-        <ellipse cx="163" cy="20" rx="100" ry="35" fill="#C0826E" opacity="0.8"/>
-        <ellipse cx="163" cy="162" rx="110" ry="38" fill="#C0826E" opacity="0.7"/>
-        <!-- Gum - slightly inflamed pink -->
-        <ellipse cx="163" cy="75" rx="130" ry="30" fill="#CC8080" opacity="0.5"/>
-        <!-- Teeth row - upper -->
-        <rect x="40" y="75" width="32" height="40" rx="6" fill="#F5F0E8"/>
-        <rect x="76" y="68" width="38" height="48" rx="7" fill="#F8F4EC"/>
-        <rect x="118" y="65" width="20" height="52" rx="5" fill="#FAF7F0"/>
-        <rect x="142" y="64" width="22" height="54" rx="5" fill="#FDFAF5"/>
-        <rect x="168" y="64" width="22" height="54" rx="5" fill="#FDFAF5"/>
-        <rect x="194" y="65" width="20" height="52" rx="5" fill="#FAF7F0"/>
-        <rect x="218" y="68" width="38" height="48" rx="7" fill="#F8F4EC"/>
-        <rect x="260" y="75" width="32" height="40" rx="6" fill="#F5F0E8"/>
-        <!-- Gum highlights and inflammation markers -->
-        <ellipse cx="90" cy="78" rx="18" ry="8" fill="#E07070" opacity="0.4"/>
-        <ellipse cx="240" cy="78" rx="14" ry="7" fill="#E07070" opacity="0.35"/>
-        <!-- Bottom teeth partial -->
-        <rect x="60" y="120" width="28" height="36" rx="5" fill="#F0EDE5" opacity="0.6"/>
-        <rect x="92" y="118" width="34" height="38" rx="6" fill="#F3F0E8" opacity="0.7"/>
-        <rect x="130" y="116" width="18" height="40" rx="5" fill="#F5F2EA" opacity="0.8"/>
-        <rect x="152" y="115" width="20" height="42" rx="5" fill="#F7F4EC" opacity="0.85"/>
-        <rect x="177" y="115" width="20" height="42" rx="5" fill="#F7F4EC" opacity="0.85"/>
-        <rect x="201" y="116" width="18" height="40" rx="5" fill="#F5F2EA" opacity="0.8"/>
-        <rect x="223" y="118" width="34" height="38" rx="6" fill="#F3F0E8" opacity="0.7"/>
-        <rect x="261" y="120" width="28" height="36" rx="5" fill="#F0EDE5" opacity="0.6"/>
-        <!-- AI detection overlays -->
-        <!-- Gum inflammation marker left -->
-        <rect x="68" y="68" width="52" height="28" rx="4" fill="none" stroke="#E88C7D" stroke-width="1.5" stroke-dasharray="3 2" opacity="0.9"/>
-        <rect x="69" y="58" width="130" height="16" rx="4" fill="#9D5E54"/>
-        <text x="74" y="69" fill="white" font-size="9" font-family="system-ui" font-weight="600">Inflammation Detected</text>
-        <!-- Good area marker right  -->
-        <rect x="214" y="65" width="48" height="34" rx="4" fill="none" stroke="#34D399" stroke-width="1.5" opacity="0.7"/>
-        <!-- Sensitivity marker center -->
-        <circle cx="163" cy="92" r="16" fill="none" stroke="#FCD34D" stroke-width="1.5" stroke-dasharray="3 2" opacity="0.8"/>
-        <!-- Scan lines overlay -->
-        <rect width="327" height="180" fill="url(#scanlines)" opacity="0.06"/>
-        <defs>
-          <pattern id="scanlines" width="1" height="3" patternUnits="userSpaceOnUse">
-            <line x1="0" y1="0" x2="1" y2="0" stroke="white" stroke-width="1"/>
-          </pattern>
-        </defs>
-        <!-- Corner brackets -->
-        <path d="M15 30 L15 15 L30 15" stroke="#7DECD4" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
-        <path d="M312 30 L312 15 L297 15" stroke="#7DECD4" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
-        <path d="M15 150 L15 165 L30 165" stroke="#7DECD4" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
-        <path d="M312 150 L312 165 L297 165" stroke="#7DECD4" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
-        <!-- AI badge -->
-        <rect x="8" y="8" width="50" height="20" rx="6" fill="#2C7777"/>
-        <text x="14" y="21" fill="white" font-size="9" font-family="system-ui" font-weight="700">AI SCAN</text>
-      </svg>
-    </div>
-
-    <div class="result-metrics">
-      <div class="metric-card">
-        <div class="metric-header">
-          <div>
-            <div class="metric-name">Gum Health</div>
-            <div style="font-size: 12px; color: var(--text-light); margin-top: 2px;">Inflammation assessment</div>
-          </div>
-          <div>
-            <span class="metric-score" style="color: var(--amber-text);">54</span>
-            <span style="font-size: 13px; color: var(--text-light);">/100</span>
-          </div>
-        </div>
-        <div class="metric-bar"><div class="metric-bar-fill bar-warn" style="width: 54%;"></div></div>
-        <div class="metric-desc">Mild-to-moderate inflammation detected in the upper left gum margin — consistent with pregnancy gingivitis. Hormonal changes increase gum sensitivity during the 2nd trimester.</div>
-        <span class="chip chip-amber" style="margin-top: 10px;">Needs Attention</span>
-      </div>
-
-      <div class="metric-card">
-        <div class="metric-header">
-          <div>
-            <div class="metric-name">Enamel Appearance</div>
-            <div style="font-size: 12px; color: var(--text-light); margin-top: 2px;">Surface integrity check</div>
-          </div>
-          <div>
-            <span class="metric-score" style="color: var(--green-text);">82</span>
-            <span style="font-size: 13px; color: var(--text-light);">/100</span>
-          </div>
-        </div>
-        <div class="metric-bar"><div class="metric-bar-fill bar-good" style="width: 82%;"></div></div>
-        <div class="metric-desc">Enamel surface appears well-maintained with no significant erosion markers visible. Continue current fluoride routine.</div>
-        <span class="chip chip-green" style="margin-top: 10px;">Good</span>
-      </div>
-
-      <div class="metric-card">
-        <div class="metric-header">
-          <div>
-            <div class="metric-name">Sensitivity Protection</div>
-            <div style="font-size: 12px; color: var(--text-light); margin-top: 2px;">Dentin coverage estimate</div>
-          </div>
-          <div>
-            <span class="metric-score" style="color: var(--amber-text);">58</span>
-            <span style="font-size: 13px; color: var(--text-light);">/100</span>
-          </div>
-        </div>
-        <div class="metric-bar"><div class="metric-bar-fill bar-warn" style="width: 58%;"></div></div>
-        <div class="metric-desc">Gum recession at 2–3 teeth may be contributing to reported sensitivity. This is a known side effect of pregnancy hormones and typically resolves postpartum.</div>
-        <span class="chip chip-amber" style="margin-top: 10px;">Moderate</span>
-      </div>
-    </div>
-
-    <div class="ai-note">
-      <div class="ai-avatar">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="4" fill="white"/><path d="M10 4 L10 2 M10 18 L10 16 M4 10 L2 10 M18 10 L16 10 M5.5 5.5 L4 4 M15.5 15.5 L14 14 M14.5 5.5 L16 4 M4.5 15.5 L6 14" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/></svg>
-      </div>
-      <div class="ai-note-content">
-        <div class="ai-note-from">OraCare AI</div>
-        <div class="ai-note-text">Based on your scan and 2nd trimester status, the gum inflammation is typical of <em>pregnancy gingivitis</em> — affecting up to 70% of pregnant women. I've updated your care plan with targeted recommendations. This is very manageable with the right routine.</div>
-      </div>
-    </div>
-
-    <div class="results-footer">
-      <button class="btn-primary" onclick="navigate('screen-recommendations', 'forward')">View Personalized Plan</button>
-      <button class="btn-secondary" onclick="navigate('screen-dashboard', 'back')">Back to Dashboard</button>
-    </div>
-
-    <div class="bottom-nav">
-      <button class="nav-item" onclick="navigate('screen-dashboard', 'back')">
-        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 9.5L11 3L19 9.5V19C19 19.6 18.6 20 18 20H14V15H8V20H4C3.4 20 3 19.6 3 19V9.5Z" stroke="#9EA4A8" stroke-width="1.6" stroke-linejoin="round"/></svg>
-        <span>Home</span>
-      </button>
-      <button class="nav-item active">
-        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="3" y="5" width="16" height="13" rx="2" stroke="#2E7D7D" stroke-width="1.6"/><circle cx="11" cy="11.5" r="3" stroke="#2E7D7D" stroke-width="1.6"/><path d="M8 5V4C8 3.4 8.4 3 9 3H13C13.6 3 14 3.4 14 4V5" stroke="#2E7D7D" stroke-width="1.6" stroke-linecap="round"/></svg>
-        <span>Photos</span>
-      </button>
-      <button class="nav-item" onclick="navigate('screen-recommendations', 'forward')">
-        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M7 11H15M7 7H15M7 15H11" stroke="#9EA4A8" stroke-width="1.6" stroke-linecap="round"/><rect x="3" y="3" width="16" height="16" rx="3" stroke="#9EA4A8" stroke-width="1.6"/></svg>
-        <span>Plan</span>
-      </button>
-      <button class="nav-item" onclick="navigate('screen-profile', 'forward')">
-        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="8" r="4" stroke="#9EA4A8" stroke-width="1.6"/><path d="M4 19C4 15.7 7.1 13 11 13C14.9 13 18 15.7 18 19" stroke="#9EA4A8" stroke-width="1.6" stroke-linecap="round"/></svg>
-        <span>Profile</span>
-      </button>
-    </div>
   </div>
 
   <!-- ════════════════════════════

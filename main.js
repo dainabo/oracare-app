@@ -141,11 +141,11 @@
     const subtitle = document.getElementById('captureSubtitle');
     const btn = document.getElementById('captureCta');
     const checklist = document.getElementById('captureChecklist');
-    if (title) title.textContent = isDemo ? 'Explore AI Analysis' : 'Capture Your Smile';
+    if (title) title.textContent = 'Capture Your Smile';
     if (subtitle) subtitle.textContent = isDemo
-      ? 'See how OraCare evaluates oral health using a sample scan.'
+      ? 'Try the photo diary with a sample photo.'
       : 'Position your teeth and gums inside the frame.';
-    if (btn) btn.textContent = isDemo ? 'Try Sample Scan' : 'Scan My Smile';
+    if (btn) btn.textContent = 'Save photo';
     if (checklist) checklist.style.display = isDemo ? 'none' : 'flex';
   }
 
@@ -219,9 +219,7 @@
   let analyzeTimer = null;
 
   function startScan() {
-    navigate('screen-scan-analyzing', 'forward');
-    // Small delay so the screen transition completes first
-    setTimeout(runAnalysis, 400);
+    navigate('screen-photo-saved', 'forward');
   }
 
   function runAnalysis() {
