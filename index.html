@@ -508,10 +508,10 @@
 
       <div class="health-score-card">
         <div class="progress-stats">
-          <div class="progress-stat">
-            <span class="progress-value">Done</span>
+          <button class="progress-stat progress-stat--link" onclick="navigate('screen-checkin', 'forward')">
+            <span class="progress-value" id="checkinStatus">To do</span>
             <span class="progress-label">This week’s check-in</span>
-          </div>
+          </button>
           <div class="progress-stat">
             <span class="progress-value" id="photoCount">4</span>
             <span class="progress-label">Photos so far</span>
@@ -537,16 +537,16 @@
           <div class="qa-label">Care Plan</div>
           <div class="qa-sub">7 actions</div>
         </button>
-        <button class="quick-action">
-          <div class="qa-icon">📅</div>
-          <div class="qa-label">Log</div>
-          <div class="qa-sub">Daily check-in</div>
+        <button class="quick-action" onclick="navigate('screen-checkin', 'forward')">
+          <div class="qa-icon">📝</div>
+          <div class="qa-label">Check-in</div>
+          <div class="qa-sub" id="checkinQaSub">This week</div>
         </button>
       </div>
 
       <div class="section-title">For Your Trimester</div>
       <div class="tip-cards">
-        <button class="tip-card" onclick="navigate('screen-lesson', 'forward')">
+        <button class="tip-card" onclick="openLesson('screen-dashboard')">
           <div class="tip-icon-wrap fi-teal">📖</div>
           <div class="tip-content">
             <div class="tip-label tip-label--teal">Lesson · 2-min read</div>
@@ -1283,12 +1283,101 @@
   </div>
 
   <!-- ════════════════════════════
+       WEEKLY CHECK-IN
+  ════════════════════════════ -->
+  <div class="screen" id="screen-checkin">
+    <div class="screen-header">
+      <div class="nav-row">
+        <button class="back-btn" onclick="navigate('screen-dashboard', 'back')">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M11 14L6 9L11 4" stroke="#2F3133" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="checkin">
+      <h1 class="heading">Weekly check-in</h1>
+      <p class="body checkin-sub">Oct 10 · Week 18 · Takes 30 seconds</p>
+
+      <section class="checkin-question">
+        <h2 class="section-title">Any bleeding when you brush or floss?</h2>
+        <div class="checkin-options" data-question="bleeding"><button class="checkin-opt" onclick="selectCheckin(this)">No</button><button class="checkin-opt" onclick="selectCheckin(this)">Sometimes</button><button class="checkin-opt" onclick="selectCheckin(this)">Often</button></div>
+      </section>
+      <section class="checkin-question">
+        <h2 class="section-title">Any tooth sensitivity?</h2>
+        <div class="checkin-options" data-question="sensitivity"><button class="checkin-opt" onclick="selectCheckin(this)">No</button><button class="checkin-opt" onclick="selectCheckin(this)">A little</button><button class="checkin-opt" onclick="selectCheckin(this)">A lot</button></div>
+      </section>
+      <section class="checkin-question">
+        <h2 class="section-title">Brushed twice a day this week?</h2>
+        <div class="checkin-options" data-question="brushing"><button class="checkin-opt" onclick="selectCheckin(this)">Most days</button><button class="checkin-opt" onclick="selectCheckin(this)">Some days</button><button class="checkin-opt" onclick="selectCheckin(this)">Rarely</button></div>
+      </section>
+      <section class="checkin-question">
+        <h2 class="section-title">Is your check-up booked?</h2>
+        <div class="checkin-options" data-question="checkup"><button class="checkin-opt" onclick="selectCheckin(this)">Yes</button><button class="checkin-opt" onclick="selectCheckin(this)">Not yet</button></div>
+        <p class="checkin-hint" id="checkupHint" hidden>The 2nd trimester is a good time. Aim for before Week 22.</p>
+      </section>
+
+      <section class="checkin-question">
+        <label class="section-title" for="checkinNote">Anything else? Add a note</label>
+        <textarea class="note-field" id="checkinNote" rows="2"></textarea>
+      </section>
+
+      <button class="btn-primary" id="saveCheckin" disabled onclick="saveCheckin()">Save check-in</button>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════
+       CHECK-IN SAVED
+  ════════════════════════════ -->
+  <div class="screen" id="screen-checkin-saved">
+    <div class="checkin checkin--saved">
+      <h1 class="heading">Check-in saved</h1>
+      <p class="body checkin-sub">Saved to your history. See you next week.</p>
+
+      <h2 class="section-title">This week</h2>
+      <div class="profile-card">
+        <div class="profile-row"><span class="profile-row-label">Bleeding</span><span class="profile-row-value" id="sumBleeding"></span></div>
+        <div class="profile-row"><span class="profile-row-label">Sensitivity</span><span class="profile-row-value" id="sumSensitivity"></span></div>
+        <div class="profile-row"><span class="profile-row-label">Brushing</span><span class="profile-row-value" id="sumBrushing"></span></div>
+        <div class="profile-row"><span class="profile-row-label">Check-up</span><span class="profile-row-value" id="sumCheckup"></span></div>
+      </div>
+
+      <div class="tip-cards">
+        <button class="tip-card" id="checkinLessonCard" hidden onclick="openLesson('screen-checkin-saved')">
+          <div class="tip-icon-wrap fi-teal">📖</div>
+          <div class="tip-content">
+            <div class="tip-label tip-label--teal">Lesson</div>
+            <div class="tip-title">Bleeding gums are common in pregnancy</div>
+            <div class="tip-body">Read: Why gums bleed more in the 2nd trimester</div>
+            <div class="reviewed-mark" id="checkinDentistLine" hidden>If it doesn’t improve, mention it to your dentist.</div>
+          </div>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="tip-arrow"><path d="M6 4L10 8L6 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+
+        <div class="tip-card checkin-reminder" id="checkinReminderCard" hidden>
+          <div class="tip-icon-wrap fi-salmon">🔔</div>
+          <div class="tip-content">
+            <div class="tip-title">Book your check-up</div>
+            <div class="tip-body">The 2nd trimester is a good time. Aim for before Week 22.</div>
+            <button class="btn-secondary checkin-remind-btn" id="remindBtn" onclick="setReminder()">Remind me Monday</button>
+            <p class="checkin-hint" id="remindNote" hidden>We’ll remind you on Monday.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="checkin-actions">
+        <button class="btn-primary" onclick="navigate('screen-dashboard', 'back')">Back to home</button>
+        <button class="btn-capture-back" onclick="enterCapture()">Add this week’s photo too</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════
        LESSON
   ════════════════════════════ -->
   <div class="screen" id="screen-lesson">
     <div class="screen-header">
       <div class="nav-row">
-        <button class="back-btn" onclick="navigate('screen-dashboard', 'back')">
+        <button class="back-btn" onclick="navigate(lessonReturn, 'back')">
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M11 14L6 9L11 4" stroke="#2F3133" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
       </div>

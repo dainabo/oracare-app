@@ -269,6 +269,59 @@
     navigate('screen-photo-saved', 'forward');
   }
 
+  // ─── LESSON ───
+  let lessonReturn = 'screen-dashboard';
+  function openLesson(from) {
+    lessonReturn = from;
+    navigate('screen-lesson', 'forward');
+  }
+
+  // ─── WEEKLY CHECK-IN ───
+  // State lives in memory only, so a refresh resets the demo.
+  function checkinAnswer(key) {
+    const sel = document.querySelector('.checkin-options[data-question="' + key + '"] .selected');
+    return sel ? sel.textContent : null;
+  }
+
+  function selectCheckin(btn) {
+    const group = btn.closest('.checkin-options');
+    group.querySelectorAll('.checkin-opt').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    if (group.dataset.question === 'checkup') {
+      document.getElementById('checkupHint').hidden = btn.textContent !== 'Not yet';
+    }
+    const allAnswered = ['bleeding', 'sensitivity', 'brushing', 'checkup'].every(checkinAnswer);
+    document.getElementById('saveCheckin').disabled = !allAnswered;
+  }
+
+  function saveCheckin() {
+    const a = {
+      bleeding: checkinAnswer('bleeding'),
+      sensitivity: checkinAnswer('sensitivity'),
+      brushing: checkinAnswer('brushing'),
+      checkup: checkinAnswer('checkup')
+    };
+    document.getElementById('sumBleeding').textContent = a.bleeding;
+    document.getElementById('sumSensitivity').textContent = a.sensitivity;
+    document.getElementById('sumBrushing').textContent = a.brushing;
+    document.getElementById('sumCheckup').textContent = a.checkup;
+
+    document.getElementById('checkinLessonCard').hidden = a.bleeding === 'No';
+    document.getElementById('checkinDentistLine').hidden = a.bleeding !== 'Often';
+    document.getElementById('checkinReminderCard').hidden = a.checkup !== 'Not yet';
+
+    document.getElementById('checkinStatus').textContent = 'Done';
+    document.getElementById('checkinQaSub').textContent = 'Done ✓';
+    navigate('screen-checkin-saved', 'forward');
+  }
+
+  function setReminder() {
+    const btn = document.getElementById('remindBtn');
+    btn.textContent = 'Reminder set ✓';
+    btn.disabled = true;
+    document.getElementById('remindNote').hidden = false;
+  }
+
   // ─── SHARE WITH DENTIST ───
   let shareReturn = 'screen-photo-diary';
 
