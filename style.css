@@ -265,6 +265,8 @@
     pointer-events: none;
   }
 
+  .splash-logo-clip { width: 220px; height: 132px; overflow: hidden; }
+  .splash-logo-clip img { width: 100%; height: auto; display: block; }
   .splash-center {
     display: flex;
     flex-direction: column;
