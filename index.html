@@ -598,7 +598,7 @@
       </button>
       <button class="nav-item" onclick="navigate('screen-photo-diary', 'forward')">
         <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="3" y="5" width="16" height="13" rx="2" stroke="#9EA4A8" stroke-width="1.6"/><circle cx="11" cy="11.5" r="3" stroke="#9EA4A8" stroke-width="1.6"/><path d="M8 5V4C8 3.4 8.4 3 9 3H13C13.6 3 14 3.4 14 4V5" stroke="#9EA4A8" stroke-width="1.6" stroke-linecap="round"/></svg>
-        <span>Photos</span>
+        <span>History</span>
       </button>
       <button class="nav-item" onclick="navigate('screen-recommendations', 'forward')">
         <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M7 11H15M7 7H15M7 15H11" stroke="#9EA4A8" stroke-width="1.6" stroke-linecap="round"/><rect x="3" y="3" width="16" height="16" rx="3" stroke="#9EA4A8" stroke-width="1.6"/></svg>
@@ -704,7 +704,7 @@
       </button>
       <button class="nav-item active">
         <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="3" y="5" width="16" height="13" rx="2" stroke="#2E7D7D" stroke-width="1.6"/><circle cx="11" cy="11.5" r="3" stroke="#2E7D7D" stroke-width="1.6"/><path d="M8 5V4C8 3.4 8.4 3 9 3H13C13.6 3 14 3.4 14 4V5" stroke="#2E7D7D" stroke-width="1.6" stroke-linecap="round"/></svg>
-        <span>Photos</span>
+        <span>History</span>
       </button>
       <button class="nav-item" onclick="navigate('screen-recommendations', 'forward')">
         <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M7 11H15M7 7H15M7 15H11" stroke="#9EA4A8" stroke-width="1.6" stroke-linecap="round"/><rect x="3" y="3" width="16" height="16" rx="3" stroke="#9EA4A8" stroke-width="1.6"/></svg>
@@ -856,8 +856,8 @@
   ════════════════════════════ -->
   <div class="screen" id="screen-photo-diary">
     <div class="profile-header">
-      <h1 class="heading">Photo diary</h1>
-      <p class="body diary-sub">Your photos, week by week.</p>
+      <h1 class="heading">Your history</h1>
+      <p class="body diary-sub">Photos and notes, over time.</p>
     </div>
 
     <div class="profile-body">
@@ -875,23 +875,23 @@
       <div class="diary-grid">
         <button class="diary-thumb" onclick="openPhoto(18)" id="diaryThumb18" hidden>
           <svg viewBox="0 0 327 210" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#teethArt"/></svg>
-          <span class="diary-thumb-label">Week 18</span>
+          <span class="diary-thumb-label">Oct 10<span class="photo-week">Week 18</span></span>
         </button>
         <button class="diary-thumb" onclick="openPhoto(17)">
           <svg viewBox="0 0 327 210" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#teethArt"/></svg>
-          <span class="diary-thumb-label">Week 17</span>
+          <span class="diary-thumb-label">Oct 3<span class="photo-week">Week 17</span></span>
         </button>
         <button class="diary-thumb" onclick="openPhoto(16)">
           <svg viewBox="0 0 327 210" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#teethArt"/></svg>
-          <span class="diary-thumb-label">Week 16</span>
+          <span class="diary-thumb-label">Sep 26<span class="photo-week">Week 16</span></span>
         </button>
         <button class="diary-thumb" onclick="openPhoto(15)">
           <svg viewBox="0 0 327 210" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#teethArt"/></svg>
-          <span class="diary-thumb-label">Week 15</span>
+          <span class="diary-thumb-label">Sep 19<span class="photo-week">Week 15</span></span>
         </button>
         <button class="diary-thumb" onclick="openPhoto(14)">
           <svg viewBox="0 0 327 210" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#teethArt"/></svg>
-          <span class="diary-thumb-label">Week 14</span>
+          <span class="diary-thumb-label">Sep 12<span class="photo-week">Week 14</span></span>
         </button>
       </div>
 
@@ -908,7 +908,7 @@
       </button>
       <button class="nav-item active">
         <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="3" y="5" width="16" height="13" rx="2" stroke="#2E7D7D" stroke-width="1.6"/><circle cx="11" cy="11.5" r="3" stroke="#2E7D7D" stroke-width="1.6"/><path d="M8 5V4C8 3.4 8.4 3 9 3H13C13.6 3 14 3.4 14 4V5" stroke="#2E7D7D" stroke-width="1.6" stroke-linecap="round"/></svg>
-        <span>Photos</span>
+        <span>History</span>
       </button>
       <button class="nav-item" onclick="navigate('screen-recommendations', 'forward')">
         <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M7 11H15M7 7H15M7 15H11" stroke="#9EA4A8" stroke-width="1.6" stroke-linecap="round"/><rect x="3" y="3" width="16" height="16" rx="3" stroke="#9EA4A8" stroke-width="1.6"/></svg>
@@ -937,9 +937,20 @@
       <div class="photo-compare-frame">
         <svg viewBox="0 0 327 210" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#teethArt"/></svg>
       </div>
-      <h2 class="heading photo-detail-title" id="photoDetailTitle">Week 17 · Oct 3</h2>
-      <p class="body photo-detail-note" id="photoDetailNote">Note: gums bleed when flossing</p>
+      <h2 class="heading photo-detail-title" id="photoDetailTitle">Oct 10 · Week 18</h2>
+
+      <div class="photo-detail-group">
+        <h3 class="section-title">How do your gums feel?</h3>
+        <div class="feel-chips" id="feelChips"><button class="feel-chip" aria-pressed="false" onclick="toggleFeel(this)">All good</button><button class="feel-chip" aria-pressed="false" onclick="toggleFeel(this)">Bleeding</button><button class="feel-chip" aria-pressed="false" onclick="toggleFeel(this)">Sensitive</button><button class="feel-chip" aria-pressed="false" onclick="toggleFeel(this)">Swollen</button><button class="feel-chip" aria-pressed="false" onclick="toggleFeel(this)">Sore</button></div>
+      </div>
+
+      <div class="photo-detail-group">
+        <label class="section-title" for="photoNote">Add a note</label>
+        <textarea class="note-field" id="photoNote" rows="2"></textarea>
+      </div>
+
       <button class="btn-primary" onclick="navigate('screen-photo-compare', 'forward')">Compare with…</button>
+      <button class="btn-secondary" onclick="openShareSheet()">Share with my dentist</button>
     </div>
   </div>
 
@@ -949,7 +960,7 @@
   <div class="screen" id="screen-photo-compare">
     <div class="capture-header">
       <h1 class="capture-title">Compare</h1>
-      <p class="capture-subtitle">Week 17 and Week 18</p>
+      <p class="capture-subtitle">Oct 3 and Oct 10</p>
     </div>
 
     <div class="photo-compare">
@@ -957,19 +968,19 @@
         <div class="photo-compare-frame">
           <svg viewBox="0 0 327 210" xmlns="http://www.w3.org/2000/svg"><use href="#teethArt"/></svg>
         </div>
-        <figcaption class="photo-compare-label">Week 17</figcaption>
+        <figcaption class="photo-compare-label">Oct 3<span class="photo-week">Week 17</span></figcaption>
       </figure>
       <figure class="photo-compare-item">
         <div class="photo-compare-frame">
           <svg viewBox="0 0 327 210" xmlns="http://www.w3.org/2000/svg"><use href="#teethArt"/></svg>
         </div>
-        <figcaption class="photo-compare-label">Week 18</figcaption>
+        <figcaption class="photo-compare-label">Oct 10<span class="photo-week">Week 18</span></figcaption>
       </figure>
     </div>
 
     <div class="capture-footer">
       <button class="btn-secondary" onclick="openShareSheet()">Share with my dentist</button>
-      <button class="btn-capture-back" onclick="navigate('screen-photo-diary', 'back')">Back to photo diary</button>
+      <button class="btn-capture-back" onclick="navigate('screen-photo-diary', 'back')">Back to history</button>
     </div>
   </div>
 
@@ -980,7 +991,7 @@
 
     <div class="capture-header">
       <h1 class="capture-title">Photo saved</h1>
-      <p class="capture-subtitle">Added to your photo diary.</p>
+      <p class="capture-subtitle">Added to your history.</p>
     </div>
 
     <div class="photo-compare">
@@ -988,14 +999,14 @@
         <div class="photo-compare-frame">
           <svg viewBox="0 0 327 210" xmlns="http://www.w3.org/2000/svg"><use href="#teethArt"/></svg>
         </div>
-        <figcaption class="photo-compare-label">Week 17</figcaption>
+        <figcaption class="photo-compare-label">Oct 3<span class="photo-week">Week 17</span></figcaption>
       </figure>
       <figure class="photo-compare-item">
         <div class="photo-compare-frame photo-compare-frame--current">
           <svg viewBox="0 0 327 210" xmlns="http://www.w3.org/2000/svg"><use href="#teethArt"/></svg>
           <span class="photo-new-label">New</span>
         </div>
-        <figcaption class="photo-compare-label">Week 18 · today</figcaption>
+        <figcaption class="photo-compare-label">Oct 10 · today<span class="photo-week">Week 18</span></figcaption>
       </figure>
     </div>
 
@@ -1004,7 +1015,7 @@
     <div class="capture-footer">
       <button class="btn-primary" onclick="navigate('screen-recommendations', 'forward')">View care plan</button>
       <button class="btn-secondary" onclick="openShareSheet()">Share with my dentist</button>
-      <button class="btn-capture-back" onclick="navigate('screen-photo-diary', 'back')">Back to photo diary</button>
+      <button class="btn-capture-back" onclick="navigate('screen-photo-diary', 'back')">Back to history</button>
     </div>
 
   </div>
@@ -1161,7 +1172,7 @@
       </button>
       <button class="nav-item" onclick="navigate('screen-photo-diary', 'forward')">
         <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="3" y="5" width="16" height="13" rx="2" stroke="#9EA4A8" stroke-width="1.6"/><circle cx="11" cy="11.5" r="3" stroke="#9EA4A8" stroke-width="1.6"/><path d="M8 5V4C8 3.4 8.4 3 9 3H13C13.6 3 14 3.4 14 4V5" stroke="#9EA4A8" stroke-width="1.6" stroke-linecap="round"/></svg>
-        <span>Photos</span>
+        <span>History</span>
       </button>
       <button class="nav-item active">
         <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M7 11H15M7 7H15M7 15H11" stroke="#2E7D7D" stroke-width="1.6" stroke-linecap="round"/><rect x="3" y="3" width="16" height="16" rx="3" stroke="#2E7D7D" stroke-width="1.6"/></svg>
@@ -1246,7 +1257,7 @@
       </button>
       <button class="nav-item" onclick="navigate('screen-photo-diary', 'forward')">
         <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="3" y="5" width="16" height="13" rx="2" stroke="#9EA4A8" stroke-width="1.6"/><circle cx="11" cy="11.5" r="3" stroke="#9EA4A8" stroke-width="1.6"/><path d="M8 5V4C8 3.4 8.4 3 9 3H13C13.6 3 14 3.4 14 4V5" stroke="#9EA4A8" stroke-width="1.6" stroke-linecap="round"/></svg>
-        <span>Photos</span>
+        <span>History</span>
       </button>
       <button class="nav-item" onclick="navigate('screen-recommendations', 'forward')">
         <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M7 11H15M7 7H15M7 15H11" stroke="#9EA4A8" stroke-width="1.6" stroke-linecap="round"/><rect x="3" y="3" width="16" height="16" rx="3" stroke="#9EA4A8" stroke-width="1.6"/></svg>
@@ -1278,7 +1289,7 @@
 
       <section class="lesson-section">
         <h2 class="section-title">What’s happening</h2>
-        <p class="body">Pregnancy hormones increase blood flow to your gums and make them react more to plaque. Many women notice bleeding when brushing or flossing, most often in the second trimester.</p>
+        <p class="body">Pregnancy hormones increase blood flow to your gums and make them react more to plaque. Many pregnant people notice bleeding when brushing or flossing, most often in the second trimester.</p>
       </section>
 
       <section class="lesson-section">
@@ -1316,23 +1327,23 @@
         <div class="report-thumbs">
           <figure class="report-thumb">
             <svg viewBox="0 0 327 210" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#teethArt"/></svg>
-            <figcaption>Week 14</figcaption>
+            <figcaption>Sep 12<span class="photo-week">Week 14</span></figcaption>
           </figure>
           <figure class="report-thumb">
             <svg viewBox="0 0 327 210" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#teethArt"/></svg>
-            <figcaption>Week 15</figcaption>
+            <figcaption>Sep 19<span class="photo-week">Week 15</span></figcaption>
           </figure>
           <figure class="report-thumb">
             <svg viewBox="0 0 327 210" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#teethArt"/></svg>
-            <figcaption>Week 16</figcaption>
+            <figcaption>Sep 26<span class="photo-week">Week 16</span></figcaption>
           </figure>
           <figure class="report-thumb">
             <svg viewBox="0 0 327 210" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#teethArt"/></svg>
-            <figcaption>Week 17</figcaption>
+            <figcaption>Oct 3<span class="photo-week">Week 17</span></figcaption>
           </figure>
           <figure class="report-thumb">
             <svg viewBox="0 0 327 210" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#teethArt"/></svg>
-            <figcaption>Week 18</figcaption>
+            <figcaption>Oct 10<span class="photo-week">Week 18</span></figcaption>
           </figure>
         </div>
       </section>

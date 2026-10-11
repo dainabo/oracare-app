@@ -1140,7 +1140,6 @@
   /* ── Photo detail ── */
   .photo-detail { padding: 0 24px 32px; display: flex; flex-direction: column; gap: 16px; }
   .photo-detail-title { margin-top: 8px; }
-  .photo-detail-note[hidden] { display: none; }
 
   /* ════════════════════════════════════════
      SCREEN 5b — SCAN ANALYZING
@@ -1514,3 +1513,35 @@
   .lesson-section { margin-bottom: 24px; }
   .lesson-section .section-title { margin-bottom: 8px; }
   .lesson .btn-primary { margin-top: 8px; }
+
+  /* ── Photo labels: date, week underneath ── */
+  .photo-week { display: block; font-size: 11px; font-weight: 400; color: var(--text-light); margin-top: 2px; }
+
+  /* ── Photo detail: feelings + note ── */
+  .photo-detail-group { display: flex; flex-direction: column; gap: 8px; }
+  .photo-detail-group .section-title { margin-bottom: 0; }
+  .feel-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .feel-chip {
+    padding: 8px 16px;
+    border-radius: 999px;
+    border: 1.5px solid var(--border);
+    background: white;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    cursor: pointer;
+  }
+  .feel-chip[aria-pressed="true"] { background: var(--teal); border-color: var(--teal); color: white; }
+  .note-field {
+    width: 100%;
+    padding: 16px;
+    border-radius: 16px;
+    border: 1.5px solid var(--border);
+    background: white;
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--text);
+    resize: none;
+  }
+  .note-field:focus { outline: 2px solid var(--teal); outline-offset: 2px; }

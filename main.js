@@ -273,20 +273,34 @@
   }
 
   const diaryPhotos = {
-    18: { date: 'Oct 10', note: '' },
-    17: { date: 'Oct 3', note: 'Note: gums bleed when flossing' },
-    16: { date: 'Sep 26', note: '' },
-    15: { date: 'Sep 19', note: '' },
-    14: { date: 'Sep 12', note: '' }
+    18: { date: 'Oct 10', feel: ['Bleeding'], note: 'Gums bleed a little when flossing.' },
+    17: { date: 'Oct 3', feel: ['Bleeding'], note: 'Gums bleed a little when flossing.' },
+    16: { date: 'Sep 26', feel: ['All good'], note: '' },
+    15: { date: 'Sep 19', feel: ['All good'], note: '' },
+    14: { date: 'Sep 12', feel: ['All good'], note: '' }
   };
 
   function openPhoto(week) {
     const photo = diaryPhotos[week];
-    document.getElementById('photoDetailTitle').textContent = 'Week ' + week + ' · ' + photo.date;
-    const note = document.getElementById('photoDetailNote');
-    note.textContent = photo.note;
-    note.hidden = !photo.note;
+    document.getElementById('photoDetailTitle').textContent = photo.date + ' · Week ' + week;
+    document.querySelectorAll('#feelChips .feel-chip').forEach(chip => {
+      chip.setAttribute('aria-pressed', photo.feel.includes(chip.textContent) ? 'true' : 'false');
+    });
+    document.getElementById('photoNote').value = photo.note;
     navigate('screen-photo-detail', 'forward');
+  }
+
+  // "All good" and the symptom chips exclude each other
+  function toggleFeel(chip) {
+    const on = chip.getAttribute('aria-pressed') !== 'true';
+    const chips = document.querySelectorAll('#feelChips .feel-chip');
+    if (on) {
+      chips.forEach(c => {
+        const isAllGood = c.textContent === 'All good';
+        if (chip.textContent === 'All good' ? !isAllGood : isAllGood) c.setAttribute('aria-pressed', 'false');
+      });
+    }
+    chip.setAttribute('aria-pressed', on ? 'true' : 'false');
   }
 
   function runAnalysis() {
