@@ -8,6 +8,10 @@
   function navigate(targetId, direction) {
     if (targetId === currentScreen) return;
 
+    // Leaving the camera stops the simulated AI guidance; arriving restarts it
+    if (currentScreen === 'screen-scan-capture') stopCaptureGuidance();
+    if (targetId === 'screen-scan-capture') setTimeout(runCaptureGuidance, 400);
+
     const current = document.getElementById(currentScreen);
     const target = document.getElementById(targetId);
 
@@ -153,14 +157,10 @@
     const isDemo = scanMode === 'demo';
     const title = document.getElementById('captureTitle');
     const subtitle = document.getElementById('captureSubtitle');
-    const btn = document.getElementById('captureCta');
-    const checklist = document.getElementById('captureChecklist');
     if (title) title.textContent = 'Capture Your Smile';
     if (subtitle) subtitle.textContent = isDemo
       ? 'Try the photo diary with a sample photo.'
       : 'Position your teeth and gums inside the frame.';
-    if (btn) btn.textContent = 'Save photo';
-    if (checklist) checklist.style.display = isDemo ? 'none' : 'flex';
   }
 
   // Toggles analyzing/results copy between the real-scan and demo-scan wording.
@@ -203,30 +203,58 @@
     scanMode = 'trial';
     updateCaptureCopy();
     navigate('screen-scan-capture', 'forward');
-    setTimeout(runCaptureChecklist, 400);
   }
 
-  function runCaptureChecklist() {
-    for (let i = 1; i <= 5; i++) {
-      const item = document.getElementById('capture-check-' + i);
-      const icon = document.getElementById('capture-check-icon-' + i);
-      if (!item) continue;
-      item.classList.remove('done');
-      const svg = icon.querySelector('svg');
-      if (svg) svg.style.display = 'none';
-    }
-    for (let i = 1; i <= 5; i++) {
-      setTimeout(() => markCaptureCheck(i), 300 + (i - 1) * 260);
-    }
+  // Simulated AI photo guidance: checks turn green one by one while the
+  // hint banner coaches, then a 3-2-1 countdown takes the photo.
+  const captureSteps = [
+    { check: 1 },
+    { check: 2, hint: 'Move a little closer' },
+    { check: 3, hint: 'Tilt your head down slightly' },
+    { check: 4, hint: 'Good light ✓' },
+    { check: 5, hint: 'Hold still…' },
+    { check: 6, hint: 'Perfect, hold still' }
+  ];
+  let captureTimers = [];
+
+  function stopCaptureGuidance() {
+    captureTimers.forEach(clearTimeout);
+    captureTimers = [];
+    const countdown = document.getElementById('captureCountdown');
+    if (countdown) countdown.hidden = true;
   }
 
-  function markCaptureCheck(i) {
+  function runCaptureGuidance() {
+    stopCaptureGuidance();
+    if (currentScreen !== 'screen-scan-capture') return;
+    const hint = document.getElementById('captureHint');
+    const countdown = document.getElementById('captureCountdown');
+    for (let i = 1; i <= 6; i++) setCaptureCheck(i, false);
+    hint.textContent = 'Pull your lips back a little more';
+
+    const later = (ms, fn) => captureTimers.push(setTimeout(fn, ms));
+    captureSteps.forEach((step, n) => {
+      later(700 * (n + 1), () => {
+        setCaptureCheck(step.check, true);
+        if (step.hint) hint.textContent = step.hint;
+      });
+    });
+    const countStart = 700 * captureSteps.length + 300;
+    [3, 2, 1].forEach((num, n) => {
+      later(countStart + n * 1000, () => {
+        countdown.textContent = num;
+        countdown.hidden = false;
+      });
+    });
+    later(countStart + 3000, startScan);
+  }
+
+  function setCaptureCheck(i, done) {
     const item = document.getElementById('capture-check-' + i);
-    const icon = document.getElementById('capture-check-icon-' + i);
+    const svg = document.querySelector('#capture-check-icon-' + i + ' svg');
     if (!item) return;
-    item.classList.add('done');
-    const svg = icon.querySelector('svg');
-    if (svg) svg.style.display = 'block';
+    item.classList.toggle('done', done);
+    if (svg) svg.style.display = done ? 'block' : 'none';
   }
 
   // ─── SCAN ANALYSIS ───

@@ -796,59 +796,65 @@
 
     <div class="capture-header">
       <h1 class="capture-title" id="captureTitle">Capture Your Smile</h1>
-      <p class="capture-subtitle" id="captureSubtitle">Position your teeth and gums inside the frame.</p>
       <span class="chip chip-teal capture-ai-chip">AI-guided</span>
     </div>
 
+    <p class="capture-hint" id="captureHint" aria-live="polite">Pull your lips back a little more</p>
+
     <!-- Camera preview with teeth illustration -->
     <div class="capture-preview-wrap">
-      <!-- Teeth illustration SVG -->
       <svg class="teeth-illustration" viewBox="0 0 327 210" xmlns="http://www.w3.org/2000/svg">
         <use href="#teethArt"/>
       </svg>
 
-      <!-- Teal scan frame corners -->
+      <!-- Last week's mouth position (decorative overlay) -->
+      <svg class="capture-ghost" viewBox="0 0 327 210" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M40 104 Q88 70 163 66 Q238 70 286 104 L286 146 Q238 172 163 174 Q88 172 40 146 Z"/>
+      </svg>
+      <span class="capture-ghost-label">Last week (Oct 3)</span>
+
       <div class="scan-frame-corner tl"></div>
       <div class="scan-frame-corner tr"></div>
       <div class="scan-frame-corner bl"></div>
       <div class="scan-frame-corner br"></div>
 
-      <!-- Animated scan line -->
-      <div class="capture-scan-line"></div>
+      <div class="capture-countdown" id="captureCountdown" aria-live="assertive" hidden></div>
     </div>
 
-    <p class="capture-helper-text">Front Teeth View</p>
-    <button class="capture-tips-link" onclick="openGuide('screen-scan-capture')">Photo tips</button>
+    <div class="shutter-row">
+      <button class="capture-tips-link" onclick="openGuide('screen-scan-capture')">Photo tips</button>
+      <button class="shutter" id="captureCta" onclick="startScan()" aria-label="Take photo now"></button>
+      <button class="btn-capture-back" onclick="backFromCapture()">Cancel</button>
+    </div>
 
-    <div class="analysis-checklist" id="captureChecklist" style="margin-bottom: 24px;">
+    <div class="analysis-checklist capture-checklist" id="captureChecklist">
       <h2 class="section-title capture-checklist-title">AI checks your photo</h2>
-      <div class="check-item" id="capture-check-1">
-        <div class="check-icon" id="capture-check-icon-1"><svg width="12" height="10" viewBox="0 0 12 10" fill="none" style="display:none"><path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        Upper teeth visible
+      <div class="capture-checks">
+        <div class="check-item" id="capture-check-1">
+          <div class="check-icon" id="capture-check-icon-1"><svg width="12" height="10" viewBox="0 0 12 10" fill="none" style="display:none"><path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          Mouth in frame
+        </div>
+        <div class="check-item" id="capture-check-2">
+          <div class="check-icon" id="capture-check-icon-2"><svg width="12" height="10" viewBox="0 0 12 10" fill="none" style="display:none"><path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          Gum line visible
+        </div>
+        <div class="check-item" id="capture-check-3">
+          <div class="check-icon" id="capture-check-icon-3"><svg width="12" height="10" viewBox="0 0 12 10" fill="none" style="display:none"><path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          Right distance
+        </div>
+        <div class="check-item" id="capture-check-4">
+          <div class="check-icon" id="capture-check-icon-4"><svg width="12" height="10" viewBox="0 0 12 10" fill="none" style="display:none"><path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          Straight angle
+        </div>
+        <div class="check-item" id="capture-check-5">
+          <div class="check-icon" id="capture-check-icon-5"><svg width="12" height="10" viewBox="0 0 12 10" fill="none" style="display:none"><path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          Enough light
+        </div>
+        <div class="check-item" id="capture-check-6">
+          <div class="check-icon" id="capture-check-icon-6"><svg width="12" height="10" viewBox="0 0 12 10" fill="none" style="display:none"><path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          Sharp image
+        </div>
       </div>
-      <div class="check-item" id="capture-check-2">
-        <div class="check-icon" id="capture-check-icon-2"><svg width="12" height="10" viewBox="0 0 12 10" fill="none" style="display:none"><path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        Lower teeth visible
-      </div>
-      <div class="check-item" id="capture-check-3">
-        <div class="check-icon" id="capture-check-icon-3"><svg width="12" height="10" viewBox="0 0 12 10" fill="none" style="display:none"><path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        Gum line visible
-      </div>
-      <div class="check-item" id="capture-check-4">
-        <div class="check-icon" id="capture-check-icon-4"><svg width="12" height="10" viewBox="0 0 12 10" fill="none" style="display:none"><path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        Good lighting
-      </div>
-      <div class="check-item" id="capture-check-5">
-        <div class="check-icon" id="capture-check-icon-5"><svg width="12" height="10" viewBox="0 0 12 10" fill="none" style="display:none"><path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        Face centered
-      </div>
-    </div>
-
-    <div class="capture-footer">
-      <button class="btn-primary" id="captureCta" onclick="startScan()" style="width:100%; background: linear-gradient(135deg, var(--teal), #256868);">
-        Save photo
-      </button>
-      <button class="btn-capture-back" onclick="backFromCapture()">Back</button>
     </div>
 
   </div>
