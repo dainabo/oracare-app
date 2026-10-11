@@ -617,7 +617,7 @@
   <div class="screen" id="screen-scan-instructions">
     <div class="scan-hero">
       <div class="nav-row" style="justify-content: flex-start; margin-bottom: 16px;">
-        <button class="back-btn" style="background: rgba(255,255,255,0.15); box-shadow: none;" onclick="navigate('screen-scan-capture', 'back')">
+        <button class="back-btn" style="background: rgba(255,255,255,0.15); box-shadow: none;" onclick="navigate(guideReturn, 'back')">
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M11 14L6 9L11 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
       </div>
@@ -817,7 +817,7 @@
     </div>
 
     <p class="capture-helper-text">Front Teeth View</p>
-    <button class="capture-tips-link" onclick="navigate('screen-scan-instructions', 'forward')">Photo tips</button>
+    <button class="capture-tips-link" onclick="openGuide('screen-scan-capture')">Photo tips</button>
 
     <div class="analysis-checklist" id="captureChecklist" style="margin-bottom: 24px;">
       <div class="check-item" id="capture-check-1">
@@ -861,6 +861,17 @@
     </div>
 
     <div class="profile-body">
+      <div class="tip-cards">
+        <button class="tip-card" onclick="openGuide('screen-photo-diary')">
+          <div class="tip-icon-wrap fi-teal">📸</div>
+          <div class="tip-content">
+            <div class="tip-title">How to take a good photo</div>
+            <div class="tip-body">30-second guide</div>
+          </div>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="tip-arrow"><path d="M6 4L10 8L6 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+
       <div class="diary-grid">
         <button class="diary-thumb" onclick="openPhoto(18)" id="diaryThumb18" hidden>
           <svg viewBox="0 0 327 210" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#teethArt"/></svg>

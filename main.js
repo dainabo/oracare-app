@@ -242,6 +242,13 @@
   }
 
   // ─── PHOTO DIARY ───
+  // The photo guide opens from the diary or the camera; Back returns there
+  let guideReturn = 'screen-photo-diary';
+  function openGuide(from) {
+    guideReturn = from;
+    navigate('screen-scan-instructions', 'forward');
+  }
+
   const diaryPhotos = {
     18: { date: 'Oct 10', note: '' },
     17: { date: 'Oct 3', note: 'Note: gums bleed when flossing' },
