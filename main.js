@@ -241,6 +241,29 @@
     navigate('screen-photo-saved', 'forward');
   }
 
+  // ─── SHARE WITH DENTIST ───
+  let shareReturn = 'screen-photo-diary';
+
+  function openShareSheet() {
+    shareReturn = currentScreen;
+    document.getElementById('shareSheet').hidden = false;
+  }
+
+  function closeShareSheet() {
+    document.getElementById('shareSheet').hidden = true;
+  }
+
+  // The report only shows the sections left ticked in the sheet
+  function createReport() {
+    document.querySelectorAll('#shareSheet [data-section]').forEach(item => {
+      const section = document.querySelector('#screen-share-report [data-report="' + item.dataset.section + '"]');
+      if (section) section.hidden = !item.classList.contains('checked');
+    });
+    document.getElementById('reportNote').hidden = true;
+    closeShareSheet();
+    navigate('screen-share-report', 'forward');
+  }
+
   // ─── PHOTO DIARY ───
   // The photo guide opens from the diary or the camera; Back returns there
   let guideReturn = 'screen-photo-diary';

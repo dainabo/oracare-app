@@ -1462,3 +1462,46 @@
     to { stroke-dashoffset: var(--target-offset); }
   }
   .score-ring-fill { animation: ringDraw 1.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both; }
+
+  /* ════════════════════════════════════════
+     SHARE WITH DENTIST — sheet + report
+  ════════════════════════════════════════ */
+  .sheet-backdrop {
+    position: absolute;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    align-items: flex-end;
+    background: rgba(0,0,0,0.4);
+  }
+  .sheet-backdrop[hidden] { display: none; }
+  .sheet {
+    width: 100%;
+    background: var(--bg);
+    border-radius: 24px 24px 0 0;
+    padding: 16px 24px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    animation: sheetUp 300ms ease-out;
+  }
+  .sheet-handle { width: 40px; height: 4px; border-radius: 2px; background: var(--border); align-self: center; margin-bottom: 8px; }
+  .sheet-title { font-size: 22px; }
+  .sheet-body { margin-bottom: 8px; }
+  .sheet .symptom-list { margin-bottom: 8px; }
+  @keyframes sheetUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+  @media (prefers-reduced-motion: reduce) { .sheet { animation: none; } }
+
+  .report { padding: 0 24px 32px; }
+  .report-meta { margin: 8px 0 24px; }
+  .report-section { margin-bottom: 24px; }
+  .report-section[hidden] { display: none; }
+  .report-thumbs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .report-thumb { margin: 0; }
+  .report-thumb svg { display: block; width: 100%; height: auto; border-radius: 8px; }
+  .report-thumb figcaption { font-size: 11px; font-weight: 600; color: var(--text-mid); margin-top: 4px; }
+  .report-section .symptom-log { margin-bottom: 0; }
+  .report-dot-salmon { background: var(--salmon); }
+  .report-dot-amber { background: #FCD34D; }
+  .report-dot-teal { background: var(--teal-light); }
+  .report-actions { display: flex; flex-direction: column; gap: 8px; }
