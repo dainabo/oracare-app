@@ -1545,3 +1545,9 @@
     resize: none;
   }
   .note-field:focus { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+  /* ── AI-guided labels ── */
+  .diary-section-head { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
+  .diary-section-head .section-title { margin-bottom: 0; }
+  .capture-ai-chip { margin-top: 8px; }
+  .capture-checklist-title { margin-bottom: 0; }
